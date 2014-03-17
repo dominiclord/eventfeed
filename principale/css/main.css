@@ -1,0 +1,472 @@
+/*
+ * HTML5 Boilerplate
+ *
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+html,
+button,
+input,
+select,
+textarea {
+    color: #222;
+}
+
+body {
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection declarations have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+/*
+ * Remove the gap between images and the bottom of their containers: h5bp.com/i/440
+ */
+
+img {
+    vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+/* ==========================================================================
+   Chrome Frame prompt
+   ========================================================================== */
+
+.chromeframe {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+*{
+    -webkit-box-sizing:border-box;
+       -moz-box-sizing:border-box;
+            box-sizing:border-box;
+}
+
+html, body{
+    height:100%;
+}
+
+header{
+    background:url(../img/background-header.png) repeat-x;
+    color:white;
+    margin:0 auto;
+    padding:20px;
+    position:fixed;
+    text-align:center;
+    width:100%;
+}
+
+header p{
+    display:inline-block;
+    font-size:1.5em;
+    font-weight:700;
+    margin:17px;
+    vertical-align:top;
+}
+
+#colonnes{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-direction: normal;
+       -moz-box-direction: normal;
+    -webkit-box-orient: horizontal;
+       -moz-box-orient: horizontal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    -webkit-box-pack: center;
+       -moz-box-pack: center;
+    -webkit-justify-content: center;
+              -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-align-content: stretch;
+       -ms-flex-line-pack: stretch;
+            align-content: stretch;
+    -webkit-box-align: end;
+       -moz-box-align: end;
+    -webkit-align-items: flex-end;
+         -ms-flex-align: end;
+            align-items: flex-end;
+    height:100%;
+}
+
+.colonne{
+    /*Pour le contrôle des colonnes*/
+    -webkit-box-ordinal-group: 1;
+       -moz-box-ordinal-group: 1;
+     -webkit-order: 0;
+    -ms-flex-order: 0;
+             order: 0;
+    -webkit-box-flex: 1;
+       -moz-box-flex: 1;
+        -webkit-flex: 1 0 auto;
+            -ms-flex: 1 0 auto;
+                flex: 1 0 auto;
+     -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+             align-self: auto;
+    /*Pour le contrôle des posts dans les colonnes*/
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-direction: normal;
+       -moz-box-direction: normal;
+    -webkit-box-orient: vertical;
+       -moz-box-orient: vertical;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    -webkit-box-pack: end;
+       -moz-box-pack: end;
+    -webkit-justify-content: flex-end;
+              -ms-flex-pack: end;
+            justify-content: flex-end;
+    -webkit-align-content: stretch;
+       -ms-flex-line-pack: stretch;
+            align-content: stretch;
+    -webkit-box-align: end;
+       -moz-box-align: end;
+    -webkit-align-items: flex-end;
+         -ms-flex-align: end;
+            align-items: flex-end;
+    /*Pour les actual styles, you know?*/
+    padding:0 30px 30px 30px;
+    width:50%;
+}
+
+.colonne:last-child{
+    border-left:1px solid #C2C2C2;
+}
+
+.colonne div.post{
+    border:1px solid #8D8D8D;
+    border-radius:3px;
+    box-shadow:4px 4px 8px -3px #A1A1A1;
+    -webkit-box-ordinal-group: 1;
+       -moz-box-ordinal-group: 1;
+     -webkit-order: 0;
+    -ms-flex-order: 0;
+             order: 0;
+    -webkit-box-flex: 0;
+       -moz-box-flex: 0;
+        -webkit-flex: 0 1 auto;
+            -ms-flex: 0 1 auto;
+                flex: 0 1 auto;
+    margin-top:46px;
+    opacity:1;
+    -webkit-transition:opacity 0.5s ease-in;
+       -moz-transition:opacity 0.5s ease-in;
+}
+
+.colonne div.post.new{
+    opacity:0;
+}
+
+.colonne:first-child div.post{
+     -webkit-align-self:flex-end;
+    -ms-flex-item-align:flex-end;
+             align-self:flex-end;
+}
+
+.colonne:last-child div.post{
+     -webkit-align-self:flex-start;
+    -ms-flex-item-align:flex-start;
+             align-self:flex-start;
+}
+
+div.texte{
+    background-color:#E4FFE4;
+    padding:10px 15px;
+    text-align:left;
+    width:400px;
+}
+
+div.texte p{
+    font-size:2em;
+    margin:0;
+}
+
+div.image img{
+    border-radius:3px;
+    width:inherit;
+}
+
+div.hybride .texte{
+    border-bottom-left-radius:3px;
+    border-bottom-right-radius:3px;
+    width:auto;
+}
+
+div.hybride img{
+    border-bottom-left-radius:0px;
+    border-bottom-right-radius:0px;
+    width:inherit;
+}
+
+div.post.rejeter{
+    background-color:#E46B6B;
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Image replacement
+ */
+
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    /* IE 6/7 fallback */
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 100%;
+}
+
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/*
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   Theses examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+       only screen and (min-resolution: 144dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+
+@media print {
+    * {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
+        box-shadow:none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links for images, or javascript/internal links
+     */
+
+    .ir a:after,
+    a[href^="javascript:"]:after,
+    a[href^="#"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group; /* h5bp.com/t */
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    @page {
+        margin: 0.5cm;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}
