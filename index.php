@@ -24,12 +24,12 @@
         <form action="soumettre.php" enctype="multipart/form-data" id="formEntry" method="post">
             <ul>
                 <li>
-                    <label for="auteur">Votre nom (obligatoire) :</label>
-                    <input id="auteur" type="text" name="auteur" value="">
+                    <label for="author">Votre nom (obligatoire) :</label>
+                    <input id="author" type="text" name="author" value="">
                 </li>
                 <li>
-                    <label for="texte">Votre message :</label>
-                    <input id="texte" type="text" name="texte" value="">
+                    <label for="text">Votre message :</label>
+                    <input id="text" type="text" name="text" value="">
                 </li>
                 <li>
                     <label for="imagefile">Image :</label>
@@ -42,9 +42,9 @@
             <p style="display:none;" id="nocontent"><strong>Il vous faut envoyer au minimum un message ou une image.</strong></p>
             <p>Vous pouvez envoyer un message, une image ou les deux en même temps.</p>
             <p>Les contenus jugés innapproprié ne seront pas publiés.</p>
-            <input id="btnCancel" type="reset" value="Effacer">
-            <input id="btnSubmit" name="btnSubmit" type="submit" value="Envoyer">
-            <input id="etat" name="etat" type="hidden" value="Envoyer">
+            <input id="btnCancel" type="reset" value="Erase">
+            <input id="btnSubmit" name="btnSubmit" type="submit" value="Send">
+            <input id="state" name="state" type="hidden" value="Send">
             <input id="timestamp" type="hidden" value="">
             <input id="image" type="hidden" value="">
         </form>

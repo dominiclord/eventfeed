@@ -1,10 +1,10 @@
 $(function(){
-    var auteur = $('#auteur'),
-        texte = $('#texte'),
+    var author = $('#author'),
+        text = $('#text'),
         imageFile = $('#imagefile');
     $('#btnCancel').click(function(ev){
-        auteur.val('').removeClass('error').blur();
-        texte.val('').removeClass('error').blur();
+        author.val('').removeClass('error').blur();
+        text.val('').removeClass('error').blur();
         imageFile.val('').removeClass('error').blur();
         $('#nocontent').hide();
     });
@@ -14,15 +14,15 @@ $(function(){
         var timestamp = $('#timestamp'),
             image = $('#image');
         var error = false;
-        auteur.removeClass('error');
-        texte.removeClass('error');
+        author.removeClass('error');
+        text.removeClass('error');
         $('#nocontent').hide();
-        if(auteur.val().length==0){
-            auteur.addClass('error');
+        if(author.val().length==0){
+            author.addClass('error');
             error = true;
         }
-        if(texte.val().length==0 && imageFile.val() == ''){
-            texte.addClass('error');
+        if(text.val().length==0 && imageFile.val() == ''){
+            text.addClass('error');
             $('#nocontent').fadeIn();
             error = true;
         }

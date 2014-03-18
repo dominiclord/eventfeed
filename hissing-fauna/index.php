@@ -1,28 +1,18 @@
 <?php
-    // fonction pour les requetes de données en POST
-    function fct_POST($nom, $defaut=''){
-        if (isset($_POST[$nom])==true) return($_POST[$nom]);
-        return($defaut);
-    }
-    // fonction de connexion à la BDD
-    function bd_connexion(){
-        $bdLier = mysqli_connect('localhost','root','root','ef_local');
-        if (mysqli_connect_errno()){
-            printf("Connect failed: %s\n", mysqli_connect_error());
-            exit();
-        }
-        return($bdLier);
-    }
+    require_once dirname(__FILE__).'/../config.php';
+
+    // ASD
     $actionLinks = "<aside><a href='#' class='edit'>Modifier</a>&nbsp;<a href='#' class='approve'>Approuver</a>&nbsp;<a href='#' class='remove'>Rejeter</a></aside>";
     $affichage = $_SERVER['QUERY_STRING'];
-    $etat = fct_POST('etat');
-    if($etat == "Envoyer"){
-        $vitesse = fct_POST('vitesse');
-        $bdLien = bd_connexion();
-        mysqli_set_charset($bdLien,"utf8");
-        $requete = "UPDATE parametres SET vitesse = '".$vitesse."' WHERE id = 1;";
-        mysqli_query($bdLien,$requete);
-        mysqli_close($bdLien);
+    $state = fct_POST('state');
+    if($state == "Send"){
+        $speed = fct_POST('speed');
+        // Connecting to the database
+        $db = db_connection();
+        mysqli_set_charset($db,"utf8");
+        $request = "UPDATE parametres SET vitesse = '".$speed."' WHERE id = 1;";
+        mysqli_query($db,$request);
+        mysqli_close($db);
     }
     if($affichage=="moderation"||$affichage=="");
 ?>
@@ -47,48 +37,49 @@
         </nav>
         <h1>Modération</h1>
 <?php
-    $bdLien = bd_connexion();
-    mysqli_set_charset($bdLien,"utf8");
-    $requete = "";
+    // Connecting to the database
+    $db = db_connection();
+    mysqli_set_charset($db,"utf8");
+    $request = "";
     switch($affichage){
         case "moderation":
-            $requete = "SELECT * FROM posts WHERE statut = 'moderation' ORDER BY timestamp ASC";
+            $request = "SELECT * FROM posts WHERE status = 'moderation' ORDER BY timestamp ASC";
         break;
         case "approuver":
-            $requete = "SELECT * FROM posts WHERE statut = 'approuver' ORDER BY timestamp ASC";
+            $request = "SELECT * FROM posts WHERE status = 'approuver' ORDER BY timestamp ASC";
         break;
         case "publier":
-            $requete = "SELECT * FROM posts WHERE statut = 'publier' ORDER BY timestamp_modifier DESC";
+            $request = "SELECT * FROM posts WHERE status = 'publier' ORDER BY timestamp_modified DESC";
         break;
         case "rejeter":
-            $requete = "SELECT * FROM posts WHERE statut = 'rejeter' ORDER BY timestamp DESC";
+            $request = "SELECT * FROM posts WHERE status = 'rejeter' ORDER BY timestamp DESC";
         break;
         case "parametres":
-            $requete = "SELECT * FROM parametres";
+            $request = "SELECT * FROM parametres";
         break;
         default:
-            $requete = "SELECT * FROM posts WHERE statut = 'moderation' ORDER BY timestamp ASC";
+            $request = "SELECT * FROM posts WHERE status = 'moderation' ORDER BY timestamp ASC";
         break;
     }
     $chaine = "";
     if($affichage != "parametres"){
-        $statuts = mysqli_query($bdLien,$requete);
-        mysqli_close($bdLien);
+        $statuts = mysqli_query($db,$request);
+        mysqli_close($db);
         $chaine .= "
         <section id='entries'>";
         while ($row = mysqli_fetch_assoc($statuts)){
-            $temptexte=$row["texte"];
+            $temptexte=$row["text"];
             $tempimage=$row["image"];
             $chaine.='
             <article rel="'.$row['timestamp'].'">
                 '.$actionLinks.'
-                <h2><span class="sAuteur">'.$row['auteur'].'</span> - <span class="sType">'.$row['type'].'</span></h2>';
+                <h2><span class="sAuteur">'.$row['author'].'</span> - <span class="sType">'.$row['type'].'</span></h2>';
             switch($row['type']){
-                case "texte":
+                case "text":
                     $chaine.='
                 <p class="sTexte">'.$temptexte.'</p>';
                 break;
-                case "hybride":
+                case "hybrid":
                     $chaine.='
                 <p><span id="sTexte">'.$temptexte.'</span><br><img class="sImage" src="../utilisateur/uploads/'.$tempimage.'"></p>';
 
@@ -131,8 +122,8 @@
         </form>
 <?php
     }else{
-        $params = mysqli_query($bdLien,$requete);
-        mysqli_close($bdLien);
+        $params = mysqli_query($db,$request);
+        mysqli_close($db);
         $aParams = array();
         while ($row = mysqli_fetch_assoc($params)){
             $aParams = $row;

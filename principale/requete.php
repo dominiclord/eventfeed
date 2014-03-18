@@ -1,18 +1,11 @@
 <?php
-    // fonction pour les requetes de données en POST
-    function fct_POST($nom, $defaut=''){
-        if (isset($_POST[$nom])==true) return($_POST[$nom]);
-        return($defaut);
-    }
-    // fonction de connexion à la BDD
-    function bd_connexion(){
-        $bdLier = mysqli_connect('localhost','root','root','ef_local');
-        if (mysqli_connect_errno()){
-            printf("Connect failed: %s\n", mysqli_connect_error());
-            exit();
-        }
-        return($bdLier);
-    }
+    require_once dirname(__FILE__).'/../config.php';
+
+    // Connecting to the database
+    $db = db_connection();
+    mysqli_set_charset($db,"utf8");
+
+    // asd
     $etat = fct_POST('etat');
     if(is_array($etat)){
         $donnees = $etat;
@@ -23,20 +16,18 @@
     switch($etat){
         case "Publier":
             date_default_timezone_set('America/Montreal');
-            $timestamp_modifier = time();
-            $bdLien = bd_connexion();
-            mysqli_set_charset($bdLien,"utf8");
-            $requete = "UPDATE posts SET statut = 'publier', timestamp_modifier = '".$timestamp_modifier."' WHERE timestamp = ".$timestamp;
-            mysqli_query($bdLien,$requete);
-            mysqli_close($bdLien);
+            $timestamp_modified = time();
+            $request = "UPDATE posts SET status = 'publier', timestamp_modified = '".$timestamp_modified."' WHERE timestamp = ".$timestamp;
+            mysqli_query($db,$request);
+            mysqli_close($db);
             return true;
         break;
         case "Charger":
-            $bdLien = bd_connexion();
-            mysqli_set_charset($bdLien,"utf8");
-            $requete = "SELECT * FROM posts WHERE statut = 'approuver' ORDER BY timestamp_modifier ASC";
-            $statuts = mysqli_query($bdLien,$requete);
-            mysqli_close($bdLien);
+            $db = db_connection();
+            mysqli_set_charset($db,"utf8");
+            $request = "SELECT * FROM posts WHERE status = 'approuver' ORDER BY timestamp_modified ASC";
+            $statuts = mysqli_query($db,$request);
+            mysqli_close($db);
             $aStatuts = array();
             while ($row = mysqli_fetch_assoc($statuts)){
                 $aStatuts[] = $row;
@@ -46,11 +37,9 @@
             echo json_encode($aStatuts);
         break;
         case "Parametres":
-            $bdLien = bd_connexion();
-            mysqli_set_charset($bdLien,"utf8");
-            $requete = "SELECT * FROM parametres";
-            $params = mysqli_query($bdLien,$requete);
-            mysqli_close($bdLien);
+            $request = "SELECT * FROM parametres";
+            $params = mysqli_query($db,$request);
+            mysqli_close($db);
             $aParams = array();
             while ($row = mysqli_fetch_assoc($params)){
                 $aParams = $row;

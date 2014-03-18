@@ -1,49 +1,36 @@
 <?php
-    // fonction pour les requetes de données en POST
-    function fct_POST($nom, $defaut=''){
-        if (isset($_POST[$nom])==true) return($_POST[$nom]);
-        return($defaut);
-    }
-    // fonction de connexion à la BDD
-    function bd_connexion(){
-        $bdLier = mysqli_connect('localhost','root','root','ef_local');
-        if (mysqli_connect_errno()){
-            printf("Connect failed: %s\n", mysqli_connect_error());
-            exit();
-        }
-        return($bdLier);
-    }
-    $etat = fct_POST('etat');
-    if(is_array($etat)){
-        $donnees = $etat;
-        $etat = "Modifier";
+    require_once dirname(__FILE__).'/../config.php';
+
+    // Connecting to the database
+    $db = db_connection();
+    mysqli_set_charset($db,"utf8");
+
+    // ASD
+    $state = fct_POST('etat');
+    if(is_array($state)){
+        $data = $state;
+        $state = "Modifier";
     }
     $timestamp = fct_POST('timestamp');
-    switch($etat){
+    switch($state){
         case "Approuver":
-            $bdLien = bd_connexion();
-            mysqli_set_charset($bdLien,"utf8");
-            $requete = "UPDATE posts SET statut = 'approuver' WHERE timestamp = ".$timestamp;
-            mysqli_query($bdLien,$requete);
-            mysqli_close($bdLien);
+            $request = "UPDATE posts SET status = 'approuver' WHERE timestamp = ".$timestamp;
+            mysqli_query($db,$request);
+            mysqli_close($db);
             return true;
         break;
         case "Modifier":
             date_default_timezone_set('America/Montreal');
-            $timestamp_modifier = time();
-            $bdLien = bd_connexion();
-            mysqli_set_charset($bdLien,"utf8");
-            $requete = 'UPDATE posts SET auteur = "'.$donnees['auteur'].'", texte = "'.$donnees['texte'].'", timestamp_modifier = "'.$timestamp_modifier.'" WHERE timestamp = '.$donnees['timestamp'];
-            mysqli_query($bdLien,$requete);
-            mysqli_close($bdLien);
+            $timestamp_modified = time();
+            $request = 'UPDATE posts SET author = "'.$data['author'].'", text = "'.$data['text'].'", timestamp_modified = "'.$timestamp_modified.'" WHERE timestamp = '.$data['timestamp'];
+            mysqli_query($db,$request);
+            mysqli_close($db);
             return true;
         break;
         case "Charger":
-            $bdLien = bd_connexion();
-            mysqli_set_charset($bdLien,"utf8");
-            $requete = "SELECT * FROM  posts WHERE timestamp = ".$timestamp;
-            $statuts = mysqli_query($bdLien,$requete);
-            mysqli_close($bdLien);
+            $request = "SELECT * FROM  posts WHERE timestamp = ".$timestamp;
+            $statuts = mysqli_query($db,$request);
+            mysqli_close($db);
             $aStatuts = array();
             while ($row = mysqli_fetch_assoc($statuts)){
                 $aStatuts = $row;
@@ -53,12 +40,10 @@
         break;
         case "Rejeter":
             date_default_timezone_set('America/Montreal');
-            $timestamp_modifier = time();
-            $bdLien = bd_connexion();
-            mysqli_set_charset($bdLien,"utf8");
-            $requete = "UPDATE posts SET statut = 'rejeter', timestamp_modifier = '".$timestamp_modifier."' WHERE timestamp = ".$timestamp;
-            mysqli_query($bdLien,$requete);
-            mysqli_close($bdLien);
+            $timestamp_modified = time();
+            $request = "UPDATE posts SET status = 'rejeter', timestamp_modified = '".$timestamp_modified."' WHERE timestamp = ".$timestamp;
+            mysqli_query($db,$request);
+            mysqli_close($db);
             return true;
         break;
     }
