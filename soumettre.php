@@ -24,9 +24,7 @@
     $error = false;
     if($state == "Send"){
         if(isset($_FILES['files']['name']) && !empty($_FILES['files']['name'])){
-            //$folder = 'D:\xampp\htdocs\technoblog\utilisateur\uploads\\';
-            //$folder = 'F:\Sites\technoblog\utilisateur\uploads\\';
-            $folder = '/home/domkev/webapps/technosoiree/utilisateur/uploads//';
+            $folder = '/var/www/eventfeed/utilisateur/uploads//';
             $taille = filesize($_FILES['files']['tmp_name']);
             $extensions = array('.png','.jpg','.jpeg','.PNG','.JPG','.JPEG');
             $extension = strrchr($_FILES['files']['name'],'.');
@@ -90,10 +88,9 @@
             $author = mysqli_real_escape_string($db,$author);
             $text = mysqli_real_escape_string($db,$text);
             $request = "INSERT INTO posts (timestamp, author, text, image, status, type) VALUES ('".$timestamp."', '".$author."', '".$text."', '".$file."', 'moderation', '".$type."');";
-            echo $request;
             mysqli_query($db,$request);
             mysqli_close($db);
-            //header('Location: index.php?succes');
+            header('Location: index.php?succes');
         }
     }
 ?>

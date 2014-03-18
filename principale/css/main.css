@@ -121,7 +121,7 @@ header p{
     vertical-align:top;
 }
 
-#colonnes{
+#columns{
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -153,7 +153,7 @@ header p{
     height:100%;
 }
 
-.colonne{
+.column{
     /*Pour le contrôle des colonnes*/
     -webkit-box-ordinal-group: 1;
        -moz-box-ordinal-group: 1;
@@ -202,11 +202,11 @@ header p{
     width:50%;
 }
 
-.colonne:last-child{
+.column:last-child{
     border-left:1px solid #C2C2C2;
 }
 
-.colonne div.post{
+.column div.post{
     border:1px solid #8D8D8D;
     border-radius:3px;
     box-shadow:4px 4px 8px -3px #A1A1A1;
@@ -226,30 +226,30 @@ header p{
        -moz-transition:opacity 0.5s ease-in;
 }
 
-.colonne div.post.new{
+.column div.post.new{
     opacity:0;
 }
 
-.colonne:first-child div.post{
+.column:first-child div.post{
      -webkit-align-self:flex-end;
     -ms-flex-item-align:flex-end;
              align-self:flex-end;
 }
 
-.colonne:last-child div.post{
+.column:last-child div.post{
      -webkit-align-self:flex-start;
     -ms-flex-item-align:flex-start;
              align-self:flex-start;
 }
 
-div.texte{
+div.text{
     background-color:#E4FFE4;
     padding:10px 15px;
     text-align:left;
     width:400px;
 }
 
-div.texte p{
+div.text p{
     font-size:2em;
     margin:0;
 }
@@ -259,13 +259,13 @@ div.image img{
     width:inherit;
 }
 
-div.hybride .texte{
+div.hybrid .texte{
     border-bottom-left-radius:3px;
     border-bottom-right-radius:3px;
     width:auto;
 }
 
-div.hybride img{
+div.hybrid img{
     border-bottom-left-radius:0px;
     border-bottom-right-radius:0px;
     width:inherit;

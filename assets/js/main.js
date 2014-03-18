@@ -35,24 +35,24 @@ $(function () {
             var sPost = '<div data-timestamp="'+post.timestamp+'" class="post '+post.type+' new">';
             //Construction du post
             switch(post.type){
-                case "texte":
-                    sPost += '<p><strong>'+post.auteur+'&nbsp;:</strong> '+post.texte+'</p></div>';
+                case "text":
+                    sPost += '<p><strong>'+post.author+'&nbsp;:</strong> '+post.text+'</p></div>';
                 break;
-                case "hybride":
-                    sPost += '<img src="../utilisateur/uploads/'+post.image+'"><div class="texte"><p><strong>'+post.auteur+'&nbsp;:</strong> '+post.texte+'</p></div></div>';
+                case "hybrid":
+                    sPost += '<img src="../utilisateur/uploads/'+post.image+'"><div class="texte"><p><strong>'+post.author+'&nbsp;:</strong> '+post.text+'</p></div></div>';
                 break;
                 case "image":
                   sPost += '<img src="../utilisateur/uploads/'+post.image+'"></div>';
                 break;
             }
             if(split == true){
-                $('.colonne:first-child').append(sPost);
+                $('.column:first-child').append(sPost);
                 widthFix($('.post.new img'));
-                $('.colonne:first-child div:last-child').fadeIn().removeClass('new');
+                $('.column:first-child div:last-child').fadeIn().removeClass('new');
             }else{
-                $('.colonne:last-child').append(sPost);
+                $('.column:last-child').append(sPost);
                 $('.post.new img').each(function(){widthFix($(this));});
-                $('.colonne:last-child div:last-child').fadeIn().removeClass('new');
+                $('.column:last-child div:last-child').fadeIn().removeClass('new');
             }
             split=!split;
             posts.splice(0,1);
@@ -70,7 +70,7 @@ $(function () {
     }
     function chargerApprouves(){
         $.ajax({
-            url:'requete.php',
+            url:'/principale/requete.php',
             type:'post',
             dataType:'json',
             data:'etat=Charger',
@@ -82,7 +82,7 @@ $(function () {
     function chargerParametres(premier){
         premier = typeof premier !== 'undefined' ? premier : false;
         $.ajax({
-            url:'requete.php',
+            url:'/principale/requete.php',
             type:'post',
             dataType:'json',
             data:'etat=Parametres',
@@ -93,7 +93,7 @@ $(function () {
     }
     function publierStatut(key){
         $.ajax({
-            url:'requete.php',
+            url:'/principale/requete.php',
             type:'post',
             data:'etat=Publier&timestamp='+key,
             success: function(donnees){}
