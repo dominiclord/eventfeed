@@ -73,12 +73,13 @@ def show_posts():
     return render_template('main.html', posts=posts)
 
 @app.route('/moderation')
-@app.route('/moderation?<success>')
-def show_moderation():
+@app.route('/moderation/<display>')
+# @app.route('/moderation?<success>')
+def show_moderation(display=None):
     db = get_db()
     cur = db.execute('select * from posts where status = "published" order by timestamp asc')
     posts = cur.fetchall()
-    return render_template('main.html', posts=posts)
+    return render_template('moderation.html', posts=posts, display=display)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -91,14 +92,14 @@ def login():
         else:
             session['logged_in'] = True
             flash('You were logged in')
-            return redirect(url_for('show_posts'))
+            return redirect(url_for('show_moderation'))
     return render_template('login.html', error=error)
 
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
     flash('You were logged out')
-    return redirect(url_for('show_posts'))
+    return redirect(url_for('login'))
 
 
 if __name__ == '__main__':
