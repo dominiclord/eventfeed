@@ -14,9 +14,9 @@ h1, h2 {
 }
 
 h1{
-  -webkit-transition: all 0.3s ease-out; 
-     -moz-transition: all 0.3s ease-out; 
-       -o-transition: all 0.3s ease-out; 
+  -webkit-transition: all 0.3s ease-out;
+     -moz-transition: all 0.3s ease-out;
+       -o-transition: all 0.3s ease-out;
           transition: all 0.3s ease-out;
   background-color: #df8310;
   background-image:         linear-gradient(bottom, #DF8210 0%, #FFA12E 75%);
@@ -83,10 +83,10 @@ nav li:last-child a{
     border-right:none;
 }
 
-#entries p{
-    -webkit-transition: all 0.3s ease-out; 
-     -moz-transition: all 0.3s ease-out; 
-       -o-transition: all 0.3s ease-out; 
+#posts p{
+    -webkit-transition: all 0.3s ease-out;
+     -moz-transition: all 0.3s ease-out;
+       -o-transition: all 0.3s ease-out;
           transition: all 0.3s ease-out;
     height:0;
     margin:-1px;
@@ -102,23 +102,23 @@ nav li:last-child a{
     background-image:         linear-gradient(to bottom, #f2f2f2, #ffffff);
 }
 
-#entries img{
+#posts img{
   width: 100%;
 }
 
-#entries .active p{
+#posts .active p{
   height:100%;
   padding:1em 3%;
   border-bottom:1px solid #aaa;
 }
 
-#entries aside{
+#posts aside{
   display:none;
   float:right;
   margin:1em;
 }
 
-#entries aside a{
+#posts aside a{
   border:3px solid black;
   -webkit-border-radius: 0.5em;
           border-radius: 0.5em;
@@ -130,23 +130,23 @@ nav li:last-child a{
   text-decoration:none;
 }
 
-#entries aside a.edit{
+#posts aside a.edit{
   background-color:#67C8FF;
 }
 
-#entries aside a.approve{
+#posts aside a.approve{
   background-color:#5BF56E;
 }
 
-#entries aside a.remove{
+#posts aside a.remove{
   background-color:#FF4949;
 }
 
-#entries .active aside{
+#posts .active aside{
   display:block;
 }
 
-#entries h2{
+#posts h2{
   background-color: #ededed;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#f2f2f2));
   background-image: -webkit-linear-gradient(top, #ededed, #f2f2f2);
@@ -160,7 +160,7 @@ nav li:last-child a{
   margin:0;
 }
 
-#entries .active h2{
+#posts .active h2{
   border-bottom:none;
 }
 

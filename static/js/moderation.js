@@ -3,8 +3,8 @@ $(function(){
     // Variable definitions
     var diaryEntries='';
     var diaryEntriesList = new Array;
-    var auteur = $('#auteur'),
-        texte = $('#texte'),
+    var author = $('#author'),
+        texte = $('#text'),
         formMode = $('#formMode');
     $('#formEntry').submit(modifierStatut);
     function resetForm(){
@@ -13,20 +13,20 @@ $(function(){
         formMode.val('');
     }
     function showEntries() {
-        $('#formEntry').fadeOut('fast',function(){$('#entries').fadeIn('fast');});
+        $('#formEntry').fadeOut('fast',function(){$('#posts').fadeIn('fast');});
     }
     function showForm() {
-    $('#entries').fadeOut('fast',function(){$('#formEntry').fadeIn('fast');});
+    $('#posts').fadeOut('fast',function(){$('#formEntry').fadeIn('fast');});
     }
     // --- INTERACTION AVEC STATUTS ---
     function activateEntries(){
-    diaryEntries=document.querySelectorAll('#entries article');
+    diaryEntries=document.querySelectorAll('#posts article');
     if(diaryEntries.length>0||diaryEntries !== null){
       for (var i=0;i<diaryEntries.length;i++){
-        document.querySelectorAll('#entries article h2')[i].addEventListener('click',toggleSingle);
-        document.querySelectorAll('#entries article .approve')[i].addEventListener('click',approuverStatut);
-        document.querySelectorAll('#entries article .remove')[i].addEventListener('click',rejeterStatut);
-        document.querySelectorAll('#entries article .edit')[i].addEventListener('click',chargerStatut);
+        document.querySelectorAll('#posts article h2')[i].addEventListener('click',toggleSingle);
+        document.querySelectorAll('#posts article .approve')[i].addEventListener('click',approuverStatut);
+        document.querySelectorAll('#posts article .remove')[i].addEventListener('click',rejeterStatut);
+        document.querySelectorAll('#posts article .edit')[i].addEventListener('click',chargerStatut);
       }
     }
     }

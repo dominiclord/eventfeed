@@ -5,6 +5,7 @@ import sqlite3
 import time
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
+from PIL import Image
 
 # create our application
 app = Flask(__name__)
@@ -72,14 +73,33 @@ def show_posts():
     posts = cur.fetchall()
     return render_template('main.html', posts=posts)
 
-@app.route('/moderation')
+@app.route('/moderation/')
 @app.route('/moderation/<display>')
 # @app.route('/moderation?<success>')
 def show_moderation(display=None):
     db = get_db()
-    cur = db.execute('select * from posts where status = "published" order by timestamp asc')
-    posts = cur.fetchall()
-    return render_template('moderation.html', posts=posts, display=display)
+    if display == 'approved':
+        cur = db.execute('select * from posts where status = "approuver" order by timestamp asc')
+        posts = cur.fetchall()
+        return render_template('moderation.html', posts=posts, display=display)
+    elif display == 'published':
+        cur = db.execute('select * from posts where status = "published" order by timestamp_modified desc')
+        posts = cur.fetchall()
+        return render_template('moderation.html', posts=posts, display=display)
+    elif display == 'rejected':
+        cur = db.execute('select * from posts where status = "rejected" order by timestamp desc')
+        posts = cur.fetchall()
+        return render_template('moderation.html', posts=posts, display=display)
+    elif display == 'options':
+        cur = db.execute('select * from params')
+        params = cur.fetchall()
+        return render_template('moderation.html', params=params, display=display)
+    else:
+        cur = db.execute('select * from posts where status = "moderation" order by timestamp asc')
+        posts = cur.fetchall()
+        return render_template('moderation.html', posts=posts, display=display)
+    #im=Image.open(filepath)
+    #m.size # (width,height) tuple
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

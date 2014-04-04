@@ -9,3 +9,10 @@ create table posts (
   status text not null,
   type text not null
 );
+
+drop table if exists params;
+create table params (
+  speed integer not null
+);
+
+insert into params (speed) values (15000);
