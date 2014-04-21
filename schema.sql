@@ -16,3 +16,6 @@ create table params (
 );
 
 insert into params (speed) values (15000);
+insert into posts values (1, 1398034771, NULL, 'asda', '', '1398034771.jpg', 'moderation', 'image');
+insert into posts values (2, 1398034876, NULL, 'aasda', 'broo', '1398034876.jpg', 'moderation', 'hybrid');
+insert into posts values (3, 1398034890, NULL, 'hey', 'heyyyÿ', '', 'moderation', 'text');

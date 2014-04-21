@@ -1,147 +1,148 @@
 $(function(){
     // --- APPLICATION INITIALIZATION ---
     // Variable definitions
-    var diaryEntries='';
-    var diaryEntriesList = new Array;
-    var author = $('#author'),
-        texte = $('#text'),
-        formMode = $('#formMode');
-    $('#formEntry').submit(modifierStatut);
+    var posts='',
+        postsArray = new Array,
+        author = $('#author'),
+        text = $('#text'),
+        formMode = $('#formMode'),
+        requesturl = 'request';
+    $('#postform').submit(editPost);
     function resetForm(){
-        auteur.val('').removeClass('error').blur();
-        texte.val('').removeClass('error').blur();
+        author.val('').removeClass('error').blur();
+        text.val('').removeClass('error').blur();
         formMode.val('');
     }
-    function showEntries() {
-        $('#formEntry').fadeOut('fast',function(){$('#posts').fadeIn('fast');});
+    function showPosts(){
+        $('#postform').fadeOut('fast',function(){$('#posts').fadeIn('fast');});
     }
-    function showForm() {
-    $('#posts').fadeOut('fast',function(){$('#formEntry').fadeIn('fast');});
+    function showForm(){
+    $('#posts').fadeOut('fast',function(){$('#postform').fadeIn('fast');});
     }
-    // --- INTERACTION AVEC STATUTS ---
-    function activateEntries(){
-    diaryEntries=document.querySelectorAll('#posts article');
-    if(diaryEntries.length>0||diaryEntries !== null){
-      for (var i=0;i<diaryEntries.length;i++){
-        document.querySelectorAll('#posts article h2')[i].addEventListener('click',toggleSingle);
-        document.querySelectorAll('#posts article .approve')[i].addEventListener('click',approuverStatut);
-        document.querySelectorAll('#posts article .remove')[i].addEventListener('click',rejeterStatut);
-        document.querySelectorAll('#posts article .edit')[i].addEventListener('click',chargerStatut);
-      }
-    }
+    // --- Interaction with posts ---
+    function activatePosts(){
+        posts=document.querySelectorAll('#posts article');
+        if(posts.length>0||posts !== null){
+            for(var i=0;i<posts.length;i++){
+                document.querySelectorAll('#posts article h2')[i].addEventListener('click',toggleSingle);
+                document.querySelectorAll('#posts article .approve')[i].addEventListener('click',approvePost);
+                document.querySelectorAll('#posts article .remove')[i].addEventListener('click',rejectPost);
+                document.querySelectorAll('#posts article .edit')[i].addEventListener('click',loadPost);
+            }
+        }
     }
     function hasClass(element,cls){
-    return(' '+element.className+' ').indexOf(' '+cls+' ')>-1;
+        return(' '+element.className+' ').indexOf(' '+cls+' ')>-1;
     }
     function addClass(element,cls){
-    element.className+=cls;
+        element.className+=cls;
     }
     function removeClass(element,cls){
-    element.className=element.className.replace(/(?:^|\s)active(?!\S)/,'');
+        element.className=element.className.replace(/(?:^|\s)active(?!\S)/,'');
     }
     function toggleSingle(ev){
-    var t=ev.target;
-    if(hasClass(t.parentNode,'active')){
-      toggleAll("off");
-      removeClass(t.parentNode,'active');
-    }else{
-      toggleAll("off");
-      addClass(t.parentNode,'active');
-    }
+        var t=ev.target;
+        if(hasClass(t.parentNode,'active')){
+            toggleAll("off");
+            removeClass(t.parentNode,'active');
+        }else{
+            toggleAll("off");
+            addClass(t.parentNode,'active');
+        }
     }
     function toggleAll(s){
-    switch(s){
-      case "off":
-        for(var i=0;i<diaryEntries.length;i++){
-          removeClass(diaryEntries[i],'active');
+        switch(s){
+          case "off":
+            for(var i=0;i<posts.length;i++){
+                removeClass(posts[i],'active');
+            }
+          break;
+          case "on":
+            for(var i=0;i<posts.length;i++) {
+                addClass(posts[i],'active');
+            }
+          break;
+          case "maybe":
+            var actives=0;
+            for (var i=0;i<posts.length;i++) {
+                if(hasClass(posts[i],'active')){
+                    actives++;
+                }
+            }
+            if(actives>0){
+                toggleAll("off");
+            }else{
+                toggleAll("on");
+            }
+          break;
         }
-      break;
-      case "on":
-        for(var i=0;i<diaryEntries.length;i++) {
-          addClass(diaryEntries[i],'active');
-        }
-      break;
-      case "maybe":
-        var actives=0;
-        for (var i=0;i<diaryEntries.length;i++) {
-          if(hasClass(diaryEntries[i],'active')){
-            actives++;
-          }
-        }
-        if(actives>0){
-          toggleAll("off");
-        }else{
-          toggleAll("on");
-        }
-      break;
-    }
     }
     /*******************************************************************************************************************/
-    function rejeterStatut(ev){
+    function rejectPost(ev){
         ev.preventDefault();
-        var statut = $(this).closest('article');
-        var key = statut.attr('rel');
+        var post = $(this).closest('article'),
+            key = post.attr('rel');
         $.ajax({
-            url:'requete.php',
+            url:requesturl,
             type:'post',
             dataType:'html',
             data:'etat=Rejeter&timestamp='+key,
             success: function(msg){
-                statut.fadeOut();
+                post.fadeOut();
             },
             error: function(xhr,code){
                 alert(code);
             }
         });
     }
-    function approuverStatut(ev){
+    function approvePost(ev){
         ev.preventDefault();
-        var statut = $(this).closest('article');
-        var key = statut.attr('rel');
+        var post = $(this).closest('article'),
+            key = post.attr('rel');
         $.ajax({
-            url:'requete.php',
+            url:requesturl,
             type:'post',
             dataType:'html',
             data:'etat=Approuver&timestamp='+key,
             success: function(msg){
-                statut.fadeOut();
+                post.fadeOut();
             },
             error: function(xhr,code){
                 alert(code);
             }
         });
     }
-    function chargerStatut(ev){
+    function loadPost(ev){
         ev.preventDefault();
-        var element = $(this).closest('article');
-        var key = element.attr('rel');
-        var statut = {};
+        var element = $(this).closest('article'),
+            key = element.attr('rel'),
+            post = {};
         $.ajax({
-            url:'requete.php',
+            url:requesturl,
             type:'post',
             dataType:'json',
-            data:'etat=Charger&timestamp='+key+'',
-            success: function(msg){
-                afficherStatut(key,msg)
+            data:'state=load&timestamp='+key+'',
+            success:function(msg){
+                showPost(key,msg)
             },
-            error: function(xhr,code){
+            error:function(xhr,code){
                alert(code);
             }
         });
     }
-    function afficherStatut(key,donnees){
+    function showPost(key,data){
         formMode.val(key)
-        auteur.val(donnees.auteur);
-        texte.val(donnees.texte);
+        author.val(data.author);
+        text.val(data.text);
         showForm();
     }
-    function modifierStatut(ev){
+    function editPost(ev){
         ev.preventDefault();
-        var key = formMode.val();
-        var error = false;
-        auteur.removeClass('error');
-        texte.removeClass('error');
-        if(auteur.val().length==0){
+        var key = formMode.val(),
+            error = false;
+        author.removeClass('error');
+        text.removeClass('error');
+        if(author.val().length==0){
           auteur.addClass('error');
           error = true;
         }
@@ -179,6 +180,6 @@ $(function(){
         }
     }
     document.querySelector('h1').addEventListener('click',function(){toggleAll("maybe")});
-    $('#btnCancel').click(function(){showEntries();resetForm();});
-    activateEntries();
+    $('#btnCancel').click(function(){showPosts();resetForm();});
+    activatePosts();
 });

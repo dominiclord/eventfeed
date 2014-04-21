@@ -3,13 +3,21 @@ import os
 import sqlite3
 
 import time
-from flask import Flask, request, session, g, redirect, url_for, abort, \
-     render_template, flash
+import json
+import collections
+from flask import Flask, request, session, g, redirect, url_for, abort, send_from_directory, render_template, flash, jsonify
+from werkzeug.utils import secure_filename
 from PIL import Image
+
+# image globals
+UPLOAD_FOLDER = '/var/www/eventfeed/uploads'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 # create our application
 app = Flask(__name__)
 app.config.from_object(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 # Load default config and override config from an environment variable
 app.config.update(dict(
@@ -41,6 +49,10 @@ def get_db():
         g.sqlite_db = connect_db()
     return g.sqlite_db
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
 @app.teardown_appcontext
 def close_db(error):
     """Closes the database again at the end of the request."""
@@ -54,17 +66,52 @@ def user_form(success=None):
 
     return render_template('user_form.html',success=success)
 
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
+
 @app.route('/submit', methods=['POST'])
 def submit_post():
 #    if not session.get('logged_in'):
 #        abort(401)
-    db = get_db()
-    db.execute('insert into posts (timestamp, author, text, image, status, type) values (?, ?, ?, ?, ?, ?)',
-        [int(time.time()), request.form['author'], request.form['text'], 'test', 'moderation', 'type']
-    )
-    db.commit()
-    flash('New post was successfully sent')
-    return redirect( url_for('user_form',success='success') )
+    if request.method == 'POST':
+
+        timestamp = int(time.time())
+        image = False
+        filename = ''
+        posttype = ''
+        text = ''
+
+        if request.form.get('author'):
+            author = request.form['author']
+
+        if request.form.get('text'):
+            text = request.form['text']
+
+        file = request.files['imagefile']
+        if file and allowed_file(file.filename):
+            image = True
+            filename = secure_filename(file.filename)
+            filename = str(timestamp) + '.' + filename.rsplit('.', 1)[1]
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            flash(filename)
+
+        if image == True and text !='':
+            posttype = 'hybrid'
+        elif image == True and text =='':
+            posttype = 'image'
+        elif image == False and text !='':
+            posttype = 'text'
+
+        db = get_db()
+        db.execute('insert into posts (timestamp, author, text, image, status, type) values (?, ?, ?, ?, ?, ?)',
+            [timestamp, author, text, filename, 'moderation', posttype]
+        )
+        db.commit()
+        flash('New post was successfully sent')
+        #return redirect( url_for('user_form',success='success') )
+        return render_template('user_form.html')
 
 @app.route('/main')
 def show_posts():
@@ -72,6 +119,29 @@ def show_posts():
     cur = db.execute('select * from posts where status = "published" order by timestamp asc')
     posts = cur.fetchall()
     return render_template('main.html', posts=posts)
+
+@app.route('/moderation/request',methods=['GET','POST'])
+def return_data():
+    db = get_db()
+    #state = request.args['state']
+    #timestamp = request.args['timestamp']
+    state = request.form['state']
+    timestamp = request.form['timestamp']
+
+    if state == 'load':
+        cur = db.execute('select * from posts where timestamp = ?',[timestamp])
+        posts = cur.fetchall()
+        post = posts[0]
+        return jsonify(
+            id=post['id'],
+            timestamp = post['timestamp'],
+            timestamp_modified = post['timestamp_modified'],
+            author = post['author'],
+            text = post['text'],
+            image = post['image'],
+            status = post['status'],
+            type = post['type']
+        )
 
 @app.route('/moderation/')
 @app.route('/moderation/<display>')
