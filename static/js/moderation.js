@@ -17,7 +17,7 @@ $(function(){
         $('#postform').fadeOut('fast',function(){$('#posts').fadeIn('fast');});
     }
     function showForm(){
-    $('#posts').fadeOut('fast',function(){$('#postform').fadeIn('fast');});
+        $('#posts').fadeOut('fast',function(){$('#postform').fadeIn('fast');});
     }
     // --- Interaction with posts ---
     function activatePosts(){
@@ -143,11 +143,7 @@ $(function(){
         author.removeClass('error');
         text.removeClass('error');
         if(author.val().length==0){
-          auteur.addClass('error');
-          error = true;
-        }
-        if(texte.val().length==0){
-          texte.addClass('error');
+          author.addClass('error');
           error = true;
         }
         if(error){
@@ -155,22 +151,20 @@ $(function(){
           return;
         }
         if(error == false){
-
-            texte.val();
             var postData = {
                 "timestamp":key,
-                "auteur":auteur.val(),
-                "texte":texte.val()
+                "author":author.val(),
+                "text":text.val()
             }
             $.ajax({
-                url:'requete.php',
+                url:requesturl,
                 type:'post',
-                data:{etat:postData},
+                data:'state=edit&timestamp='+key+'&author='+author.val()+'&text='+text.val(),
                 success: function(msg){
-                    var statut = $('article[rel='+key+']');
-                    $('.sAuteur',statut).text(auteur.val());
-                    $('.sTexte',statut).text(texte.val());
-                    showEntries();
+                    var post = $('article[rel='+key+']');
+                    $('.author',post).text(author.val());
+                    $('.text',post).text(text.val());
+                    showPosts();
                     resetForm();
                 },
                 error: function(xhr,code){

@@ -63,7 +63,6 @@ def close_db(error):
 # @app.route('/success')
 def user_form(success=None):
     success = request.args.get('success')
-
     return render_template('user_form.html',success=success)
 
 @app.route('/uploads/<filename>')
@@ -120,7 +119,7 @@ def show_posts():
     posts = cur.fetchall()
     return render_template('main.html', posts=posts)
 
-@app.route('/moderation/request',methods=['GET','POST'])
+@app.route('/moderation/request',methods=['POST'])
 def return_data():
     db = get_db()
     #state = request.args['state']
@@ -142,6 +141,17 @@ def return_data():
             status = post['status'],
             type = post['type']
         )
+    elif state == 'edit':
+        author = request.args['author']
+        text = request.args['text']
+        timestamp_modified = int(time.time())
+        timestamp = request.args['timestamp']
+
+        db = get_db()
+        db.execute('update posts set author=?, text=?, timestamp_modified=? WHERE timestamp=?',(author,text,timestamp_modified,timestamp))
+        db.commit()
+        #return jsonify(saved=True)
+        return render_template('moderation.html')
 
 @app.route('/moderation/')
 @app.route('/moderation/<display>')
