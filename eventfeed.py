@@ -155,6 +155,11 @@ def return_data():
         cur = db.execute('update posts set status=? where timestamp=?',['approved',timestamp])
         db.commit()
         return jsonify(saved=True)
+    elif state == 'reject':
+        timestamp_modified = int(time.time())
+        cur = db.execute('update posts set status=?, timestamp_modified=? where timestamp=?',['rejected',timestamp_modified,timestamp])
+        db.commit()
+        return jsonify(saved=True)
     #return render_template('moderation.html')
 
 @app.route('/moderation/')

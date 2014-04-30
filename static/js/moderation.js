@@ -94,8 +94,8 @@ function rejectPost(ev){
     $.ajax({
         url:requesturl,
         type:'post',
-        dataType:'html',
-        data:'etat=Rejeter&timestamp='+key,
+        dataType:'json',
+        data:'state=reject&timestamp='+key,
         success: function(msg){
             post.fadeOut();
         },
