@@ -122,15 +122,15 @@ def show_posts():
 @app.route('/moderation/request',methods=['POST'])
 def return_data():
     db = get_db()
-    #state = request.args['state']
+    #action = request.args['action']
     #timestamp = request.args['timestamp']
-    #state = request.form['state']
+    #action = request.form['action']
     #timestamp = request.form['timestamp']
-    state = request.form.get('state', None)
-    #state = request.args['state']
+    action = request.form.get('action', None)
+    #action = request.args['action']
     timestamp = request.form.get('timestamp', None)
 
-    if state == 'load':
+    if action == 'load':
         cur = db.execute('select * from posts where timestamp=?',[timestamp])
         posts = cur.fetchall()
         post = posts[0]
@@ -144,27 +144,31 @@ def return_data():
             status = post['status'],
             type = post['type']
         )
-    elif state == 'edit':
+    elif action == 'edit':
         author = request.form.get('author', None)
         text = request.form.get('text', None)
         timestamp_modified = int(time.time())
         db.execute('update posts set author=?, text=?, timestamp_modified=? WHERE timestamp=?',(author,text,timestamp_modified,timestamp))
         db.commit()
         return jsonify(saved=True)
-    elif state == 'approve':
+    elif action == 'approve':
         cur = db.execute('update posts set status=? where timestamp=?',['approved',timestamp])
         db.commit()
         return jsonify(saved=True)
-    elif state == 'reject':
+    elif action == 'reject':
         timestamp_modified = int(time.time())
         cur = db.execute('update posts set status=?, timestamp_modified=? where timestamp=?',['rejected',timestamp_modified,timestamp])
+        db.commit()
+        return jsonify(saved=True)
+    elif action == 'savesettings':
+        speed = request.form.get('speed', 15000)
+        cur = db.execute('update options set speed=? where id=1',[speed])
         db.commit()
         return jsonify(saved=True)
     #return render_template('moderation.html')
 
 @app.route('/moderation/')
 @app.route('/moderation/<display>')
-# @app.route('/moderation?<success>')
 def show_moderation(display=None):
     db = get_db()
     if display == 'approved':
@@ -180,9 +184,9 @@ def show_moderation(display=None):
         posts = cur.fetchall()
         return render_template('moderation.html', posts=posts, display=display)
     elif display == 'options':
-        cur = db.execute('select * from params')
-        params = cur.fetchall()
-        return render_template('moderation.html', params=params, display=display)
+        cur = db.execute('select * from options')
+        options = cur.fetchall()
+        return render_template('moderation.html', options=options, display=display)
     else:
         cur = db.execute('select * from posts where status = "moderation" order by timestamp asc')
         posts = cur.fetchall()

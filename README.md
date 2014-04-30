@@ -30,6 +30,10 @@ You should now be able to acces the app at the following :
 * Finish code migration
 * Documentation
 * Code comments
+* Rework front-end
+    * Vanilla JS
 * Implement minification,preprocessing, general watch tasks (Gulp or Grunt)
+* Retire old code
+* Look into better database solutions
 * Login for moderation access
 * See about websockets for main interface
