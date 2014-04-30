@@ -20,7 +20,14 @@
         <section id='posts'>
         {% for post in posts %}
             <article rel="{{ post.timestamp }}">
-                {% if session.logged_in %}<aside><a href='#' class='edit'>Edit</a>&nbsp;<a href='#' class='approve'>Approve</a>&nbsp;<a href='#' class='remove'>Reject</a></aside>{% endif %}
+            {% if session.logged_in %}{% endif %}
+                <aside>
+                    <a href="#" class="edit">Edit</a>
+            {% if display=='moderation' or display==None %}
+                    <a href="#" class="approve">Approve</a>
+                    <a href="#" class="remove">Reject</a>
+            {% endif %}
+                </aside>
                 <h2><span class="author">{{ post.author }}</span> - <span class="type">{{ post.type }}</span></h2>
             {% if post.type == 'text' %}
                 <p class="text">{{ post.text }}</p>
