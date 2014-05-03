@@ -95,7 +95,7 @@ function rejectPost(ev){
         url:requesturl,
         type:'post',
         dataType:'html',
-        data:'etat=Rejeter&timestamp='+key,
+        data:'state=reject&timestamp='+key,
         success: function(msg){
             post.fadeOut();
         },
