@@ -138,7 +138,7 @@ nav li:last-child a{
   background-color:#5BF56E;
 }
 
-#posts aside a.remove{
+#posts aside a.reject{
   background-color:#FF4949;
 }
 
@@ -169,7 +169,23 @@ form { padding: 3%; }
 form ul {  padding:0; margin:0; }
 form ul li { list-style-type:none; }
 form label { display: block; width:100%; margin:.7em 0 .1em 0; font-weight:bold; }
-form input[type=text] { width:100%; border:1px solid #CCC; font-size: 1.5em; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+form input[type=text],
+form input[type=number]{
+    border:1px solid #CCC;
+    font-size: 1.5em;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+    width:100%;
+}
+form input[type='number']{
+    -moz-appearance:textfield;
+}
+form input::-webkit-outer-spin-button,
+form input::-webkit-inner-spin-button{
+    -webkit-appearance:none;
+    margin:0;
+}
 form .error { border: 1px solid #C00!important; }
 form #btnCancel, form #btnSubmit { font-size:1.1em;margin-top:50px; }
 
