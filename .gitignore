@@ -2,4 +2,6 @@
 **/.sass-cache
 **/.sass-cache/*
 .vagrant
+uploads/*
 utilisateur/*
+eventfeed.db
