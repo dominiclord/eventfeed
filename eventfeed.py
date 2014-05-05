@@ -112,7 +112,37 @@ def submit_post():
         #return redirect( url_for('user_form',success='success') )
         return render_template('user_form.html')
 
-@app.route('/main')
+@app.route('/main/request',methods=['POST'])
+def return_main_data():
+    db = get_db()
+    action = request.form.get('action', None)
+    timestamp = request.form.get('timestamp', None)
+
+    if action == 'loadapproved':
+        cur = db.execute('select * from posts where status = "approved" order by timestamp asc')
+        rows = cur.fetchall()
+        posts = []
+
+        for row in rows:
+            l = [
+                ('id',row['id']),
+                ('timestamp',row['timestamp'])
+            ]
+            posts.append(l)
+
+        return jsonify(posts)
+    elif action == 'loadoptions':
+        cur = db.execute('select * from options')
+        options = cur.fetchall()
+        return jsonify(options)
+    elif action == 'publishpost':
+        speed = request.form.get('speed', 15000)
+        cur = db.execute('update options set speed=? where id=1',[speed])
+        db.commit()
+        return jsonify(saved='publishpost')
+    #return render_template('moderation.html')
+
+@app.route('/main/')
 def show_posts():
     db = get_db()
     cur = db.execute('select * from posts where status = "published" order by timestamp asc')
@@ -120,14 +150,9 @@ def show_posts():
     return render_template('main.html', posts=posts)
 
 @app.route('/moderation/request',methods=['POST'])
-def return_data():
+def return_moderation_data():
     db = get_db()
-    #action = request.args['action']
-    #timestamp = request.args['timestamp']
-    #action = request.form['action']
-    #timestamp = request.form['timestamp']
     action = request.form.get('action', None)
-    #action = request.args['action']
     timestamp = request.form.get('timestamp', None)
 
     if action == 'load':

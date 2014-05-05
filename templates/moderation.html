@@ -26,6 +26,8 @@
             {% if display=='moderation' or display==None %}
                     <a href="#" class="approve">Approve</a>
                     <a href="#" class="reject">Reject</a>
+            {% elif display=='rejected'%}
+                    <a href="#" class="approve">Approve</a>
             {% endif %}
                 </aside>
                 <h2><span class="author">{{ post.author }}</span> - <span class="type">{{ post.type }}</span></h2>
