@@ -8,7 +8,7 @@
     </header>
     <div id="columns">
     {% for column in posts | sort | slice(2) %}
-        <div class="columns">
+        <div class="column">
         {% for post in column %}
             <div data-timestamp="{{ post.timestamp }}" class="post {{ post.type }}">
             {% if post.type=='text' %}

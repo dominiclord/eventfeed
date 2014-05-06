@@ -31,7 +31,7 @@ function getspeed(){
     }
 }
 function showNewPosts(){
-    if(!isEmpty(posts)){
+    if(!isEmpty(posts[0])){
         var post = posts[0],
             sPost = '<div data-timestamp="'+post.timestamp+'" class="post '+post.type+' new">';
         //Construction du post
@@ -76,7 +76,7 @@ function loadApproved(){
         dataType:'json',
         data:'action=loadapproved',
         success:function(data){
-            posts=data;
+            posts=data.posts;
         }
     });
 }

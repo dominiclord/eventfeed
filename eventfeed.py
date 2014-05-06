@@ -115,32 +115,39 @@ def submit_post():
 @app.route('/main/request',methods=['POST'])
 def return_main_data():
     db = get_db()
-    action = request.form.get('action', None)
-    timestamp = request.form.get('timestamp', None)
-
+    action = request.form.get('action',None)
+    timestamp = request.form.get('timestamp',None)
     if action == 'loadapproved':
         cur = db.execute('select * from posts where status = "approved" order by timestamp asc')
         rows = cur.fetchall()
         posts = []
-
         for row in rows:
-            l = [
-                ('id',row['id']),
-                ('timestamp',row['timestamp'])
-            ]
+            l = {
+                "id":row['id'],
+                "timestamp":row['timestamp'],
+                "timestamp_modified":row['timestamp_modified'],
+                "author":row['author'],
+                "text":row['text'],
+                "image":row['image'],
+                "status":row['status'],
+                "type":row['type'],
+            }
             posts.append(l)
-
-        return jsonify(posts)
+        return jsonify(posts=posts)
     elif action == 'loadoptions':
         cur = db.execute('select * from options')
         options = cur.fetchall()
         return jsonify(options)
     elif action == 'publishpost':
-        speed = request.form.get('speed', 15000)
-        cur = db.execute('update options set speed=? where id=1',[speed])
+        text = request.form.get('text', None)
+        timestamp_modified = int(time.time())
+        db.execute('update posts set status=?, timestamp_modified=? WHERE timestamp=?',('published',timestamp_modified,timestamp))
         db.commit()
         return jsonify(saved='publishpost')
-    #return render_template('moderation.html')
+    else:
+        flash(action)
+        flash(timestamp)
+        return render_template('blank.html')
 
 @app.route('/main/')
 def show_posts():
