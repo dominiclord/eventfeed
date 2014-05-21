@@ -59,6 +59,10 @@ def close_db(error):
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
 @app.route('/')
 # @app.route('/success')
 def user_form(success=None):
@@ -154,6 +158,7 @@ def show_posts():
     db = get_db()
     cur = db.execute('select * from posts where status = "published" order by timestamp asc')
     posts = cur.fetchall()
+    print(posts)
     return render_template('main.html', posts=posts)
 
 @app.route('/moderation/request',methods=['POST'])

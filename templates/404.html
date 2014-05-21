@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block title %}Page not found - EventFeed{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}">{% endblock %}
+{% block body %}
+    <h1>EventFeed</h1>
+    <section>
+        <h2>Page not found</h2>
+        <p><strong><a href="{{ url_for('user_form') }}">&laquo;Back</a></strong></p>
+    </section>
+{% endblock %}
