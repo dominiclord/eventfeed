@@ -6,10 +6,9 @@
     <h1>EventFeed</h1>
     {% if success!=None %}
     <section style="display:block;" id="container-succes">
-        <h3>Merci! Votre message a été envoyé.</h3>
-        <h3>Il passera à travers un processus de validation et s'affichera bientôt lorsqu'il sera approuvé!</h3>
-        <h3>Bonne soirée!</h3>
-        <h3><a href="/">&laquo;Retour</a></h3>
+        <h3>Your post was succesfully submitted.</h3>
+        <h3>It will reviewed and posted once it is approved!</h3>
+        <h3><a href="/">&laquo;Back</a></h3>
     </section>
     {% else %}
     <form action="{{ url_for('submit_post') }}" enctype="multipart/form-data" id="formEntry" method="post">
@@ -23,13 +22,13 @@
                 <input id="text" type="text" name="text" value="">
             </li>
             <li>
-                <label for="imagefile">Image :</label>
+                <label for="imagefile">Image:</label>
                 <input id="imagefile" type="file" accept="image/*" name="imagefile" data-url="server/php/">
             </li>
         </ul>
-        <p style="display:none;" id="nocontent"><strong>Il vous faut envoyer au minimum un message ou une image.</strong></p>
-        <p>Vous pouvez envoyer un message, une image ou les deux en même temps.</p>
-        <p>Les contenus jugés innapproprié ne seront pas publiés.</p>
+        <p style="display:none;" id="nocontent"><strong>You need to send at least an image or a message.</strong></p>
+        <p>You can send a message, an image, or both at the same time</p>
+        <p>Innapropriate content will not be posted.</p>
         <input id="btnCancel" type="reset" value="Erase">
         <input id="btnSubmit" name="btnSubmit" type="submit" value="Send">
         <input id="state" name="state" type="hidden" value="Send">

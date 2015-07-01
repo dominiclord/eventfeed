@@ -4,7 +4,7 @@
 apt-get update
 
 # Install requirements
-apt-get install -y apache2 build-essential checkinstall php5 php5-cli php5-mcrypt php5-gd php-apc git sqlite php5-sqlite curl php5-curl php5-dev php-pear vim-nox ruby rubygems sqlite3 libsqlite3-dev python-setuptools python-virtualenv python-imaging
+apt-get install -y apache2 build-essential checkinstall php5 php5-cli php5-mcrypt php5-gd php-apc git sqlite php5-sqlite curl php5-curl php5-dev php-pear vim-nox ruby rubygems sqlite3 libsqlite3-dev python-setuptools python-virtualenv python-imaging python-pyexiv2
 
 # Install MySQL
 sudo debconf-set-selections <<< 'mysql-server-<version> mysql-server/root_password password root'
