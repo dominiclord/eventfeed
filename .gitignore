@@ -1,7 +1,6 @@
 .DS_STORE
-**/.sass-cache
-**/.sass-cache/*
-.vagrant
 uploads/*
 utilisateur/*
-eventfeed.db
+node_modules
+vendor
+.idea
