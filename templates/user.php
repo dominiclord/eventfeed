@@ -21,7 +21,7 @@
 <?php
     }else{
 ?>
-        <form action="soumettre.php" enctype="multipart/form-data" id="formEntry" method="post">
+        <form action="/submit" enctype="multipart/form-data" id="formEntry" method="post">
             <ul>
                 <li>
                     <label for="author">Votre nom (obligatoire) :</label>

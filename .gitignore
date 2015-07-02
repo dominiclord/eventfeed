@@ -1,4 +1,5 @@
 .DS_STORE
+.DS_Store
 uploads/*
 utilisateur/*
 node_modules
