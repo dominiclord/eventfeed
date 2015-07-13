@@ -1,8 +1,10 @@
 <?php
 
 use \Slim\Slim as Slim;
+use \Utils\RandomStringGenerator;
 
 require_once 'vendor/autoload.php';
+require_once 'utils/index.php';
 
 $app = new Slim();
 $pdo = new PDO('mysql:dbname=eventfeed_local;host:127.0.0.1','root','root');
@@ -12,6 +14,11 @@ $app->config(array(
     'debug'          => true,
     'templates.path' => 'templates'
 ));
+
+// Display after post submit
+$app->get('/submit', function () use ($app) {
+    $app->render('success.php');
+});
 
 // Submit a post
 $app->post('/submit', function () use ($app, $db) {
@@ -98,7 +105,12 @@ $app->post('/submit', function () use ($app, $db) {
         $error = true;
     }else{
 
+        // Generate a unique id for the post
+        $generator = new RandomStringGenerator;
+        $token = $generator->generate(40);
+
         $post = [
+            'id'        => $token,
             'timestamp' => $timestamp,
             'author'    => $author,
             'text'      => $text,
@@ -115,16 +127,15 @@ $app->post('/submit', function () use ($app, $db) {
         //$request = "INSERT INTO posts (timestamp, author, text, image, status, type) VALUES ('".$timestamp."', '".$author."', '".$text."', '".$file."', 'moderation', '".$type."');";
         //mysqli_query($db,$request);
         //mysqli_close($db);
-        //header('Location: index.php?succes');
 
-        $result = $db->posts->insert( json_encode( $post ) );
-        //echo json_encode( $post );
+        $result = $db->posts->insert( $post );
+        $app->redirect('/submit');
     }
 
 });
 
 // User interface
-$app->get('/', function () use ($app, $db) {
+$app->get('/', function ( ) use ($app, $db) {
 
     $posts = [];
 
@@ -132,7 +143,7 @@ $app->get('/', function () use ($app, $db) {
         $posts[] = $post;
     }
 
-    var_dump($posts);
+    //var_dump($posts);
 
     $app->view()->setData([
         'page_title' => "Your Friends",
