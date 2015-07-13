@@ -46,49 +46,78 @@ $app->post('/submit', function () use ($app, $db) {
 
     $error = false;
 
-    if( isset( $_FILES['files']['name'] ) && ! empty( $_FILES['files']['name'] ) ){
-        var_dump( '@TODO' );
-        die();
-        $folder = '/var/www/eventfeed/utilisateur/uploads//';
-        $taille = filesize($_FILES['files']['tmp_name']);
-        $extensions = array('.png','.jpg','.jpeg','.PNG','.JPG','.JPEG');
-        $extension = strrchr($_FILES['files']['name'],'.');
-        if(!in_array($extension, $extensions)){
-            echo 'ERROR you must upload the right type';
-        }else{
-            $file = $timestamp.$extension;
-            if(move_uploaded_file($_FILES['files']['tmp_name'],$folder.$file)){
-                if($extension!='.png'&&$extension!='.PNG'){
-                    chmod($folder.$file, 0755);
-                    $exif = exif_read_data($folder.$file);
-                    if(isset($exif['Orientation'])){
-                        $ort = $exif['Orientation'];
-                        switch($ort){
-                            case 1:// normal
-                                $source = imagecreatefromjpeg($folder.$file);
-                                imagejpeg($source,$folder.$file,50);
-                            break;
-                            case 3:// 180 rotate left
-                                $source = imagecreatefromjpeg($folder.$file);
-                                $rotate = imagerotate($source, 180, -1);
-                                imagejpeg($rotate,$folder.$file,50);
-                            break;
-                            case 6:// 90 rotate right
-                                $source = imagecreatefromjpeg($folder.$file);
-                                $rotate = imagerotate($source, -90, -1);
-                                imagejpeg($rotate,$folder.$file,50);
-                            break;
-                            case 8:// 90 rotate left
-                                $source = imagecreatefromjpeg($folder.$file);
-                                $rotate = imagerotate($source, 90, -1);
-                                imagejpeg($rotate,$folder.$file,50);
-                            break;
-                        }
+    // Generate a unique id for the post
+    $generator = new RandomStringGenerator;
+    $token = $generator->generate(40);
+
+    if( isset( $_FILES['image'] ) && ( isset( $_FILES['image']['name'] ) && $_FILES['image']['name'] ) && ( isset( $_FILES['image']['tmp_name'] ) && $_FILES['image']['tmp_name'] ) ) {
+
+        // File upload properties
+        $base_path = __DIR__.'/';
+        $upload_path = 'uploads/';
+        $dir = $base_path.$upload_path;
+        $filename = $token;
+        $max_filesize = 134220000; //128M
+        $target = $dir.$filename;
+        $file_date = $_FILES['image'];
+
+        if (!is_writable($dir)) {
+            throw new Exception('Error: upload directory is not writeable');
+            die();
+        }
+        if (!file_exists($target)) {
+            throw new Exception('Error: file already exists');
+            die();
+        }
+
+        $info = new finfo(FILEINFO_MIME_TYPE);
+
+        // Tesf for mimetype
+        //$info->file($file_data['tmp_name']));
+
+        $filesize = filesize( $file_data['tmp_name'] );
+
+        if ( $filesize > $max_filesize ) {
+            throw new Exception('Error: file too big');
+            die();
+        }
+
+        if( move_uploaded_file( $file_data['tmp_name'], $target) ){
+            die();
+
+            if($extension!='.png'&&$extension!='.PNG'){
+                chmod($folder.$file, 0755);
+                $exif = exif_read_data($folder.$file);
+                if(isset($exif['Orientation'])){
+                    $ort = $exif['Orientation'];
+                    switch($ort){
+                        case 1:// normal
+                            $source = imagecreatefromjpeg($folder.$file);
+                            imagejpeg($source,$folder.$file,50);
+                        break;
+                        case 3:// 180 rotate left
+                            $source = imagecreatefromjpeg($folder.$file);
+                            $rotate = imagerotate($source, 180, -1);
+                            imagejpeg($rotate,$folder.$file,50);
+                        break;
+                        case 6:// 90 rotate right
+                            $source = imagecreatefromjpeg($folder.$file);
+                            $rotate = imagerotate($source, -90, -1);
+                            imagejpeg($rotate,$folder.$file,50);
+                        break;
+                        case 8:// 90 rotate left
+                            $source = imagecreatefromjpeg($folder.$file);
+                            $rotate = imagerotate($source, 90, -1);
+                            imagejpeg($rotate,$folder.$file,50);
+                        break;
                     }
                 }
-                $image = true;
             }
+
+            $image = true;
+
         }
+
     }
 
     if( $image === true && $text !== "" ){
@@ -105,10 +134,6 @@ $app->post('/submit', function () use ($app, $db) {
         $error = true;
     }else{
 
-        // Generate a unique id for the post
-        $generator = new RandomStringGenerator;
-        $token = $generator->generate(40);
-
         $post = [
             'id'        => $token,
             'timestamp' => $timestamp,
@@ -118,15 +143,6 @@ $app->post('/submit', function () use ($app, $db) {
             'status'    => 'moderation',
             'type'      => $type
         ];
-
-        // Parse the data
-        //$author = htmlspecialchars($author);
-        //$text = htmlspecialchars($text);
-        //$author = mysqli_real_escape_string($db,$author);
-        //$text = mysqli_real_escape_string($db,$text);
-        //$request = "INSERT INTO posts (timestamp, author, text, image, status, type) VALUES ('".$timestamp."', '".$author."', '".$text."', '".$file."', 'moderation', '".$type."');";
-        //mysqli_query($db,$request);
-        //mysqli_close($db);
 
         $result = $db->posts->insert( $post );
         $app->redirect('/submit');

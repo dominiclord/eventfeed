@@ -13,7 +13,7 @@
             <h3>Merci! Votre message a été envoyé.</h3>
             <h3>Il passera à travers un processus de validation et s'affichera bientôt lorsqu'il sera approuvé!</h3>
             <h3>Bonne soirée!</h3>
-            <h3><a href="index.php">&laquo;Retour</a></h3>
+            <h3><a href="/">&laquo;Retour</a></h3>
         </section>
         <script src="utilisateur/jquery-1.8.0.min.js"></script>
         <script src="utilisateur/scripts.js"></script>

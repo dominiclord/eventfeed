@@ -33,7 +33,7 @@
                 </li>
                 <li>
                     <label for="imagefile">Image :</label>
-                    <input id="imagefile" type="file" accept="image/*" name="files" data-url="server/php/">
+                    <input id="imagefile" type="file" accept="image/*" name="image">
                 </li>
             </ul>
             <div id="progress">
@@ -46,7 +46,6 @@
             <input id="btnSubmit" name="btnSubmit" type="submit" value="Send">
             <input id="state" name="state" type="hidden" value="Send">
             <input id="timestamp" type="hidden" value="">
-            <input id="image" type="hidden" value="">
         </form>
 <?php
     }
