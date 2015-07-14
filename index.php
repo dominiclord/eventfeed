@@ -53,65 +53,84 @@ $app->post('/submit', function () use ($app, $db) {
     if( isset( $_FILES['image'] ) && ( isset( $_FILES['image']['name'] ) && $_FILES['image']['name'] ) && ( isset( $_FILES['image']['tmp_name'] ) && $_FILES['image']['tmp_name'] ) ) {
 
         // File upload properties
-        $base_path = __DIR__.'/';
-        $upload_path = 'uploads/';
-        $dir = $base_path.$upload_path;
-        $filename = $token;
+        $base_path    = __DIR__.'/';
+        $upload_path  = 'uploads/';
+        $dir          = $base_path.$upload_path;
         $max_filesize = 134220000; //128M
-        $target = $dir.$filename;
-        $file_date = $_FILES['image'];
+        $finfo         = new finfo(FILEINFO_MIME_TYPE);
+        $mimetypes    = [
+            'image/gif',
+            'image/png',
+            'image/jpeg'
+        ];
 
-        if (!is_writable($dir)) {
+        $file_name = $token;
+        $file_data = $_FILES['image'];
+        $file_info = pathinfo( $file_data['name'] );
+        $file_size = filesize( $file_data['tmp_name'] );
+        $file_type = $finfo->file( $file_data['tmp_name'] );
+
+        if (isset($file_info['extension']) && $file_info['extension']) {
+            $file_name .= '.'.$file_info['extension'];
+        }else{
+            $file_name .= '.jpg';
+        }
+
+        $target = $dir.$file_name;
+
+        /**
+        * @TODO
+        * Manage image failures gracefully
+        */
+        if ( !is_writable($dir) ) {
             throw new Exception('Error: upload directory is not writeable');
             die();
         }
-        if (!file_exists($target)) {
+
+        if ( file_exists($target) ) {
+            /**
+            * @TODO
+            * Generate new token? This could mean the token already exists in the database as well
+            */
             throw new Exception('Error: file already exists');
             die();
         }
 
-        $info = new finfo(FILEINFO_MIME_TYPE);
+        if ( !in_array( $file_type, $mimetypes ) ) {
+            throw new Exception('Error: rejected mimetype');
+            die();
+        }
 
-        // Tesf for mimetype
-        //$info->file($file_data['tmp_name']));
-
-        $filesize = filesize( $file_data['tmp_name'] );
-
-        if ( $filesize > $max_filesize ) {
+        if ( $file_size > $max_filesize ) {
             throw new Exception('Error: file too big');
             die();
         }
 
         if( move_uploaded_file( $file_data['tmp_name'], $target) ){
-            die();
 
-            if($extension!='.png'&&$extension!='.PNG'){
-                chmod($folder.$file, 0755);
-                $exif = exif_read_data($folder.$file);
-                if(isset($exif['Orientation'])){
-                    $ort = $exif['Orientation'];
-                    switch($ort){
-                        case 1:// normal
-                            $source = imagecreatefromjpeg($folder.$file);
-                            imagejpeg($source,$folder.$file,50);
-                        break;
-                        case 3:// 180 rotate left
-                            $source = imagecreatefromjpeg($folder.$file);
-                            $rotate = imagerotate($source, 180, -1);
-                            imagejpeg($rotate,$folder.$file,50);
-                        break;
-                        case 6:// 90 rotate right
-                            $source = imagecreatefromjpeg($folder.$file);
-                            $rotate = imagerotate($source, -90, -1);
-                            imagejpeg($rotate,$folder.$file,50);
-                        break;
-                        case 8:// 90 rotate left
-                            $source = imagecreatefromjpeg($folder.$file);
-                            $rotate = imagerotate($source, 90, -1);
-                            imagejpeg($rotate,$folder.$file,50);
-                        break;
-                    }
+            $imagick = new \Imagick( realpath($target) );
+
+            $exif_data = $imagick->getImageProperties("exif:*");
+
+            if ( ! empty( $exif_data ) && isset( $exif_data['exif:Orientation'] ) && $orientation = $exif_data['exif:Orientation'] ) {
+
+                chmod($target, 0755);
+
+                switch($orientation){
+                    //case '1': // Normal
+                    case '3':// 180 rotate left
+                        $imagick->rotateimage(new \ImagickPixel('none'), 180);
+                    break;
+                    case '6':// 90 rotate right
+                        $imagick->rotateimage(new \ImagickPixel('none'), -90);
+                    break;
+                    case '8':// 90 rotate left
+                        $imagick->rotateimage(new \ImagickPixel('none'), 90);
+                    break;
                 }
+
+                $imagick->writeImage( $target );
+
             }
 
             $image = true;
@@ -120,18 +139,17 @@ $app->post('/submit', function () use ($app, $db) {
 
     }
 
-    if( $image === true && $text !== "" ){
-        $type = "hybrid";
-    }else{
-        if( $image==true && $text=="" ){
-            $type = "image";
-        }elseif( $image === false && $text !== "" ){
-            $type = "text";
-        }
+    if( $image === true && $text !== '' ){
+        $type = 'hybrid';
+    }elseif( $image === true && $text === '' ){
+        $type = 'image';
+    }elseif( $image === false && $text !== '' ){
+        $type = 'text';
     }
 
-    if($author === "" || $type === ""){
-        $error = true;
+    if($author === '' || $type === ''){
+        throw new Exception('Error: empty author or post type');
+        die();
     }else{
 
         $post = [
