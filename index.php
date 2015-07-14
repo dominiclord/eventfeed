@@ -6,7 +6,9 @@ use \Utils\RandomStringGenerator;
 require_once 'vendor/autoload.php';
 require_once 'utils/index.php';
 
-$app = new Slim();
+$app = new Slim(array(
+    'view' => new \Slim\Mustache\Mustache()
+));
 $pdo = new PDO('mysql:dbname=eventfeed_local;host:127.0.0.1','root','root');
 $db  = new NotORM($pdo);
 
@@ -14,6 +16,23 @@ $app->config(array(
     'debug'          => true,
     'templates.path' => 'templates'
 ));
+
+// User interface
+$app->get('/main', function ( ) use ($app, $db) {
+
+    $posts = [];
+
+    foreach ($db->posts() as $post) {
+        $posts[] = $post;
+    }
+
+    $app->view()->setData([
+        'page_title' => "Your Friends",
+        'data'       => 'data'
+    ]);
+
+    $app->render('user.php');
+});
 
 // Display after post submit
 $app->get('/submit', function () use ($app) {

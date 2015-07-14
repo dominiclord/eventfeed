@@ -9,18 +9,6 @@
     <body>
         <div id="overlay"></div>
         <h1>Technosoirée</h1>
-<?php
-    if ($_SERVER['QUERY_STRING']=="succes"){
-?>
-        <section style="display:block;" id="container-succes">
-            <h3>Merci! Votre message a été envoyé.</h3>
-            <h3>Il passera à travers un processus de validation et s'affichera bientôt lorsqu'il sera approuvé!</h3>
-            <h3>Bonne soirée!</h3>
-            <h3><a href="index.php">&laquo;Retour</a></h3>
-        </section>
-<?php
-    }else{
-?>
         <form action="/submit" enctype="multipart/form-data" id="formEntry" method="post">
             <ul>
                 <li>
@@ -47,9 +35,6 @@
             <input id="state" name="state" type="hidden" value="Send">
             <input id="timestamp" type="hidden" value="">
         </form>
-<?php
-    }
-?>
         <script src="utilisateur/jquery-1.8.0.min.js"></script>
         <script src="utilisateur/scripts.js"></script>
     </body>
