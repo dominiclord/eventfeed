@@ -17,18 +17,55 @@ $db  = new NotORM($pdo);
 // User interface
 $app->get('/main', function ( ) use ($app, $db) {
 
-    $posts = [];
+    $left_posts  = [];
+    $right_posts = [];
 
+    $count = 1;
     foreach ($db->posts() as $post) {
-        $posts[] = $post;
+
+        /*
+        * @TODO : Figure out how to output structure automatically with NotORM
+        */
+        $_post = [
+            'id'                 => $post['id'],
+            'timestamp'          => $post['timestamp'],
+            'timestamp_modified' => $post['timestamp_modified'],
+            'author'             => $post['author'],
+            'text'               => $post['text'],
+            'image'              => $post['image'],
+            'status'             => $post['status'],
+            'type'               => $post['type']
+        ];
+
+        switch ( $post['type'] ) {
+            case 'text':
+                $_post['is_text'] = true;
+                break;
+            case 'hybrid':
+                $_post['is_hybrid'] = true;
+                break;
+            case 'image':
+                $_post['is_image'] = true;
+                break;
+        }
+
+        if( $count % 2 ){
+            $left_posts[]  = $_post;
+        }else{
+            $right_posts[] = $_post;
+        }
+
+        $count++;
     }
 
+    //var_dump($left_posts);
+
     $app->view()->setData([
-        'page_title' => "Your Friends",
-        'data'       => 'data'
+        'left_posts'  => $left_posts,
+        'right_posts' => $right_posts
     ]);
 
-    $app->render('user');
+    $app->render('main');
 });
 
 // Display after post submit
@@ -47,16 +84,15 @@ $app->post('/submit', function () use ($app, $db) {
         $timestamp = $timestamp_date->getTimestamp();
     }
 
-    $author = empty( $data['author'] ) ? '' : $data['author'];
-    $text   = empty( $data['text'] ) ? '' : $data['text'];
-    $image  = empty( $data['image'] ) ? '' : $data['image'];
-    $type   = "";
-    $file   = "";
+    $author    = empty( $data['author'] ) ? '' : $data['author'];
+    $text      = empty( $data['text'] ) ? '' : $data['text'];
+    $image     = empty( $data['image'] ) ? '' : $data['image'];
+    $type      = "";
+    $file_name = "";
 
     if( $image === "" ){
         $image = false;
     }else{
-        $file  = $image;
         $image = true;
     }
 
@@ -151,6 +187,10 @@ $app->post('/submit', function () use ($app, $db) {
 
             $image = true;
 
+        }else{
+
+            $image = false;
+
         }
 
     }
@@ -173,7 +213,7 @@ $app->post('/submit', function () use ($app, $db) {
             'timestamp' => $timestamp,
             'author'    => $author,
             'text'      => $text,
-            'image'     => $file,
+            'image'     => $file_name,
             'status'    => 'moderation',
             'type'      => $type
         ];
