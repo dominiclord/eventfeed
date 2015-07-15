@@ -6,16 +6,13 @@ use \Utils\RandomStringGenerator;
 require_once 'vendor/autoload.php';
 require_once 'utils/index.php';
 
-$app = new Slim(array(
-    'view' => new \Slim\Mustache\Mustache()
-));
+$app = new Slim([
+    'view'           => new \Slim\Mustache\Mustache(),
+    'debug'          => true,
+    'templates.path' => 'views'
+]);
 $pdo = new PDO('mysql:dbname=eventfeed_local;host:127.0.0.1','root','root');
 $db  = new NotORM($pdo);
-
-$app->config(array(
-    'debug'          => true,
-    'templates.path' => 'templates'
-));
 
 // User interface
 $app->get('/main', function ( ) use ($app, $db) {
@@ -31,12 +28,12 @@ $app->get('/main', function ( ) use ($app, $db) {
         'data'       => 'data'
     ]);
 
-    $app->render('user.php');
+    $app->render('user');
 });
 
 // Display after post submit
 $app->get('/submit', function () use ($app) {
-    $app->render('success.php');
+    $app->render('success');
 });
 
 // Submit a post
@@ -202,7 +199,7 @@ $app->get('/', function ( ) use ($app, $db) {
         'page_title' => "Your Friends",
         'data'       => 'data'
     ]);
-    $app->render('user.php');
+    $app->render('user');
 });
 
 $app->run();

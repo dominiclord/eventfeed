@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block title %}Submit a message - EventFeed{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}">{% endblock %}
+{% block body %}
+    <div id="overlay"></div>
+    <h1>EventFeed</h1>
+    {% if success!=None %}
+    <section style="display:block;" id="container-succes">
+        <h3>Your post was succesfully submitted.</h3>
+        <h3>It will reviewed and posted once it is approved!</h3>
+        <h3><a href="/">&laquo;Back</a></h3>
+    </section>
+    {% else %}
+    <form action="{{ url_for('submit_post') }}" enctype="multipart/form-data" id="formEntry" method="post">
+        <ul>
+            <li>
+                <label for="author">Name:</label>
+                <input id="author" type="text" name="author" value="">
+            </li>
+            <li>
+                <label for="text">Message:</label>
+                <input id="text" type="text" name="text" value="">
+            </li>
+            <li>
+                <label for="imagefile">Image:</label>
+                <input id="imagefile" type="file" accept="image/*" name="imagefile" data-url="server/php/">
+            </li>
+        </ul>
+        <p style="display:none;" id="nocontent"><strong>You need to send at least an image or a message.</strong></p>
+        <p>You can send a message, an image, or both at the same time</p>
+        <p>Innapropriate content will not be posted.</p>
+        <input id="btnCancel" type="reset" value="Erase">
+        <input id="btnSubmit" name="btnSubmit" type="submit" value="Send">
+        <input id="state" name="state" type="hidden" value="Send">
+        <input id="timestamp" type="hidden" value="">
+        <input id="image" type="hidden" value="">
+    </form>
+    {% endif %}
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/user.js') }}"></script>{% endblock %}

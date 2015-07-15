@@ -26,10 +26,17 @@
         ob_start();
 
 ?>
-        <div>
-            <span>text</span>
-            <a href="#">link</a>
-        </div>
+
+            <div data-timestamp="{{ post.timestamp }}" class="post {{ post.type }}">
+            {% if post.type=='text' %}
+                <p><strong>{{ post.author }} :</strong> {{ post.text }}</p>
+            {% elif post.type=='hybrid' %}
+                <img src="/uploads/{{ post.image }}">
+                <div class="text"><p><strong>{{ post.author }} :</strong> {{ post.text }}</p></div>
+            {% elif post.type=='image' %}
+                <img src="/uploads/{{ post.image }}">
+            {% endif %}
+            </div>
 <?php
 
         $content = ob_get_clean();
