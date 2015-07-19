@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml' lang='en'>
+    <head>
+        <meta charset='utf-8'/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <title>Moderation</title>
+        <link rel="stylesheet" href="/hissing-fauna/styles.css" media="all">
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a <?php echo ($affichage=='moderation'||$affichage=='' ? 'class="active"' : ""); ?> href="./?moderation">À Modérer</a></li>
+                <li><a <?php echo ($affichage=='approuver' ? 'class="active"' : ""); ?> href="./?approuver">Approuvés</a></li>
+                <li><a <?php echo ($affichage=='publier' ? 'class="active"' : ""); ?> href="./?publier">Publiés</a></li>
+                <li><a <?php echo ($affichage=='rejeter' ? 'class="active"' : ""); ?> href="./?rejeter">Rejetés</a></li>
+                <li><a <?php echo ($affichage=='parametres' ? 'class="active"' : ""); ?> href="./?parametres">Paramètres</a></li>
+            </ul>
+        </nav>
+        <h1>Modération</h1>
+        <section id='entries'>";
+            <article rel="'.$row['timestamp'].'">
+                <h2><span class="sAuteur">'.$row['author'].'</span> - <span class="sType">'.$row['type'].'</span></h2>
+                <p class="sTexte">'.$temptexte.'</p>
+                <p><span id="sTexte">'.$temptexte.'</span><br><img class="sImage" src="../utilisateur/uploads/'.$tempimage.'"></p>
+                <p>W : '.$width.' -- H : '.$height.'</p>
+                <p><img class="sImage" src="../utilisateur/uploads/'.$tempimage.'"></p>
+                <p>W : '.$width.' -- H : '.$height.'</p>
+            </article>
+        </section>
+        <form id="formEntry">
+            <ul>
+                <li>
+                    <label for="auteur">Auteur</label>
+                    <input id="auteur" type="text" name="auteur" value="" />
+                </li>
+                <li>
+                    <label for="texte">Texte</label>
+                    <input id="texte" type="text" name="texte" value="">
+                </li>
+            </ul>
+            <input id="btnCancel" type="button" value="Cancel" />
+            <input id="btnSubmit" type="submit" value="Save" />
+            <input id="formMode" type="hidden" value="" />
+        </form>
+
+        <script src="/hissing-fauna/jquery-1.8.0.min.js"></script>
+        <script src="/hissing-fauna/scripts.js"></script>
+    </body>
+</html>

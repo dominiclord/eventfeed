@@ -14,14 +14,19 @@ $app = new Slim([
 $pdo = new PDO('mysql:dbname=eventfeed_local;host:127.0.0.1','root','root');
 $db  = new NotORM($pdo);
 
-// User interface
+// Main interface
 $app->get('/main', function ( ) use ($app, $db) {
 
     $left_posts  = [];
     $right_posts = [];
 
     $count = 1;
-    foreach ($db->posts() as $post) {
+    $posts = $db
+        ->posts()
+        ->where('status','published')
+        ->order('timestamp DESC');
+
+    foreach ($posts as $post) {
 
         /*
         * @TODO : Figure out how to output structure automatically with NotORM
@@ -66,6 +71,17 @@ $app->get('/main', function ( ) use ($app, $db) {
     ]);
 
     $app->render('main');
+});
+
+/**
+* Moderation interface
+* @TODO Add authentification
+* @param $app  Application
+* @param $db   Database connection
+*/
+// Moderation interface
+$app->get('/moderation', function () use ($app, $db) {
+    $app->render('moderation');
 });
 
 // Display after post submit
