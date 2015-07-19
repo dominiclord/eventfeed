@@ -125,6 +125,13 @@ $app->get('/moderation(/)(:view)', function ( $view = null ) use ( $app, $db ) {
 
 
     foreach ($posts as $post) {
+
+        try {
+            $image_size = getimagesize( __DIR__ . '/uploads/' . $post['image'] );
+        } catch (Exception $e) {
+            $image_size = null;
+        }
+
         /*
         * @TODO : Figure out how to output structure automatically with NotORM
         */
@@ -135,9 +142,23 @@ $app->get('/moderation(/)(:view)', function ( $view = null ) use ( $app, $db ) {
             'author'             => $post['author'],
             'text'               => $post['text'],
             'image'              => $post['image'],
+            'image_height'       => ( ! empty( $image_size ) ? $image_size[0] : null ),
+            'image_width'        => ( ! empty( $image_size ) ? $image_size[1] : null ),
             'status'             => $post['status'],
             'type'               => $post['type']
         ];
+
+        switch ( $post['type'] ) {
+            case 'text':
+                $_post['is_text'] = true;
+                break;
+            case 'hybrid':
+                $_post['is_hybrid'] = true;
+                break;
+            case 'image':
+                $_post['is_image'] = true;
+                break;
+        }
 
         $view_data['posts'][] = $_post;
     }
