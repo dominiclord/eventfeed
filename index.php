@@ -63,8 +63,6 @@ $app->get('/main', function ( ) use ($app, $db) {
         $count++;
     }
 
-    //var_dump($left_posts);
-
     $app->view()->setData([
         'left_posts'  => $left_posts,
         'right_posts' => $right_posts
@@ -80,7 +78,72 @@ $app->get('/main', function ( ) use ($app, $db) {
 * @param $db   Database connection
 */
 // Moderation interface
-$app->get('/moderation', function () use ($app, $db) {
+$app->get('/moderation(/:view)', function ( $view = null ) use ( $app, $db ) {
+
+    $posts = $db->posts();
+
+    // Default view data
+    $view_data = [
+        'active_view' => 'moderation',
+        'posts'       => []
+    ];
+
+    // Moderation : Default view, for posts in moderation queue
+    // Approved   : Posts waiting to be auto-published.
+    // Published  : Posts that appear on main interface
+    // Rejected   : Posts that have been rejected
+    switch( $view ){
+        case 'approved' :
+            $posts
+                ->where('status','approved')
+                ->order('timestamp ASC');
+
+            $view_data['active_approved'] = true;
+        break;
+        case 'published' :
+            $posts
+                ->where('status','published')
+                ->order('timestamp DESC');
+
+            $view_data['active_published'] = true;
+        break;
+        case 'rejected' :
+            $posts
+                ->where('status','rejected')
+                ->order('timestamp DESC');
+
+            $view_data['active_rejected'] = true;
+        break;
+        default:
+            $posts
+                ->where('status','moderation')
+                ->order('timestamp ASC');
+
+            $view_data['active_moderation'] = true;
+        break;
+    }
+
+
+    foreach ($posts as $post) {
+        /*
+        * @TODO : Figure out how to output structure automatically with NotORM
+        */
+        $_post = [
+            'id'                 => $post['id'],
+            'timestamp'          => $post['timestamp'],
+            'timestamp_modified' => $post['timestamp_modified'],
+            'author'             => $post['author'],
+            'text'               => $post['text'],
+            'image'              => $post['image'],
+            'status'             => $post['status'],
+            'type'               => $post['type']
+        ];
+
+        $view_data['posts'][] = $_post;
+    }
+
+    $app->view()->setData( $view_data );
+
     $app->render('moderation');
 });
 

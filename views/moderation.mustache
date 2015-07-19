@@ -4,28 +4,28 @@
         <meta charset='utf-8'/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
         <title>Moderation</title>
+        <base href="/"></base>
         <link rel="stylesheet" href="/hissing-fauna/styles.css" media="all">
     </head>
     <body>
         <nav>
             <ul>
-                <li><a <?php echo ($affichage=='moderation'||$affichage=='' ? 'class="active"' : ""); ?> href="./?moderation">À Modérer</a></li>
-                <li><a <?php echo ($affichage=='approuver' ? 'class="active"' : ""); ?> href="./?approuver">Approuvés</a></li>
-                <li><a <?php echo ($affichage=='publier' ? 'class="active"' : ""); ?> href="./?publier">Publiés</a></li>
-                <li><a <?php echo ($affichage=='rejeter' ? 'class="active"' : ""); ?> href="./?rejeter">Rejetés</a></li>
-                <li><a <?php echo ($affichage=='parametres' ? 'class="active"' : ""); ?> href="./?parametres">Paramètres</a></li>
+                <li><a{{#active_moderation}} class="active"{{/active_moderation}} href="/moderation">Moderation queue</a></li>
+                <li><a{{#active_approved}} class="active"{{/active_approved}} href="/moderation/approved">Approved</a></li>
+                <li><a{{#active_published}} class="active"{{/active_published}} href="/moderation/published">Published</a></li>
+                <li><a{{#active_rejected}} class="active"{{/active_rejected}} href="/moderation/rejected">Rejected</a></li>
             </ul>
         </nav>
         <h1>Modération</h1>
-        <section id='entries'>";
-            <article rel="'.$row['timestamp'].'">
-                <h2><span class="sAuteur">'.$row['author'].'</span> - <span class="sType">'.$row['type'].'</span></h2>
-                <p class="sTexte">'.$temptexte.'</p>
-                <p><span id="sTexte">'.$temptexte.'</span><br><img class="sImage" src="../utilisateur/uploads/'.$tempimage.'"></p>
-                <p>W : '.$width.' -- H : '.$height.'</p>
-                <p><img class="sImage" src="../utilisateur/uploads/'.$tempimage.'"></p>
+        <section id="entries">
+            {{#posts}}
+            <article rel="{{ timestamp }}">
+                <h2><span class="sAuteur">{{ author }}</span> - <span class="sType">{{ type }}</span></h2>
+                <p class="sTexte">{{ text }}</p>
+                <p><span id="sTexte">{{ text }}</span><br><img class="sImage" src="/uploads/{{ image }}"></p>
                 <p>W : '.$width.' -- H : '.$height.'</p>
             </article>
+            {{/posts}}
         </section>
         <form id="formEntry">
             <ul>
