@@ -78,7 +78,7 @@ $app->get('/main', function ( ) use ($app, $db) {
 * @param $db   Database connection
 */
 // Moderation interface
-$app->get('/moderation(/:view)', function ( $view = null ) use ( $app, $db ) {
+$app->get('/moderation(/)(:view)', function ( $view = null ) use ( $app, $db ) {
 
     $posts = $db->posts();
 
