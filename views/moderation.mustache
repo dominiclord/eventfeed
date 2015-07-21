@@ -19,7 +19,7 @@
         <h1>Moderation</h1>
         <section id="entries">
             {{#posts}}
-            <article rel="{{ timestamp }}">
+            <article data-id="{{ id }}">
                 {{>moderation_actions}}
                 <h2><span class="sAuteur">{{ author }}</span> - <span class="sType">{{ type }}</span></h2>
                 {{#is_text}}

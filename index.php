@@ -72,12 +72,36 @@ $app->get('/main', function ( ) use ($app, $db) {
 });
 
 /**
+* Fetch a post
+* @TODO Add authentification
+* @param $app  Application
+* @param $db   Database connection
+*/
+$app->get('/posts/:id', function ( $id = null ) use ( $app, $db ) {
+    try{
+        $row = $db->{'posts'}[$id];
+
+        if($row) {
+            $app->response->setStatus(200);
+            $app->response()->headers->set('Content-Type', 'application/json');
+            echo json_encode($row);
+        } else {
+            throw new PDOException('No posts found.');
+        }
+
+    } catch(PDOException $e) {
+        $app->response()->setStatus(404);
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+    die();
+});
+
+/**
 * Moderation interface
 * @TODO Add authentification
 * @param $app  Application
 * @param $db   Database connection
 */
-// Moderation interface
 $app->get('/moderation(/)(:view)', function ( $view = null ) use ( $app, $db ) {
 
     $posts = $db->posts();
