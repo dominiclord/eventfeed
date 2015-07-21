@@ -72,6 +72,49 @@ $app->get('/main', function ( ) use ($app, $db) {
 });
 
 /**
+* Modify a post
+* @TODO Add authentification
+* @param $app  Application
+* @param $db   Database connection
+*/
+$app->put('/posts/:id', function ( $id = null ) use ( $app, $db ) {
+    try{
+
+        $data = $app->request()->put();
+        $post = $db->{'posts'}[$id];
+
+        $app->response()->headers->set('Content-Type', 'application/json');
+
+        if( $post ) {
+
+            $timestamp_date = new \DateTime( 'now', new \DateTimeZone('America/Montreal') );
+            $timestamp = $timestamp_date->getTimestamp();
+
+            $post->update(
+                [
+                    'author' => $data['author'],
+                    'text' => $data['text'],
+                    'timestamp_modified' => $timestamp
+                ]
+            );
+
+            $app->response->setStatus(200);
+            $app->response()->headers->set('Content-Type', 'application/json');
+            echo '{"success":{"text":"Post modified successfully"}}';
+        } else {
+            throw new PDOException('No posts found.');
+            $app->response->setStatus(404);
+            echo '{"error":{"text":"No posts found"}}';
+        }
+
+    } catch(PDOException $e) {
+        $app->response()->setStatus(404);
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+    die();
+});
+
+/**
 * Fetch a post
 * @TODO Add authentification
 * @param $app  Application

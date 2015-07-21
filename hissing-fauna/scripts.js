@@ -2,34 +2,34 @@ $(function(){
 
     var diaryEntries     = '',
         diaryEntriesList = [],
-        auteur           = $('#auteur'),
-        texte            = $('#texte'),
-        formMode         = $('#formMode');
+        author           = $('#post_author'),
+        text            = $('#post_text'),
+        post_id          = $('#post_id');
 
-    $('#formEntry').submit(modifierStatut);
+    $('#formEntry').on('submit',modify_post);
 
-    function resetForm(){
-        auteur.val('').removeClass('error').blur();
-        texte.val('').removeClass('error').blur();
-        formMode.val('');
+    function reset_form(){
+        author.val('').removeClass('error').blur();
+        text.val('').removeClass('error').blur();
+        post_id.val('');
     }
 
-    function showEntries() {
+    function show_posts() {
         $('#formEntry').fadeOut('fast',function(){$('#entries').fadeIn('fast');});
     }
 
-    function showForm() {
+    function show_form() {
         $('#entries').fadeOut('fast',function(){$('#formEntry').fadeIn('fast');});
     }
 
-    function activateEntries(){
+    function bind_post_events(){
         diaryEntries=document.querySelectorAll('#entries article');
         if(diaryEntries.length>0||diaryEntries !== null){
             for (var i=0;i<diaryEntries.length;i++){
-                document.querySelectorAll('#entries article h2')[i].addEventListener('click',toggleSingle);
-                document.querySelectorAll('#entries article .approve')[i].addEventListener('click',approuverStatut);
-                document.querySelectorAll('#entries article .remove')[i].addEventListener('click',rejeterStatut);
-                document.querySelectorAll('#entries article .edit')[i].addEventListener('click',chargerStatut);
+                document.querySelectorAll('#entries article h2')[i].addEventListener('click',toggle_single);
+                document.querySelectorAll('#entries article .approve')[i].addEventListener('click',approve_post);
+                document.querySelectorAll('#entries article .remove')[i].addEventListener('click',reject_post);
+                document.querySelectorAll('#entries article .edit')[i].addEventListener('click',load_post);
             }
         }
     }
@@ -46,18 +46,18 @@ $(function(){
         element.className=element.className.replace(/(?:^|\s)active(?!\S)/,'');
     }
 
-    function toggleSingle(ev){
+    function toggle_single(ev){
         var t=ev.target;
         if(hasClass(t.parentNode,'active')){
-            toggleAll("off");
+            toggle_all("off");
             removeClass(t.parentNode,'active');
         }else{
-            toggleAll("off");
+            toggle_all("off");
             addClass(t.parentNode,'active');
         }
     }
 
-    function toggleAll(s){
+    function toggle_all(s){
         switch(s){
             case "off":
                 for(var i=0;i<diaryEntries.length;i++){
@@ -78,15 +78,15 @@ $(function(){
                     }
                 }
                 if(actives>0){
-                    toggleAll("off");
+                    toggle_all("off");
                 }else{
-                    toggleAll("on");
+                    toggle_all("on");
                 }
             break;
         }
     }
 
-    function rejeterStatut(ev){
+    function reject_post(ev){
         ev.preventDefault();
 
         var statut = $(this).closest('article'),
@@ -109,7 +109,7 @@ $(function(){
         });
     }
 
-    function approuverStatut(ev){
+    function approve_post(ev){
         ev.preventDefault();
 
         var statut = $(this).closest('article'),
@@ -131,22 +131,20 @@ $(function(){
         });
     }
 
-    function chargerStatut(ev){
+    function load_post(ev){
         ev.preventDefault();
 
         var element = $(this).closest('article'),
-            key     = element.getAttribute('data-id'),
+            key     = element.attr('data-id'),
             statut  = {};
 
         $.ajax({
-            url      : '/posts',
+            url      : '/posts/' + key,
             type     : 'get',
             dataType : 'json',
-            data     : {
-                id : key
-            },
-            success  : function(msg){
-                afficherStatut(key,msg);
+            data     : {},
+            success  : function( response ){
+                display_post( key, response );
             },
             error    : function(xhr,code){
                alert(code);
@@ -154,29 +152,29 @@ $(function(){
         });
     }
 
-    function afficherStatut(key,donnees){
-        formMode.val(key);
-        auteur.val(donnees.auteur);
-        texte.val(donnees.texte);
-        showForm();
+    function display_post( key, data ){
+        post_id.val(key);
+        author.val(data.author);
+        text.val(data.text);
+        show_form();
     }
 
-    function modifierStatut(ev){
+    function modify_post(ev){
         ev.preventDefault();
 
-        var key = formMode.val(),
+        var key   = post_id.val(),
             error = false;
 
-        auteur.removeClass('error');
-        texte.removeClass('error');
+        author.removeClass('error');
+        text.removeClass('error');
 
-        if(auteur.val().length === 0){
-            auteur.addClass('error');
+        if(author.val().length === 0){
+            author.addClass('error');
             error = true;
         }
 
-        if(texte.val().length === 0){
-            texte.addClass('error');
+        if(text.val().length === 0){
+            text.addClass('error');
             error = true;
         }
 
@@ -187,26 +185,19 @@ $(function(){
 
         if(error === false){
 
-            texte.val();
-
-            var postData = {
-                timestamp : key,
-                auteur    : auteur.val(),
-                texte     : texte.val()
-            };
-
             $.ajax({
-                url     : 'requete.php',
-                type    : 'post',
-                data    : {
-                    etat : postData
+                url  : '/posts/' + key,
+                type : 'put',
+                data : {
+                    author : author.val(),
+                    text   : text.val()
                 },
                 success : function(msg){
-                    var statut = $('article[rel='+key+']');
-                    $('.sAuteur',statut).text(auteur.val());
-                    $('.sTexte',statut).text(texte.val());
-                    showEntries();
-                    resetForm();
+                    var post = $('article[data-id='+key+']');
+                    $('.sAuteur',post).text(author.val());
+                    $('.sTexte',post).text(text.val());
+                    show_posts();
+                    reset_form();
                 },
                 error   : function(xhr,code){
                    alert(code);
@@ -216,13 +207,13 @@ $(function(){
     }
 
     document.querySelector('h1').addEventListener('click',function(){
-        toggleAll("maybe");
+        toggle_all("maybe");
     });
 
     $('#btnCancel').click(function(){
-        showEntries();
-        resetForm();
+        show_posts();
+        reset_form();
     });
 
-    activateEntries();
+    bind_post_events();
 });
