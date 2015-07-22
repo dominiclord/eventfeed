@@ -1,5 +1,15 @@
 <?php
 
+/**
+* Main EventFeed functions and routing
+*
+* @author Dominc Lord <dlord@outlook.com>
+* @copyright 2015 dominiclord
+* @version 2015-07-01
+* @link http://github.com/dominiclord/eventfeed
+* @since Version 2015-07-01
+*/
+
 use \Slim\Slim as Slim;
 use \Utils\RandomStringGenerator;
 
@@ -14,8 +24,12 @@ $app = new Slim([
 $pdo = new PDO('mysql:dbname=eventfeed_local;host:127.0.0.1','root','root');
 $db  = new NotORM($pdo);
 
-// Main interface
-$app->get('/main', function ( ) use ($app, $db) {
+/**
+* Fetch posts for main interface
+* @param $app  Application
+* @param $db   Database connection
+*/
+$app->get('/main(/)', function ( ) use ($app, $db) {
 
     $left_posts  = [];
     $right_posts = [];
@@ -69,6 +83,91 @@ $app->get('/main', function ( ) use ($app, $db) {
     ]);
 
     $app->render('main');
+
+});
+
+/**
+* Fetch posts for main interface
+* @param $app  Application
+* @param $db   Database connection
+*/
+$app->get('/main/posts(/)', function ( ) use ($app, $db) {
+
+    $response = [
+        'status' => 'error',
+        'posts'  => []
+    ];
+
+    try{
+        $posts = $db
+            ->posts()
+            ->where('status','approved')
+            ->order('timestamp ASC');
+
+        foreach ($posts as $post) {
+
+            /*
+            * @TODO : Figure out how to output structure automatically with NotORM
+            */
+            $_post = [
+                'id'                 => $post['id'],
+                'timestamp'          => $post['timestamp'],
+                'timestamp_modified' => $post['timestamp_modified'],
+                'author'             => $post['author'],
+                'text'               => $post['text'],
+                'image'              => $post['image'],
+                'status'             => $post['status'],
+                'type'               => $post['type']
+            ];
+
+            $response['posts'][] = $_post;
+
+        }
+
+        $response['status'] = 'ok';
+        $app->response()->headers->set('Content-Type', 'application/json');
+        $app->response()->setStatus(200);
+        echo json_encode($response);
+
+    } catch(PDOException $e) {
+        $app->response()->setStatus(404);
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+    die();
+});
+
+/**
+* Set post to published
+* @TODO Add authentification
+* @param $app  Application
+* @param $db   Database connection
+*/
+$app->put('/main/posts/:id', function ( $id = null ) use ( $app, $db ) {
+    $app->response()->headers->set('Content-Type', 'application/json');
+    try{
+
+        $data = $app->request()->put();
+        $post = $db->{'posts'}[$id];
+
+        $app->response()->headers->set('Content-Type', 'application/json');
+
+        if( $post ) {
+
+            $post['status'] = 'published';
+
+            $post->update();
+
+            $app->response->setStatus(200);
+            echo '{"success":{"text":"Post modified successfully"}}';
+        } else {
+            throw new PDOException('No posts found.');
+        }
+
+    } catch(PDOException $e) {
+        $app->response()->setStatus(404);
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+    die();
 });
 
 /**
@@ -106,8 +205,6 @@ $app->put('/posts/:id', function ( $id = null ) use ( $app, $db ) {
             echo '{"success":{"text":"Post modified successfully"}}';
         } else {
             throw new PDOException('No posts found.');
-            $app->response->setStatus(404);
-            echo '{"error":{"text":"No posts found"}}';
         }
 
     } catch(PDOException $e) {
@@ -124,9 +221,7 @@ $app->put('/posts/:id', function ( $id = null ) use ( $app, $db ) {
 * @param $db   Database connection
 */
 $app->get('/posts/:id', function ( $id = null ) use ( $app, $db ) {
-
     $app->response()->headers->set('Content-Type', 'application/json');
-
     try{
         $row = $db->{'posts'}[$id];
 

@@ -1,39 +1,41 @@
 // Variable definitions
-var split = true,
-    posts = [],
+var split       = true,
+    posts       = [],
     posts_queue = [],
-    options = [],
-    requesturl = '/main/posts';
+    options     = [],
+    request_url = '/main/posts/';
 
 $(function(){
-    loadApproved();
-    loadOptions(true);
+    load_approved();
+    load_options();
 
     window.setInterval(function(){
-        loadOptions();
+        load_options();
     },10000);
-    window.setTimeout(refresh, getspeed());
+    window.setTimeout( refresh, get_speed() );
 
     $('.post img').each(function(){
-        widthFix($(this));
+        fix_width($(this));
     });
 });
 
 function refresh(){
-    showNewPosts();
-    window.setTimeout(refresh, getspeed());
+    show_new_posts();
+    window.setTimeout( refresh, get_speed() );
 }
-function getspeed(){
+function get_speed(){
     if(options.speed > 5000){
         return options.speed;
     }else{
         return 5000;
     }
 }
-function showNewPosts(){
-    if(!isEmpty(posts[0])){
-        var post = posts[0],
+function show_new_posts(){
+    if( !is_empty( posts[0] ) ){
+
+        var post  = posts[0],
             sPost = '<div data-timestamp="'+post.timestamp+'" class="post '+post.type+' new">';
+
         //Construction du post
         switch(post.type){
             case "text":
@@ -46,65 +48,70 @@ function showNewPosts(){
               sPost += '<img src="../uploads/'+post.image+'"></div>';
             break;
         }
-        if(split == true){
+
+        if(split === true){
             $('.column:first-child').append(sPost);
-            widthFix($('.post.new img'));
+            fix_width($('.post.new img'));
             $('.column:first-child div:last-child').fadeIn().removeClass('new');
         }else{
             $('.column:last-child').append(sPost);
-            $('.post.new img').each(function(){widthFix($(this));});
+            $('.post.new img').each(function(){
+                fix_width($(this));
+            });
             $('.column:last-child div:last-child').fadeIn().removeClass('new');
         }
-        split=!split;
+        split = !split;
         posts.splice(0,1);
-        publishPost(post.timestamp);
+        publish_post(post.id);
     }else{
-        loadApproved();
+        load_approved();
     }
 }
-function isEmpty(map) {
+function is_empty(map) {
     var empty = true;
     for(var key in map){
-        if(map.hasOwnProperty(key)){empty=false;break;}
+        if(map.hasOwnProperty(key)){
+            empty = false;
+            break;
+        }
     }
     return empty;
 }
-function loadApproved(){
+function load_approved(){
     $.ajax({
-        url:requesturl,
-        type:'post',
-        dataType:'json',
-        data:'action=loadapproved',
-        success:function(data){
-            posts=data.posts;
+        url      : request_url,
+        type     : 'get',
+        dataType : 'JSON',
+        success  : function(response){
+            posts = response.posts;
         }
     });
 }
-function loadOptions(first){
-    first = typeof first !== 'undefined' ? first : false;
+function load_options(){
+    /*
     $.ajax({
-        url:requesturl,
+        url:request_url,
         type:'post',
         dataType:'json',
-        data:'action=loadoptions',
+        data:'action=load_options',
         success: function(data){
             params=data;
         }
     });
+*/
 }
-function publishPost(key){
+function publish_post( post_id ){
     $.ajax({
-        url:requesturl,
-        type:'post',
-        data:'action=publishpost&timestamp='+key,
-        success:function(data){
-
+        url      : request_url + post_id,
+        type     : 'PUT',
+        dataType : 'JSON',
+        success  : function(response){
         }
     });
 }
 
 /* Fonction pour arranger la largeur des conteneurs d'images dépendemment de la grosseur des images */
-function widthFix(image){
+function fix_width(image){
     //Landscape
     if(image.width() > image.height() || image.width() == image.height() ){
         image.parent().css('width','100%');
