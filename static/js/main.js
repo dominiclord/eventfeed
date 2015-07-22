@@ -3,7 +3,7 @@ var split = true,
     posts = [],
     posts_queue = [],
     options = [],
-    requesturl = 'request';
+    requesturl = '/main/posts';
 
 $(function(){
     loadApproved();

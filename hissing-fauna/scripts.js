@@ -2,24 +2,24 @@ $(function(){
 
     var diaryEntries     = '',
         diaryEntriesList = [],
-        author           = $('#post_author'),
-        text            = $('#post_text'),
-        post_id          = $('#post_id');
+        author_input     = $('#post_author'),
+        text_input       = $('#post_text'),
+        post_id_input    = $('#post_id');
 
-    $('#formEntry').on('submit',modify_post);
+    $('#post_form').on('submit',modify_post);
 
     function reset_form(){
         author.val('').removeClass('error').blur();
-        text.val('').removeClass('error').blur();
-        post_id.val('');
+        text_input.val('').removeClass('error').blur();
+        post_id_input.val('');
     }
 
     function show_posts() {
-        $('#formEntry').fadeOut('fast',function(){$('#entries').fadeIn('fast');});
+        $('#post_form').fadeOut('fast',function(){$('#entries').fadeIn('fast');});
     }
 
     function show_form() {
-        $('#entries').fadeOut('fast',function(){$('#formEntry').fadeIn('fast');});
+        $('#entries').fadeOut('fast',function(){$('#post_form').fadeIn('fast');});
     }
 
     function bind_post_events(){
@@ -49,39 +49,44 @@ $(function(){
     function toggle_single(ev){
         var t=ev.target;
         if(hasClass(t.parentNode,'active')){
-            toggle_all("off");
+            toggle_all('off');
             removeClass(t.parentNode,'active');
         }else{
-            toggle_all("off");
+            toggle_all('off');
             addClass(t.parentNode,'active');
         }
     }
 
     function toggle_all(s){
-        switch(s){
-            case "off":
-                for(var i=0;i<diaryEntries.length;i++){
-                    removeClass(diaryEntries[i],'active');
-                }
-            break;
-            case "on":
-                for(var i=0;i<diaryEntries.length;i++) {
-                    addClass(diaryEntries[i],'active');
-                }
-            break;
-            case "maybe":
-                var actives=0;
 
-                for (var i=0;i<diaryEntries.length;i++) {
-                    if(hasClass(diaryEntries[i],'active')){
+        var len = diaryEntries.length;
+
+        switch(s){
+            case 'off' :
+                for( var i = 0; i < len; i++ ) {
+                    removeClass( diaryEntries[i], 'active' );
+                }
+            break;
+            case 'on' :
+                for( var j = 0; i < len; i++ ) {
+                    addClass( diaryEntries[i], 'active' );
+                }
+            break;
+            case 'maybe' :
+                var actives = 0;
+
+                for ( var k = 0; i < len; i++ ) {
+                    if( hasClass( diaryEntries[i], 'active' ) ){
                         actives++;
                     }
                 }
-                if(actives>0){
-                    toggle_all("off");
+
+                if( actives > 0 ){
+                    toggle_all('off');
                 }else{
-                    toggle_all("on");
+                    toggle_all('on');
                 }
+
             break;
         }
     }
@@ -89,22 +94,20 @@ $(function(){
     function reject_post(ev){
         ev.preventDefault();
 
-        var statut = $(this).closest('article'),
-            key    = statut.attr('rel');
+        var element = $(this).closest('article'),
+            post_id = element.attr('data-id');
 
         $.ajax({
-            url      : 'requete.php',
-            type     : 'post',
-            dataType : 'html',
-            data     : {
-                etat      : 'Rejeter',
-                timestamp : key
+            url     : '/posts/' + post_id,
+            type    : 'put',
+            data    : {
+                status : 'rejected'
             },
-            success  : function(msg){
-                statut.fadeOut();
+            success : function(msg){
+                element.fadeOut();
             },
-            error    : function(xhr,code){
-                alert(code);
+            error   : function(xhr,code){
+               alert(code);
             }
         });
     }
@@ -112,21 +115,20 @@ $(function(){
     function approve_post(ev){
         ev.preventDefault();
 
-        var statut = $(this).closest('article'),
-            key    = statut.attr('rel');
+        var element = $(this).closest('article'),
+            post_id = element.attr('data-id');
 
         $.ajax({
-            url      : 'requete.php',
-            type     : 'post',
-            data     : {
-                etat      : 'Approuver',
-                timestamp : key
+            url     : '/posts/' + post_id,
+            type    : 'put',
+            data    : {
+                status : 'approved'
             },
-            success  : function(msg){
-                statut.fadeOut();
+            success : function(msg){
+                element.fadeOut();
             },
-            error    : function(xhr,code){
-                alert(code);
+            error   : function(xhr,code){
+               alert(code);
             }
         });
     }
@@ -135,16 +137,14 @@ $(function(){
         ev.preventDefault();
 
         var element = $(this).closest('article'),
-            key     = element.attr('data-id'),
-            statut  = {};
+            post_id = element.attr('data-id');
 
         $.ajax({
-            url      : '/posts/' + key,
+            url      : '/posts/' + post_id,
             type     : 'get',
-            dataType : 'json',
-            data     : {},
+            dataType : 'JSON',
             success  : function( response ){
-                display_post( key, response );
+                display_post( post_id, response );
             },
             error    : function(xhr,code){
                alert(code);
@@ -152,29 +152,22 @@ $(function(){
         });
     }
 
-    function display_post( key, data ){
-        post_id.val(key);
-        author.val(data.author);
-        text.val(data.text);
-        show_form();
-    }
-
     function modify_post(ev){
         ev.preventDefault();
 
-        var key   = post_id.val(),
-            error = false;
+        var post_id = post_id_input.val(),
+            error   = false;
 
-        author.removeClass('error');
-        text.removeClass('error');
+        author_input.removeClass('error');
+        text_input.removeClass('error');
 
-        if(author.val().length === 0){
-            author.addClass('error');
+        if(author_input.val().length === 0){
+            author_input.addClass('error');
             error = true;
         }
 
-        if(text.val().length === 0){
-            text.addClass('error');
+        if(text_input.val().length === 0){
+            text_input.addClass('error');
             error = true;
         }
 
@@ -186,16 +179,19 @@ $(function(){
         if(error === false){
 
             $.ajax({
-                url  : '/posts/' + key,
+                url  : '/posts/' + post_id,
                 type : 'put',
                 data : {
-                    author : author.val(),
-                    text   : text.val()
+                    author : author_input.val(),
+                    text   : text_input.val()
                 },
                 success : function(msg){
-                    var post = $('article[data-id='+key+']');
-                    $('.sAuteur',post).text(author.val());
-                    $('.sTexte',post).text(text.val());
+
+                    var post = $('article[data-id='+post_id+']');
+
+                    $('.sAuteur',post).text(author_input.val());
+                    $('.sTexte',post).text(text_input.val());
+
                     show_posts();
                     reset_form();
                 },
@@ -206,8 +202,15 @@ $(function(){
         }
     }
 
+    function display_post( post_id, data ){
+        post_id_input.val(post_id);
+        author_input.val(data.author);
+        text_input.val(data.text);
+        show_form();
+    }
+
     document.querySelector('h1').addEventListener('click',function(){
-        toggle_all("maybe");
+        toggle_all('maybe');
     });
 
     $('#btnCancel').click(function(){

@@ -14,9 +14,9 @@ h1, h2 {
 }
 
 h1{
-  -webkit-transition: all 0.3s ease-out; 
-     -moz-transition: all 0.3s ease-out; 
-       -o-transition: all 0.3s ease-out; 
+  -webkit-transition: all 0.3s ease-out;
+     -moz-transition: all 0.3s ease-out;
+       -o-transition: all 0.3s ease-out;
           transition: all 0.3s ease-out;
   background-color: #df8310;
   background-image:         linear-gradient(bottom, #DF8210 0%, #FFA12E 75%);
@@ -84,9 +84,9 @@ nav li:last-child a{
 }
 
 #entries p{
-    -webkit-transition: all 0.3s ease-out; 
-     -moz-transition: all 0.3s ease-out; 
-       -o-transition: all 0.3s ease-out; 
+    -webkit-transition: all 0.3s ease-out;
+     -moz-transition: all 0.3s ease-out;
+       -o-transition: all 0.3s ease-out;
           transition: all 0.3s ease-out;
     height:0;
     margin:-1px;
@@ -164,7 +164,7 @@ nav li:last-child a{
   border-bottom:none;
 }
 
-#formEntry { display:none; }
+#post_form { display:none; }
 form { padding: 3%; }
 form ul {  padding:0; margin:0; }
 form ul li { list-style-type:none; }

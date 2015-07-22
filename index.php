@@ -90,13 +90,16 @@ $app->put('/posts/:id', function ( $id = null ) use ( $app, $db ) {
             $timestamp_date = new \DateTime( 'now', new \DateTimeZone('America/Montreal') );
             $timestamp = $timestamp_date->getTimestamp();
 
-            $post->update(
-                [
-                    'author' => $data['author'],
-                    'text' => $data['text'],
-                    'timestamp_modified' => $timestamp
-                ]
-            );
+            foreach ($data as $key => $value) {
+                $post[$key] = $value;
+            }
+
+            // If no status is set, data is being modified, and we need to update the modified_timestamp
+            if( empty( $data['status'] ) ) {
+                $post['timestamp_modified'] = $timestamp;
+            }
+
+            $post->update();
 
             $app->response->setStatus(200);
             $app->response()->headers->set('Content-Type', 'application/json');
@@ -121,12 +124,14 @@ $app->put('/posts/:id', function ( $id = null ) use ( $app, $db ) {
 * @param $db   Database connection
 */
 $app->get('/posts/:id', function ( $id = null ) use ( $app, $db ) {
+
+    $app->response()->headers->set('Content-Type', 'application/json');
+
     try{
         $row = $db->{'posts'}[$id];
 
         if($row) {
             $app->response->setStatus(200);
-            $app->response()->headers->set('Content-Type', 'application/json');
             echo json_encode($row);
         } else {
             throw new PDOException('No posts found.');
