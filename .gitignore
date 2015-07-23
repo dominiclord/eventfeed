@@ -1,6 +1,10 @@
 .DS_Store
-uploads/*
-utilisateur/*
-node_modules
-vendor
-.idea
+
+# EventFeed
+uploads/
+
+# Package managers
+composer.lock
+composer.phar
+vendor/
+node_modules/

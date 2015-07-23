@@ -38,7 +38,7 @@ $app->get('/main(/)', function ( ) use ($app, $db) {
     $posts = $db
         ->posts()
         ->where('status','published')
-        ->order('timestamp DESC');
+        ->order('timestamp ASC');
 
     foreach ($posts as $post) {
 

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
         <title>Moderation</title>
         <base href="/"></base>
-        <link rel="stylesheet" href="/hissing-fauna/styles.css" media="all">
+        <link rel="stylesheet" href="/assets/styles/dist/moderation.css">
     </head>
     <body>
         <nav>
@@ -17,7 +17,7 @@
             </ul>
         </nav>
         <h1>Moderation</h1>
-        <section id="entries">
+        <section id="posts">
             {{#posts}}
             <article data-id="{{ id }}">
                 {{>moderation_actions}}
@@ -52,7 +52,7 @@
             <input id="post_id" type="hidden" value="">
         </form>
 
-        <script src="/hissing-fauna/jquery-1.8.0.min.js"></script>
-        <script src="/hissing-fauna/scripts.js"></script>
+        <script src="/assets/scripts/vendor/jquery-1.10.2.min.js"></script>
+        <script src="/assets/scripts/moderation.js"></script>
     </body>
 </html>

@@ -1,0 +1,22 @@
+{
+  "name": "EventFeed",
+  "version": "0.0.1",
+  "author": "Dominic Lord <dlord@outlook.com>",
+  "devDependencies": {
+    "autoprefixer-core": "^5.2.1",
+    "glob": "^5.0.12",
+    "grunt": "0.4.5",
+    "grunt-browser-sync": "^2.1.3",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-cssmin": "^0.12.3",
+    "grunt-contrib-imagemin": "^0.9.4",
+    "grunt-contrib-uglify": "0.9.1",
+    "grunt-contrib-watch": "0.6.1",
+    "grunt-notify": "0.4.1",
+    "grunt-postcss": "^0.5.4",
+    "grunt-sass": "^1.0.0",
+    "grunt-svgmin": "2.0.1",
+    "grunt-svgstore": "0.5.0",
+    "load-grunt-tasks": "^3.2.0"
+  }
+}

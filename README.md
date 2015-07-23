@@ -3,37 +3,55 @@ EventFeed
 ##Description
 Live visual feed for public events
 
-Code quality suggestions are very welcome.
+## Disclaimer
+This application is being rewritten from a simpler and badly organized 2012 version. It's still quite a ways away from v1.0
 
-##Disclaimer
-This application is being rewritten with Flask/Python. It is not in a totally functionnal state, and I will write better documentation and comments when it is up and running in its new language. The functional PHP code has been left mostly untouched.
+## How to install
 
-##Usage
-Requires Vagrant and Virtualbox.
+To start a Charcoal project with this Boilerplate, simply:
 
-Change directory to eventfeed root and run these commands
+1. **Clone the repositoy**
+   - `$ git clone https://github.com/dominiclord/eventfeed`
+2. **Set up a database storage**
+   - Using [`eventfeed.sql`](eventfeed.sql)
+3. **Install dependencies**
+   - `$ composer install`
 
-    vagrant up
-    vagrant ssh
-    cd /vagrant
-    python eventfeed.py
 
 You should now be able to acces the app at the following :
 
-[Main interface for public viewing](http://192.168.56.101:5000/main)
+- example.com : Interface for user submissions
+- example.com/**main** : Main interface for public viewing
+- example.com/**moderation** : Main moderation interface
 
-[Mobile page for user submissions](http://192.168.56.101:5000)
+## Dependencies
 
-[Main moderation interface](http://192.168.56.101:5000/moderation)
+EventFeed depends on:
 
-##TODO
-* Finish code migration
-* Documentation
-* Code comments
-* Rework front-end
-    * Vanilla JS
-* Implement minification,preprocessing, general watch tasks (Gulp or Grunt)
-* Retire old code
-* Look into better database solutions
-* Login for moderation access
-* See about websockets for main interface
+- PHP 5.5+
+- [Slim](http://www.slimframework.com/) (mainly used for routing)
+- [Mustache](https://github.com/bobthecow/mustache.php) (templating)
+- [Slim-Mustache](https://github.com/Dearon/Slim-Mustache) (Mustache integration in Slim)
+- [notorm](https://github.com/vrana/notorm) (database management)
+
+See [`composer.json`](composer.json) for details
+
+## Build systems
+
+- [Composer](https://getcomposer.org/)
+- [Grunt](http://gruntjs.com/)
+
+## TODO
+* Missing feed options management and loading
+* Cleanup old code
+* Backend
+    * Implement a better code structure
+    * Database class
+    * Login for moderation access
+    * Split data access to an API
+* Frontend
+    * Implement a better code structure
+    * Build system
+    * Redesign
+    * Websockets for main interface
+* Much more documentation / comments
