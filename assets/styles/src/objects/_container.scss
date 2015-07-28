@@ -1,0 +1,29 @@
+// ==========================================================================
+// Container
+// ==========================================================================
+.container {
+	position: relative;
+	max-width: rem($max-width) + rem($padding * 2);
+	margin: 0 auto;
+	padding-right: rem($padding);
+	padding-left: rem($padding);
+
+	&.-margin {
+		@media (max-width: $to-small) {
+			margin-top: 60px;
+			margin-bottom: 60px;
+		}
+
+		@media (min-width: $from-small) {
+			margin-top: rem($unit * 2);
+			margin-bottom: rem($unit * 2);
+		}
+	}
+
+	.container.-margin & {
+		@media (max-width: $to-medium) {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+}

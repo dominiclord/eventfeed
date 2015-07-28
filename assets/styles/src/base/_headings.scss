@@ -1,0 +1,104 @@
+// ==========================================================================
+// Headings
+// ==========================================================================
+@mixin h {
+	&.-uppercase {
+		text-transform: uppercase;
+		font-family: $brandon;
+		font-weight: $medium;
+	}
+
+	&.-bold {
+		font-weight: $bold;
+	}
+
+	&.-nomargin {
+		margin-bottom: 0;
+	}
+}
+%h {
+	@include h;
+}
+
+h1, .h1, .alpha {
+	@extend %h;
+	font-weight: $normal;
+	line-height: $heading-line-height;
+	margin-top: 0;
+
+	@media (max-width: $to-small) {
+		font-size: ($heading1 / 2);
+	}
+
+	@media (min-width: $from-small) and (max-width: $to-medium) {
+		font-size: ($heading1 / 1.5);
+	}
+
+	@media (min-width: $from-medium) {
+		font-size: rem($heading1);
+	}
+}
+
+h2, .h2, .beta {
+	@extend %h;
+	font-weight: $normal;
+	line-height: $heading-line-height;
+	margin-top: 0;
+
+	@media (max-width: $to-small) {
+		font-size: ($heading2 / 2);
+		margin-bottom: 1em;
+
+		&.-uppercase {
+			margin-bottom: 0.5em;
+		}
+	}
+	
+	@media (min-width: $from-small) {
+		margin-bottom: 0.5em;
+	}
+
+	@media (min-width: $from-small) and (max-width: $to-medium) {
+		font-size: ($heading2 / 1.5);
+	}
+
+	@media (min-width: $from-medium) {
+		font-size: rem($heading2);
+	}
+}
+
+h3, .h3, .gamma {
+	@extend %h;
+	font-size: rem($heading3);
+	font-weight: $normal;
+	line-height: $heading-line-height;
+
+	margin-top: 0;
+}
+
+h4, .h4, .delta {
+	@extend %h;
+	font-size: rem($heading4);
+	font-weight: $normal;
+	line-height: $heading-line-height;
+
+	margin-top: 0;
+}
+
+h5, .h5, .epsilon {
+	@extend %h;
+	font-size: rem($heading5);
+	font-weight: $normal;
+	line-height: $heading-line-height;
+
+	margin-top: 0;
+}
+
+h6, .h6, .zeta {
+	@extend %h;
+	font-size: rem($heading6);
+	font-weight: $normal;
+	line-height: $heading-line-height;
+
+	margin-top: 0;
+}

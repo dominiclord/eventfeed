@@ -1,0 +1,116 @@
+// ==========================================================================
+// Base
+// ==========================================================================
+html {
+	font-family: $font-family;
+	line-height: $line-height;
+	color: $color;
+	
+	@media (max-width: $to-small) {
+		font-size: 12px;
+	}
+
+	@media (min-width: $from-small) and (max-width: $to-medium) {
+		font-size: 13px;
+	}
+
+	@media (min-width: $from-medium) and (max-width: $to-huge) {
+		font-size: 14px;
+	}
+
+	@media (min-width: $from-huge) {
+		font-size: $font-size;
+	}
+}
+
+body {
+	@media (max-width: $to-small) {
+		padding-top: $header-main-mobile;
+	}
+
+	@media (min-width: $from-small) {
+		padding-top: rem($header-main);
+	}
+
+	&.is-loading {
+		overflow: hidden;
+	}
+
+	.template-home & {
+		padding-top: 0;
+	}
+
+	&.has-nav-full {
+		@media (max-width: $to-large) {
+			overflow: hidden;
+		}
+	}
+}
+
+main {
+	overflow: hidden;
+	visibility: hidden;
+
+	.is-loaded & {
+		visibility: visible;
+	}
+}
+
+::selection {
+	background: $selection;
+	color: $white;
+	text-shadow: none;
+}
+
+hr {
+	display: block;
+
+	height: 1px;
+	margin: 0;
+	padding: 0;
+
+	border: 0;
+	border-top: 1px solid rgba($brown, 0.20);
+
+	&.-normal-margin {
+		margin: 0.5rem 0;
+	}
+
+	&.-small-margin {
+		margin: rem(52px) 0;
+
+		&.-form {
+			margin-top: (rem(25px));
+		}
+	}
+
+	&.-margin {
+		margin: rem($unit) 0;
+	}
+
+	&.-big-margin {
+		margin: rem(90px) 0;
+
+		&.-form {
+			margin-top: rem(62px);
+		}
+	}
+}
+
+img, svg {
+	max-width: 100%;
+}
+
+a {
+	color: $link;
+	transition: color $speed;
+
+	&:hover {
+		color: $link-hover;
+	}
+}
+
+p {
+	margin: 0;
+}
+

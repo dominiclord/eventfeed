@@ -1,0 +1,56 @@
+// ==========================================================================
+// Button
+// ==========================================================================
+.button {
+	background-color: $orange;
+	transition: background-color $speed, color $speed;
+	color: $white;
+	text-decoration: none;
+	font-family: $brandon;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	font-weight: $bold;
+	padding: rem(20px);
+
+	@media (max-width: $to-small) {
+		font-size: 10px;
+		width: 160px;
+	}
+
+	@media (min-width: $from-small) {
+		font-size: rem(14px);
+		min-width: rem(200px);
+	}
+
+	&:focus {
+		background-color: darken($orange, 5%);
+	}
+
+	&:hover {
+		background-color: darken($orange, 10%);
+		color: $white;
+	}
+
+	&.-margin {
+		margin-top: rem(30px);
+	}
+
+	&.-outline {
+		border: 1px solid $white;
+
+		&:hover {
+			background-color: $white;
+			color: $orange;
+		}
+	}
+
+	&.-nav {
+		font-size: rem(12px);
+		padding: rem(10px) rem(15px);
+		min-width: 0;
+
+		@media (max-width: $to-small) {
+			width: auto;
+		}
+	}
+}

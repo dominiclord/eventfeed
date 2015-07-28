@@ -1,0 +1,83 @@
+// ==========================================================================
+// Settings
+// ==========================================================================
+
+// Colors
+// ==========================================================================
+$brown: #160800;
+$orange: #d16421;
+$beige: #fff9e5;
+$gray: #d1cecb;
+$gray-light: #f2f2f2;
+$gray-error: #f2dada;
+$gray-color: #676766;
+// Generic
+$black: #000000;
+$white: #ffffff;
+$white-dark: #eeebe8;
+// Specific
+$selection: $orange;
+$link: $orange;
+$link-hover: darken($orange, 10%);
+
+// Typography
+// ==========================================================================
+
+//Fonts
+$brandon: 'brandon-grotesque', sans-serif;
+$lora: 'Lora', serif;
+
+// Base
+$font-size: 18px;
+$line-height: 1.4;
+$font-family: $lora;
+$color: $brown;
+// Headings
+$heading1: 72px; // .alpha
+$heading2: 46px; // .beta
+$heading3: 36px; // .gamma
+$heading4: 22px; // .delta
+$heading5: 13px; // .epsilon
+$heading6: 11px; // .zeta
+$heading-line-height: 1;
+// Weights
+$light: 300;
+$normal: 400;
+$medium: 500;
+$bold: 700;
+
+// Container
+// ==========================================================================
+$max-width: 1320px;
+$padding: 60px;
+
+// Spacings
+// ==========================================================================
+$gutter: 20px;
+$margin: 40px;
+
+$unit: 60px;
+
+// Components
+// ==========================================================================
+$header-main: ($unit * 2);
+$header-main-mobile: 59px;
+
+// Screen widths
+// ==========================================================================
+$from-tiny: 414px;
+$to-tiny: $from-tiny - 1;
+$from-small: 768px;
+$to-small: $from-small - 1;
+$from-medium: 1024px;
+$to-medium: $from-medium - 1;
+$from-large: 1280px;
+$to-large: $from-large - 1;
+$from-huge: 1680px;
+$to-huge: $from-huge - 1;
+
+// Transitions
+// ==========================================================================
+$speed: 0.3s;
+$speed-slow: 0.6s;
+$easing: linear;
