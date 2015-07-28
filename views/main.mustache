@@ -9,44 +9,45 @@
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,700">
         <link rel="stylesheet" href="/assets/styles/dist/normalize.css">
         <link rel="stylesheet" href="/assets/styles/dist/main.css">
-        <script src="/assets/js/vendor/modernizr-2.7.1.min.js"></script>
     </head>
     <body>
         <header class="c-header-main">
-            <h1 class="c-header-main_heading h1">EventFeed</h1>
+            <h1 class="c-header-main_heading h2">EventFeed</h1>
         </header>
-        <div id="columns">
-            <div class="column">
-            {{#left_posts}}
-                <div data-timestamp="{{ timestamp }}" class="post {{ type }}">
-                {{#is_text}}
-                    <p><strong>{{ author }}:</strong> {{ text }}</p>
-                {{/is_text}}
-                {{#is_hybrid}}
-                    <img src="/uploads/{{ image }}">
-                    <div class="text"><p><strong>{{ author }}:</strong> {{ text }}</p></div>
-                {{/is_hybrid}}
-                {{#is_image}}
-                    <img src="/uploads/{{ image }}" alt="">
-                {{/is_image}}
+        <div class="o-grid">
+            <div class="o-grid_row">
+                <div class="o-grid_item">
+                {{#left_posts}}
+                    <div data-timestamp="{{ timestamp }}" class="post {{ type }}">
+                    {{#is_text}}
+                        <p><strong>{{ author }}:</strong> {{ text }}</p>
+                    {{/is_text}}
+                    {{#is_hybrid}}
+                        <img src="/uploads/{{ image }}">
+                        <div class="text"><p><strong>{{ author }}:</strong> {{ text }}</p></div>
+                    {{/is_hybrid}}
+                    {{#is_image}}
+                        <img src="/uploads/{{ image }}" alt="">
+                    {{/is_image}}
+                    </div>
+                {{/left_posts}}
                 </div>
-            {{/left_posts}}
-            </div>
-            <div class="column">
-            {{#right_posts}}
-                <div data-timestamp="{{ timestamp }}" class="post {{ type }}">
-                {{#is_text}}
-                    <p><strong>{{ author }}:</strong> {{ text }}</p>
-                {{/is_text}}
-                {{#is_hybrid}}
-                    <img src="/uploads/{{ image }}">
-                    <div class="text"><p><strong>{{ author }}:</strong> {{ text }}</p></div>
-                {{/is_hybrid}}
-                {{#is_image}}
-                    <img src="/uploads/{{ image }}" alt="">
-                {{/is_image}}
+                <div class="o-grid_item">
+                {{#right_posts}}
+                    <div data-timestamp="{{ timestamp }}" class="post {{ type }}">
+                    {{#is_text}}
+                        <p><strong>{{ author }}:</strong> {{ text }}</p>
+                    {{/is_text}}
+                    {{#is_hybrid}}
+                        <img src="/uploads/{{ image }}">
+                        <div class="text"><p><strong>{{ author }}:</strong> {{ text }}</p></div>
+                    {{/is_hybrid}}
+                    {{#is_image}}
+                        <img src="/uploads/{{ image }}" alt="">
+                    {{/is_image}}
+                    </div>
+                {{/right_posts}}
                 </div>
-            {{/right_posts}}
             </div>
         </div>
         <script src="/assets/scripts/dist/vendors.js"></script>

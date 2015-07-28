@@ -6,7 +6,7 @@
 	font-size: 0;
 	margin-left: -$grid-gutter;
 }
-.grid {
+.o-grid {
 	@include grid;
 
 	&.-margin {
@@ -21,9 +21,9 @@
 @mixin grid_row($grid-gutter: 0) {
 	margin-bottom: rem($unit);
 }
-.grid_row {
+.o-grid_row {
 	@include grid_row;
-	
+
 	@media (min-width: $from-small) {
 		display: flex;
 		align-items: center;
@@ -43,7 +43,7 @@
 	font-size: 1rem;
 	padding-left: $grid-gutter;
 }
-.grid_item {
+.o-grid_item {
 	@include grid_item;
 
 	&.-middle {
