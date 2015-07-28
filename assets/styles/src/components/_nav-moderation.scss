@@ -1,11 +1,10 @@
 // ==========================================================================
-// Nav main
+// Nav moderation
 // ==========================================================================
 .nav-main {
 	display: inline-block;
 	line-height: rem($header-line-height);
 	text-transform: uppercase;
-	font-family: $brandon;
 	font-weight: $medium;
 
 	&.-full {

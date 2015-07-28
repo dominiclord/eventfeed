@@ -4,7 +4,6 @@
 @mixin h {
 	&.-uppercase {
 		text-transform: uppercase;
-		font-family: $brandon;
 		font-weight: $medium;
 	}
 
@@ -53,7 +52,7 @@ h2, .h2, .beta {
 			margin-bottom: 0.5em;
 		}
 	}
-	
+
 	@media (min-width: $from-small) {
 		margin-bottom: 0.5em;
 	}

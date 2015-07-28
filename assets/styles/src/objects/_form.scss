@@ -83,7 +83,7 @@
 .form_captcha_wrap {
 	display: none;
 	margin-top: rem(30px);
-	
+
 	.form_captcha.is-active & {
 		display: inline-block;
 	}
@@ -94,7 +94,6 @@
 .label {
 	display: block;
 	margin-bottom: rem(10px);
-	font-family: $brandon;
 	text-transform: uppercase;
 	font-weight: $medium;
 	font-size: rem(12px);
@@ -177,7 +176,7 @@ $input-icon-color: 534943; // No #
 // ==========================================================================
 .input-group {
 	@include grid(rem(5px));
-	
+
 	.input, .button {
 		height: rem(54px);
 		font-size: rem(14px);

@@ -13,110 +13,26 @@ $header-line-height: 40px;
 	}
 }
 
-.header-main {
+.c-header-main {
 	@extend %header-main-height;
-	position: fixed;
-	top: 0;
-	right: 0;
-	left: 0;
 	backface-visibility: hidden;
-	background-color: $brown;
-	z-index: 90;
-	text-align: center;
+	background-color: #3C3C3C;
 	color: $beige;
+	left: 0;
+	position: fixed;
+	right: 0;
+	text-align: center;
+	top: 0;
+	z-index: 90;
 
 	@media (max-width: $to-small) {
 		font-size: 0;
 	}
-
-	.template-home & {
-		position: absolute;
-		top: 100vh;
-
-		@media (max-height: 480px) {
-			position: fixed;
-			top: 0;
-		}
-
-		&.is-fixed {
-			position: fixed;
-			top: 0;
-		}
-	}
 }
 
-.header-main-space {
-	@extend %header-main-height;
-
-	@media (max-height: 480px) {
-		display: none;
-	}
-}
-
-.header-main_background {
-	position: absolute;
-	top: 0;
-	right: 0;
-	left: 0;
-	height: 100%;
-	background-color: $brown;
-	z-index: 0;
-	transition: transform $speed;
-
-	&:hover, .header-main:hover &, .has-nav-full & {
-		@media (min-width: $from-large) {
-			transform: translateY(rem($header-line-height));
-		}
-	}
-}
-
-%header-main_item {
-	padding: 22px;
-
-	@media (min-width: $from-small) {
-		line-height: rem($header-line-height);
-		padding: rem($header-line-height) rem($unit);
-	}
-}
-
-// Logo
-// ==========================================================================
-.header-main_logo {
-	@extend %header-main_item;
-	display: inline-block;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	transition: transform $speed;
-	@include notap;
-
-	.header-main:hover &, .has-nav-full & {
-		@media (min-width: $from-large) {
-			transform: translateY(rem($header-line-height / 2));
-		}
-	}
-}
-
-.header-main_logo_image {
-	fill: $beige;
-	transition: fill $speed;
-
-	@media (max-width: $to-small) {
-		width: 141px;
-		height: 15px;
-	}
-
-	@media (min-width: $from-small) {
-		width: rem(240px);
-		height: rem(26px);
-	}
-
-	.header-main_logo:hover & {
-		@media (min-width: $from-large) {
-			fill: $orange;
-		}
-	}
+.c-header-main_heading {
+	margin: 0;
+	padding: rem($header-line-height) 0;
 }
 
 // Button
@@ -128,7 +44,6 @@ $header-line-height: 40px;
 	right: 0;
 	bottom: 0;
 	text-transform: uppercase;
-	font-family: $brandon;
 	font-weight: $medium;
 	letter-spacing: 0.075em;
 	transition: transform $speed, color $speed;
@@ -160,7 +75,7 @@ $header-line-height: 40px;
 			display: none;
 		}
 	}
-	
+
 	.has-nav-full & {
 		.template-home & {
 			position: fixed;
@@ -169,7 +84,7 @@ $header-line-height: 40px;
 			bottom: auto;
 		}
 	}
-	
+
 	.header-main:hover &, .has-nav-full & {
 		@media (min-width: $from-large) {
 			transform: translateY(rem($header-line-height / 2));
@@ -247,7 +162,7 @@ $header-line-height: 40px;
 			}
 		}
 	}
-	
+
 	.has-nav-full & {
 		&:nth-child(1) {
 			transform: rotate(-41deg) translateY(-2px);
@@ -269,5 +184,5 @@ $header-line-height: 40px;
 			}
 		}
 	}
-	
+
 }
