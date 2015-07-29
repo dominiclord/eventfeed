@@ -19,7 +19,7 @@
 .c-post-grid_item {
     @include grid_item;
     margin: 0;
-    padding-top: $margin;
+    //padding-top: $margin;
 
     @media (min-width: $from-small) {
         height: 100%;

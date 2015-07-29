@@ -12,7 +12,7 @@
 
 use \Slim\Slim as Slim;
 use \Utils\RandomStringGenerator;
-use \Utils\GenerateRandomColor;
+use \Utils\ColorPalette;
 
 require_once 'vendor/autoload.php';
 require_once 'utils/index.php';
@@ -41,10 +41,11 @@ $app->get('/main(/)', function ( ) use ($app, $db) {
         ->where('status','published')
         ->order('timestamp ASC');
 
+    $color_palette = new ColorPalette('#6DB542');
+
     foreach ($posts as $post) {
 
-        $color_generator = new GenerateRandomColor('#374046');
-        $color = $color_generator->generate();
+        $color = $color_palette->render();
 
         /*
         * @TODO : Figure out how to output structure automatically with NotORM
