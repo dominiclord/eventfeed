@@ -3,12 +3,12 @@
 namespace Utils;
 
 /**
- * Class RandomStringGenerator
- * @package Utils
- *
- * Solution taken from here:
- * http://stackoverflow.com/a/13733588/1056679
- */
+* Class RandomStringGenerator
+* @package Utils
+*
+* Solution taken from here:
+* http://stackoverflow.com/a/13733588/1056679
+*/
 class RandomStringGenerator
 {
     /** @var string */
@@ -19,8 +19,8 @@ class RandomStringGenerator
 
 
     /**
-     * @param string $alphabet
-     */
+    * @param string $alphabet
+    */
     public function __construct($alphabet = '')
     {
         if ('' !== $alphabet) {
@@ -44,9 +44,9 @@ class RandomStringGenerator
     }
 
     /**
-     * @param int $length
-     * @return string
-     */
+    * @param int $length
+    * @return string
+    */
     public function generate($length)
     {
         $token = '';
@@ -60,10 +60,10 @@ class RandomStringGenerator
     }
 
     /**
-     * @param int $min
-     * @param int $max
-     * @return int
-     */
+    * @param int $min
+    * @param int $max
+    * @return int
+    */
     protected function getRandomInteger($min, $max)
     {
         $range = ($max - $min);

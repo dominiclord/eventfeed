@@ -107,7 +107,7 @@ $input-icon-color: 534943; // No #
 .input {
 	display: block;
 	padding: rem(20px);
-	background-color: $gray-light;
+	background-color: $grey-light;
 	height: rem(60px);
 	transition: background-color $speed;
 	font-size: rem(16px);
@@ -115,7 +115,7 @@ $input-icon-color: 534943; // No #
 	@include notap;
 
 	&:focus {
-		background-color: darken($gray-light, 5%);
+		background-color: darken($grey-light, 5%);
 	}
 
 	&::placeholder {
@@ -134,7 +134,7 @@ $input-icon-color: 534943; // No #
 	}
 
 	&.has-error {
-		background-color: $gray-error;
+		background-color: $grey-error;
 	}
 }
 
@@ -210,7 +210,7 @@ $input-icon-color: 534943; // No #
 
 	&:focus {
 		+ .input-file-path {
-			background-color: darken($gray-light, 5%);
+			background-color: darken($grey-light, 5%);
 		}
 	}
 }
@@ -233,7 +233,7 @@ $checkbox-icon-color: ffffff;
 	&:focus {
 		+ .checkbox-label {
 			&::before {
-				background-color: darken($gray-light, 5%) !important;
+				background-color: darken($grey-light, 5%) !important;
 			}
 		}
 	}
@@ -283,7 +283,7 @@ $checkbox-icon-color: ffffff;
 		content: "";
 
 		.input-item.has-error & {
-			background-color: $gray-error;
+			background-color: $grey-error;
 		}
 	}
 

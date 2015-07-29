@@ -18,19 +18,10 @@
 	}
 }
 
-@mixin grid_row($grid-gutter: 0) {
-	margin-bottom: rem($unit);
-}
 .o-grid_row {
-	@include grid_row;
-
 	@media (min-width: $from-small) {
 		display: flex;
 		align-items: center;
-
-		&.-reverse {
-			flex-direction: row-reverse;
-		}
 	}
 }
 
@@ -48,22 +39,6 @@
 
 	&.-middle {
 		vertical-align: middle;
-	}
-
-	&.-margin {
-		padding-left: rem($unit);
-	}
-
-	&.-small-margin {
-		padding-left: rem(40px);
-	}
-
-	&.-bottom {
-		margin-bottom: rem($unit);
-	}
-
-	&.-mobile-margin {
-		margin-bottom: rem(50px);
 	}
 }
 
@@ -195,7 +170,7 @@
 
 // Classes
 // ==========================================================================
-.two-fifths {
+.-two-fifths {
 	@extend .grid_item;
 
 	@media (max-width: $to-small) {
@@ -207,7 +182,7 @@
 	}
 }
 
-.three-fifths {
+.-three-fifths {
 	@extend .grid_item;
 
 	@media (max-width: $to-small) {
@@ -219,7 +194,7 @@
 	}
 }
 
-.half {
+.-half {
 	@extend .grid_item;
 
 	@media (max-width: $to-small) {
@@ -235,7 +210,7 @@
 	}
 }
 
-.third {
+.-third {
 	@extend .grid_item;
 
 	@media (min-width: $from-small) {
@@ -243,7 +218,7 @@
 	}
 }
 
-.two-thirds {
+.-two-thirds {
 	@extend .grid_item;
 
 	@media (min-width: $from-small) {
@@ -251,7 +226,7 @@
 	}
 }
 
-.quarter {
+.-quarter {
 	@extend .grid_item;
 
 	@media (min-width: $from-small) {
@@ -259,7 +234,7 @@
 	}
 }
 
-.fifth {
+.-fifth {
 	@extend .grid_item;
 
 	@media (max-width: $to-small) {

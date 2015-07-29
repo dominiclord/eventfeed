@@ -12,6 +12,7 @@
 
 use \Slim\Slim as Slim;
 use \Utils\RandomStringGenerator;
+use \Utils\GenerateRandomColor;
 
 require_once 'vendor/autoload.php';
 require_once 'utils/index.php';
@@ -42,6 +43,9 @@ $app->get('/main(/)', function ( ) use ($app, $db) {
 
     foreach ($posts as $post) {
 
+        $color_generator = new GenerateRandomColor('#374046');
+        $color = $color_generator->generate();
+
         /*
         * @TODO : Figure out how to output structure automatically with NotORM
         */
@@ -53,18 +57,20 @@ $app->get('/main(/)', function ( ) use ($app, $db) {
             'text'               => $post['text'],
             'image'              => $post['image'],
             'status'             => $post['status'],
-            'type'               => $post['type']
+            'type'               => $post['type'],
+            'color'              => $color
         ];
 
         switch ( $post['type'] ) {
             case 'text':
-                $_post['is_text'] = true;
+                $_post['has_text'] = true;
                 break;
             case 'hybrid':
-                $_post['is_hybrid'] = true;
+                $_post['has_text']  = true;
+                $_post['has_image'] = true;
                 break;
             case 'image':
-                $_post['is_image'] = true;
+                $_post['has_image'] = true;
                 break;
         }
 
@@ -77,9 +83,17 @@ $app->get('/main(/)', function ( ) use ($app, $db) {
         $count++;
     }
 
+    $columns = [
+        [
+            'posts' => $left_posts
+        ],
+        [
+            'posts' => $right_posts
+        ]
+    ];
+
     $app->view()->setData([
-        'left_posts'  => $left_posts,
-        'right_posts' => $right_posts
+        'columns' => $columns
     ]);
 
     $app->render('main');

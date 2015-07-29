@@ -12,9 +12,6 @@ article p, body, h1 {
 h1{
     background-color: #df8310;
     background-image:         linear-gradient(bottom, #555555 0%, #3C3C3C 75%);
-    background-image:      -o-linear-gradient(bottom, #555555 0%, #3C3C3C 75%);
-    background-image:     -ms-linear-gradient(bottom, #555555 0%, #3C3C3C 75%);
-    background-image:    -moz-linear-gradient(bottom, #555555 0%, #3C3C3C 75%);
     background-image: -webkit-linear-gradient(bottom, #555555 0%, #3C3C3C 75%);
     background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #555555),color-stop(0.75, #3C3C3C));
     color:white;
@@ -28,7 +25,7 @@ h1{
 #formEntry ul {  padding:0; margin:0; }
 #formEntry ul li { list-style-type:none; }
 #formEntry label { display: block; width:100%; margin:.7em 0 .1em 0; font-weight:bold; }
-#formEntry input[type=text] { width:100%; border:1px solid #CCC; font-size: 1.5em; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+#formEntry input[type=text] { width:100%; border:1px solid #CCC; font-size: 1.5em; box-sizing: border-box; }
 #formEntry .error { border: 1px solid #C00!important; }
 #formEntry #btnCancel, #formEntry #btnSubmit { font-size:1.1em; }
 

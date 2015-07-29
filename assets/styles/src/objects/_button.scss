@@ -4,7 +4,7 @@
 .button {
 	background-color: $orange;
 	transition: background-color $speed, color $speed;
-	color: $white;
+	color: white;
 	text-decoration: none;
 	text-transform: uppercase;
 	letter-spacing: 0.1em;
@@ -27,7 +27,7 @@
 
 	&:hover {
 		background-color: darken($orange, 10%);
-		color: $white;
+		color: white;
 	}
 
 	&.-margin {
@@ -35,10 +35,10 @@
 	}
 
 	&.-outline {
-		border: 1px solid $white;
+		border: 1px solid white;
 
 		&:hover {
-			background-color: $white;
+			background-color: white;
 			color: $orange;
 		}
 	}

@@ -4,17 +4,16 @@
 
 // Colors
 // ==========================================================================
-$brown: #160800;
-$orange: #d16421;
-$beige: #fff9e5;
-$gray: #d1cecb;
-$gray-light: #f2f2f2;
-$gray-error: #f2dada;
-$gray-color: #676766;
+$orange: #FF5722;
+$orange-dark: #E64A19;
+$grey: #727272;
+$grey-light: #B6B6B6;
+$grey-dark: #212121;
+$grey-error: #F68080;
+
 // Generic
-$black: #000000;
-$white: #ffffff;
-$white-dark: #eeebe8;
+$black: #222222;
+
 // Specific
 $selection: $orange;
 $link: $orange;
@@ -30,7 +29,7 @@ $arimo: 'Roboto', serif;
 $font-size: 18px;
 $line-height: 1.4;
 $font-family: $arimo;
-$color: $brown;
+$color: $orange;
 // Headings
 $heading1: 72px; // .alpha
 $heading2: 46px; // .beta

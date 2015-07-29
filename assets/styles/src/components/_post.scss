@@ -1,0 +1,44 @@
+// ==========================================================================
+// Posts on main interface
+// ==========================================================================
+
+// Layout
+// ==========================================================================
+.c-post-grid {
+    font-size: 0;
+    letter-spacing: normal;
+    padding: 0 2%;
+
+    @media (min-width: $from-small) {
+        align-items: top;
+        display: flex;
+        height: 100%;
+    }
+
+}
+.c-post-grid_item {
+    @include grid_item;
+    margin: 0;
+    padding-top: $margin;
+
+    @media (min-width: $from-small) {
+        height: 100%;
+        width: 50%;
+    }
+}
+
+// Posts
+// ==========================================================================
+.c-post {
+    background-color: #414141;
+    color: white;
+    position: relative;
+}
+
+.c-post_content {
+    padding: $padding;
+}
+
+.c-post_text {
+    margin-bottom: $font-size;
+}
