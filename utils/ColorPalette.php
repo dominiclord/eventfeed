@@ -15,8 +15,8 @@ class ColorPalette
     protected $base_b;
 
     protected $catalogue = [];
-
-    private $options;
+    protected $modifier;
+    protected $options;
 
     /**
     * Stock the base color and options
@@ -30,7 +30,7 @@ class ColorPalette
         $this->options = [
             'avoid_proximity' => true,
             'return_format'   => 'hex',
-            'variance'        => 50
+            'variance'        => 25
         ];
 
         if (is_array($options) && !empty($options)) {
@@ -111,11 +111,10 @@ class ColorPalette
         $b = $rgb[2];
 
         foreach ($colors_to_check as $color) {
-
             // We can validate with $r on its own since all channels were modified with the same variance
-            // We consider a good tolerace to be around 15
+            // Colors will be much closer the lower you go
             // @TODO Add proximity tolerance to options
-            if (abs( $r - $color[0]) < 40) {
+            if (abs( $r - $color[0]) < 10) {
                 $proximity = true;
             }
         }
@@ -129,7 +128,14 @@ class ColorPalette
     */
     private function generate_colors()
     {
+
         $variance = rand(0, $this->options['variance']);
+
+        // Switch operator on the variance
+        if ($this->options['avoid_proximity']) {
+            $this->modifier++;
+            $variance = $variance * ( ( $this->modifier % 2 ) ? 1 : -1 );
+        }
 
         $r = max(0, min(255, $this->base_r + $variance));
         $g = max(0, min(255, $this->base_g + $variance));
@@ -146,8 +152,11 @@ class ColorPalette
     {
         if ($this->options['avoid_proximity']) {
 
+            // Reset modifier
+            $this->modifier = 0;
+
             $counter = 0;
-            $safety = 10;
+            $safety = 20;
 
             while ($safety > $counter) {
 
