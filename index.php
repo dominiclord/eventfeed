@@ -12,7 +12,6 @@
 
 use \Slim\Slim as Slim;
 use \Utils\RandomStringGenerator;
-use \Utils\ColorPalette;
 
 require_once 'vendor/autoload.php';
 require_once 'utils/index.php';

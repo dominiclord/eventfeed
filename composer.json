@@ -1,8 +1,15 @@
 {
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/dominiclord/colorpalette.git"
+        }
+    ],
     "require": {
         "slim/slim": "2.*",
         "mustache/mustache": "2.*",
         "dearon/slim-mustache": "0.1.*",
-        "vrana/notorm": "dev-master"
+        "vrana/notorm": "dev-master",
+        "dominiclord/colorpalette": "dev-master"
     }
 }
