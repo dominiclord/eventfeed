@@ -1,0 +1,12 @@
+// ==========================================================================
+// Headers
+// ==========================================================================
+%header-main-height {
+	@media (max-width: $to-small) {
+		height: $header-main-mobile;
+	}
+
+	@media (min-width: $from-small) {
+		height: rem($header-main);
+	}
+}

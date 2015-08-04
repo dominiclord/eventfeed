@@ -38,7 +38,7 @@ $app->get('/main(/)', function ( ) use ($app, $db) {
     $posts = $db
         ->posts()
         ->where('status','published')
-        ->order('timestamp ASC');
+        ->order('timestamp DESC');
 
     $color_palette = new ColorPalette('#6DB542');
 

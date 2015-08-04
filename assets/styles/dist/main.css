@@ -1020,7 +1020,7 @@ h6, .h6, .zeta {
 .c-header-main {
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
-  background-color: #6DB542;
+  background-color: #666666;
   color: white;
   left: 0;
   position: fixed;
@@ -1079,12 +1079,23 @@ h6, .h6, .zeta {
   background-color: #414141;
   color: white;
   position: relative; }
+  .c-post.-hybrid .c-post_content,
+  .c-post.-image .c-post_content {
+    background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.9), transparent);
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    bottom: 0;
+    padding: 30px 60px;
+    position: absolute;
+    width: 100%; }
 
 .c-post_content {
   padding: 60px; }
 
 .c-post_text {
   margin-bottom: 18px; }
+
+.c-post_image {
+  width: 100%; }
 
 @media (min-width: 768px) {
   .t-main body {

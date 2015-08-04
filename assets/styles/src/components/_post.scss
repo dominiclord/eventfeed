@@ -33,6 +33,15 @@
     background-color: #414141;
     color: white;
     position: relative;
+
+    &.-hybrid .c-post_content,
+    &.-image .c-post_content {
+        background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0));
+        bottom: 0;
+        padding: ($padding / 2) $padding;
+        position: absolute;
+        width: 100%;
+    }
 }
 
 .c-post_content {
@@ -41,4 +50,8 @@
 
 .c-post_text {
     margin-bottom: $font-size;
+}
+
+.c-post_image {
+    width: 100%;
 }

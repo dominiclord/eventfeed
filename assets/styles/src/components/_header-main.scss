@@ -1,22 +1,10 @@
 // ==========================================================================
 // Header main
 // ==========================================================================
-$header-line-height: 40px;
-
-%header-main-height {
-	@media (max-width: $to-small) {
-		height: $header-main-mobile;
-	}
-
-	@media (min-width: $from-small) {
-		height: rem($header-main);
-	}
-}
-
 .c-header-main {
 	@extend %header-main-height;
 	backface-visibility: hidden;
-	background-color: #6DB542;
+	background-color: #666666;
 	color: white;
 	left: 0;
 	position: fixed;
