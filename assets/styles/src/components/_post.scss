@@ -7,7 +7,7 @@
 .c-post-grid {
     font-size: 0;
     letter-spacing: normal;
-    padding: 0 2%;
+    padding: 0 10%;
 
     @media (min-width: $from-small) {
         align-items: top;
@@ -36,9 +36,9 @@
 
     &.-hybrid .c-post_content,
     &.-image .c-post_content {
-        background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0));
+        background-image: linear-gradient(to top, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 75%, rgba(0, 0, 0, 0) 95%);
         bottom: 0;
-        padding: ($padding / 2) $padding;
+        padding: $padding $padding ($padding / 2);
         position: absolute;
         width: 100%;
     }

@@ -1020,7 +1020,7 @@ h6, .h6, .zeta {
 .c-header-main {
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
-  background-color: #666666;
+  background-color: #414141;
   color: white;
   left: 0;
   position: fixed;
@@ -1048,7 +1048,7 @@ h6, .h6, .zeta {
 .c-post-grid {
   font-size: 0;
   letter-spacing: normal;
-  padding: 0 2%; }
+  padding: 0 10%; }
   @media (min-width: 768px) {
     .c-post-grid {
       -webkit-box-align: top;
@@ -1081,10 +1081,10 @@ h6, .h6, .zeta {
   position: relative; }
   .c-post.-hybrid .c-post_content,
   .c-post.-image .c-post_content {
-    background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.9), transparent);
-    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    background-image: -webkit-linear-gradient(bottom, black 0%, rgba(0, 0, 0, 0.4) 75%, transparent 95%);
+    background-image: linear-gradient(to top, black 0%, rgba(0, 0, 0, 0.4) 75%, transparent 95%);
     bottom: 0;
-    padding: 30px 60px;
+    padding: 60px 60px 30px;
     position: absolute;
     width: 100%; }
 
