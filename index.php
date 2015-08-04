@@ -40,7 +40,9 @@ $app->get('/main(/)', function ( ) use ($app, $db) {
         ->where('status','published')
         ->order('timestamp DESC');
 
-    $color_palette = new ColorPalette('#4285F4');
+    $color_palette = new ColorPalette('#4285F4', [
+        'variance' => 25
+    ]);
 
     foreach ($posts as $post) {
 
@@ -58,7 +60,7 @@ $app->get('/main(/)', function ( ) use ($app, $db) {
             'image'              => $post['image'],
             'status'             => $post['status'],
             'type'               => $post['type'],
-            'color'              => $color
+            'color'              => ''
         ];
 
         switch ( $post['type'] ) {

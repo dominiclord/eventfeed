@@ -1048,7 +1048,7 @@ h6, .h6, .zeta {
 .c-post-grid {
   font-size: 0;
   letter-spacing: normal;
-  padding: 0 10%; }
+  padding: 0 2%; }
   @media (min-width: 768px) {
     .c-post-grid {
       -webkit-box-align: top;
@@ -1059,7 +1059,20 @@ h6, .h6, .zeta {
       display: -webkit-flex;
       display: -ms-flexbox;
       display: flex;
-      height: 100%; } }
+      height: 100%;
+      padding: 0 5%; } }
+  @media (min-width: 1024px) {
+    .c-post-grid {
+      -webkit-box-align: top;
+      -webkit-align-items: top;
+          -ms-flex-align: top;
+              align-items: top;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      height: 100%;
+      padding: 0 10%; } }
 
 .c-post-grid_item {
   position: relative;
@@ -1076,20 +1089,28 @@ h6, .h6, .zeta {
       width: 50%; } }
 
 .c-post {
-  background-color: #414141;
+  background-color: #4c8ffe;
   color: white;
+  margin: 0 6px 12px;
   position: relative; }
   .c-post.-hybrid .c-post_content,
   .c-post.-image .c-post_content {
     background-image: -webkit-linear-gradient(bottom, black 0%, rgba(0, 0, 0, 0.4) 75%, transparent 95%);
     background-image: linear-gradient(to top, black 0%, rgba(0, 0, 0, 0.4) 75%, transparent 95%);
     bottom: 0;
-    padding: 60px 60px 30px;
+    padding: 30px 30px 15px;
     position: absolute;
     width: 100%; }
+    @media (min-width: 1024px) {
+      .c-post.-hybrid .c-post_content,
+      .c-post.-image .c-post_content {
+        padding: 60px 60px 30px; } }
 
 .c-post_content {
-  padding: 60px; }
+  padding: 30px; }
+  @media (min-width: 1024px) {
+    .c-post_content {
+      padding: 60px; } }
 
 .c-post_text {
   margin-bottom: 18px; }
