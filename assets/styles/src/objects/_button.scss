@@ -1,8 +1,9 @@
 // ==========================================================================
 // Button
 // ==========================================================================
-.button {
-	background-color: $orange;
+.o-button {
+	@extend .g-button;
+	background-color: $orange-dark;
 	transition: background-color $speed, color $speed;
 	color: white;
 	text-decoration: none;
@@ -12,12 +13,11 @@
 	padding: rem(20px);
 
 	@media (max-width: $to-small) {
-		font-size: 10px;
+		font-size: 14px;
 		width: 160px;
 	}
 
 	@media (min-width: $from-small) {
-		font-size: rem(14px);
 		min-width: rem(200px);
 	}
 
@@ -26,30 +26,11 @@
 	}
 
 	&:hover {
-		background-color: darken($orange, 10%);
+		background-color: darken($orange, 15%);
 		color: white;
 	}
 
 	&.-margin {
 		margin-top: rem(30px);
-	}
-
-	&.-outline {
-		border: 1px solid white;
-
-		&:hover {
-			background-color: white;
-			color: $orange;
-		}
-	}
-
-	&.-nav {
-		font-size: rem(12px);
-		padding: rem(10px) rem(15px);
-		min-width: 0;
-
-		@media (max-width: $to-small) {
-			width: auto;
-		}
 	}
 }

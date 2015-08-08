@@ -2,7 +2,6 @@
 // Header moderation
 // ==========================================================================
 .c-header {
-    @extend %header-main-height;
     color: white;
     left: 0;
     position: fixed;
@@ -42,5 +41,14 @@
 
 .c-header_heading {
     margin: 0;
-    padding: rem($header-line-height) 0;
+
+    @media (max-width: $to-small) {
+        height: $header-main-mobile;
+        line-height: $header-main-mobile;
+    }
+
+    @media (min-width: $from-small) {
+        height: rem($header-main);
+        line-height: rem($header-main);
+    }
 }

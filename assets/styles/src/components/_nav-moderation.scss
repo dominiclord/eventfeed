@@ -40,6 +40,7 @@
 .c-nav-moderation_list {
     @include grid;
 
+    background-color: $orange-dark;
     margin: 0;
     padding: 0;
 }
@@ -53,13 +54,14 @@
 }
 
 .c-nav-moderation_link {
-    background-color: $orange-dark;
     color: white;
     display: block;
+    overflow: hidden;
     position: relative;
     text-decoration: none;
 
     &::after {
+        background-color: rgba(255, 255, 255, 0.5);
         bottom: -4px;
         content: "";
         height: 4px;
@@ -74,7 +76,6 @@
         color: white;
 
         &::after {
-            background-color: rgba(255, 255, 255, 0.5);
             bottom: 0;
         }
     }
@@ -89,7 +90,7 @@
     }
 
     @media (max-width: $to-small) {
-        font-size: $font-size;
+        font-size: 12px;
         height: $header-main-mobile;
         line-height: $header-main-mobile;
     }
