@@ -2,5 +2,101 @@
 // Nav moderation
 // ==========================================================================
 .c-nav-moderation {
+    color: white;
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 90;
 
+    @media (max-width: $to-small) {
+        bottom: 0;
+
+        &::after {
+            background: linear-gradient(to top, rgba(43, 43, 43, 0.55) 0%, rgba(47, 47, 47, 0) 100%);
+            top: -12px;
+        }
+    }
+
+    @media (min-width: $from-small) {
+        top: rem($header-main);
+
+        &::after {
+            background: linear-gradient(to bottom, rgba(43, 43, 43, 0.55) 0%, rgba(47, 47, 47, 0) 100%);
+            bottom: -12px;
+        }
+    }
+
+    &::after {
+        content: "";
+        height: 12px;
+        left: 0;
+        right: 0;
+        pointer-events: none;
+        position: absolute;
+        width: 100%;
+    }
+}
+
+.c-nav-moderation_list {
+    @include grid;
+
+    margin: 0;
+    padding: 0;
+}
+
+.c-nav-moderation_item {
+    @include grid_item;
+
+    text-align: center;
+    vertical-align: middle;
+    width: span(1/5);
+}
+
+.c-nav-moderation_link {
+    background-color: $orange-dark;
+    color: white;
+    display: block;
+    position: relative;
+    text-decoration: none;
+
+    &::after {
+        bottom: -4px;
+        content: "";
+        height: 4px;
+        left: 0;
+        position: absolute;
+        transition: bottom 150ms ease-in-out;
+        right: 0;
+        width: 100%;
+    }
+
+    &:hover {
+        color: white;
+
+        &::after {
+            background-color: rgba(255, 255, 255, 0.5);
+            bottom: 0;
+        }
+    }
+
+    &.is-active {
+        bottom: 0;
+
+        &::after {
+            background-color: white;
+            bottom: 0;
+        }
+    }
+
+    @media (max-width: $to-small) {
+        font-size: $font-size;
+        height: $header-main-mobile;
+        line-height: $header-main-mobile;
+    }
+
+    @media (min-width: $from-small) {
+        font-size: $font-size;
+        height: rem($header-main);
+        line-height: rem($header-main);
+    }
 }

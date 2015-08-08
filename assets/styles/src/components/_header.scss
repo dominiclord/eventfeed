@@ -1,0 +1,46 @@
+// ==========================================================================
+// Header moderation
+// ==========================================================================
+.c-header {
+    @extend %header-main-height;
+    color: white;
+    left: 0;
+    position: fixed;
+    right: 0;
+    text-align: center;
+    top: 0;
+    z-index: 90;
+
+    @media (max-width: $to-small) {
+        font-size: 0;
+    }
+
+    &::after {
+        background: linear-gradient(to bottom, rgba(43, 43, 43, 0.55) 0%, rgba(47, 47, 47, 0) 100%);
+        bottom: -12px;
+        content: "";
+        height: 12px;
+        left: 0;
+        pointer-events: none;
+        position: absolute;
+        width: 100%;
+    }
+
+    &.-main {
+        background-color: $grey-dark;
+    }
+
+    &.-moderation {
+        background-color: $orange;
+        cursor: pointer;
+    }
+
+    &.-user {
+        background-color: green;
+    }
+}
+
+.c-header_heading {
+    margin: 0;
+    padding: rem($header-line-height) 0;
+}
