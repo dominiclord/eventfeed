@@ -31,7 +31,7 @@ $input-icon-color: 534943; // No #
 	padding: rem(5px) 0;
 	height: rem(60px);
 	transition: background-color $speed;
-	font-size: rem(30px);
+	font-size: rem(35px);
 	@include notap;
 
 	&:focus {
@@ -40,11 +40,6 @@ $input-icon-color: 534943; // No #
 
 	&::placeholder {
 		color: rgba($grey, 0.6);
-	}
-
-	&.-pointer {
-		cursor: pointer;
-		user-select: none;
 	}
 
 	&.has-error {

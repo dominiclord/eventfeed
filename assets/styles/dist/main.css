@@ -675,7 +675,7 @@ h6, .h6, .zeta {
   height: 3.3333333333rem;
   -webkit-transition: background-color 0.3s;
           transition: background-color 0.3s;
-  font-size: 1.6666666667rem;
+  font-size: 1.9444444444rem;
   -webkit-tap-highlight-color: transparent; }
   .o-input:focus, .o-checkbox-label:focus::before, .o-radio-label:focus::before, .o-checkbox-label:focus::after, .o-radio-label:focus::after, .o-select:focus, .o-textarea:focus {
     border-bottom: 2px solid #414141; }
@@ -687,12 +687,6 @@ h6, .h6, .zeta {
     color: rgba(114, 114, 114, 0.6); }
   .o-input::placeholder, .o-select::placeholder, .o-textarea::placeholder {
     color: rgba(114, 114, 114, 0.6); }
-  .o-input.-pointer, .o-input.input-file-path, .input-file-path.o-checkbox-label::before, .input-file-path.o-radio-label::before, .input-file-path.o-checkbox-label::after, .input-file-path.o-radio-label::after, .input-file-path.o-select, .input-file-path.o-textarea, .-pointer.o-checkbox-label::before, .-pointer.o-radio-label::before, .-pointer.o-checkbox-label::after, .-pointer.o-radio-label::after, .-pointer.o-select, .-pointer.o-textarea {
-    cursor: pointer;
-    -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none; }
   .o-input.has-error, .has-error.o-checkbox-label::before, .has-error.o-radio-label::before, .has-error.o-checkbox-label::after, .has-error.o-radio-label::after, .has-error.o-select, .has-error.o-textarea {
     background-color: #F68080; }
 
@@ -853,18 +847,11 @@ h6, .h6, .zeta {
   -webkit-transition: background-color 0.3s, color 0.3s;
           transition: background-color 0.3s, color 0.3s;
   color: white;
-  text-decoration: none;
-  text-transform: uppercase;
+  font-size: 14px;
   letter-spacing: 0.1em;
-  font-weight: 700;
-  padding: 1.1111111111rem; }
-  @media (max-width: 767px) {
-    .o-button {
-      font-size: 14px;
-      width: 160px; } }
-  @media (min-width: 768px) {
-    .o-button {
-      min-width: 11.1111111111rem; } }
+  padding: 1.1111111111rem 1.3888888889rem;
+  text-decoration: none;
+  text-transform: uppercase; }
   .o-button:focus {
     background-color: #ff4408; }
   .o-button:hover {
@@ -872,6 +859,13 @@ h6, .h6, .zeta {
     color: white; }
   .o-button.-margin {
     margin-top: 1.6666666667rem; }
+  .o-button.-flat {
+    background-color: transparent;
+    color: #414141; }
+    .o-button.-flat:focus {
+      background-color: rgba(147, 147, 147, 0.4); }
+    .o-button.-flat:hover {
+      background-color: rgba(147, 147, 147, 0.2); }
 
 .background {
   position: absolute;

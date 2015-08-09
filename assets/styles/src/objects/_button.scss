@@ -6,20 +6,11 @@
 	background-color: $orange-dark;
 	transition: background-color $speed, color $speed;
 	color: white;
+	font-size: 14px;
+	letter-spacing: 0.1em;
+	padding: rem(20px) rem(25px);
 	text-decoration: none;
 	text-transform: uppercase;
-	letter-spacing: 0.1em;
-	font-weight: $bold;
-	padding: rem(20px);
-
-	@media (max-width: $to-small) {
-		font-size: 14px;
-		width: 160px;
-	}
-
-	@media (min-width: $from-small) {
-		min-width: rem(200px);
-	}
 
 	&:focus {
 		background-color: darken($orange, 5%);
@@ -32,5 +23,18 @@
 
 	&.-margin {
 		margin-top: rem(30px);
+	}
+
+	&.-flat {
+		background-color: transparent;
+		color: $grey-dark;
+
+		&:focus {
+			background-color: rgba($grey-light, 0.4);
+		}
+
+		&:hover {
+			background-color: rgba($grey-light, 0.2);
+		}
 	}
 }
