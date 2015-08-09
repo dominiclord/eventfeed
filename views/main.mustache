@@ -19,15 +19,15 @@
                 {{#columns}}
                 <ul class="c-post-grid_item -half">
                     {{#posts}}
-                    <article class="c-post -{{ type }}" data-timestamp="{{ timestamp }}" style="background-color: {{color}};">
+                    <article class="c-main-post -{{ type }}" data-timestamp="{{ timestamp }}" style="background-color: {{color}};">
                         {{#has_image}}
-                        <img class="c-post_image" src="/uploads/{{ image }}" alt="">
+                        <img class="c-main-post_image" src="/uploads/{{ image }}" alt="">
                         {{/has_image}}
-                        <div class="c-post_content">
+                        <div class="c-main-post_content">
                         {{#has_text}}
-                            <p class="c-post_text h3">{{ text }}</p>
+                            <p class="c-main-post_text h3">{{ text }}</p>
                         {{/has_text}}
-                            <p class="c-post_author h4">- {{ author }}</p>
+                            <p class="c-main-post_author h4">- {{ author }}</p>
                         </div>
                     </article>
                     {{/posts}}

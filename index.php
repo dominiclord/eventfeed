@@ -333,13 +333,14 @@ $app->get('/moderation(/)(:view)', function ( $view = null ) use ( $app, $db ) {
 
         switch ( $post['type'] ) {
             case 'text':
-                $_post['is_text'] = true;
+                $_post['has_text'] = true;
                 break;
             case 'hybrid':
-                $_post['is_hybrid'] = true;
+                $_post['has_text']  = true;
+                $_post['has_image'] = true;
                 break;
             case 'image':
-                $_post['is_image'] = true;
+                $_post['has_image'] = true;
                 break;
         }
 

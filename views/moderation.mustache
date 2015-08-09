@@ -11,7 +11,7 @@
     </head>
     <body>
         <main>
-            <header class="c-header -moderation">
+            <header class="c-header -moderation js-moderation-toggle-all">
                 <h1 class="c-header_heading h2">Moderation</h1>
             </header>
             <nav class="c-nav-moderation">
@@ -30,26 +30,28 @@
                     </li>
                 </ul>
             </nav>
-            <section id="posts">
+            <section class="c-post-list js-post-list">
                 {{#posts}}
-                <article data-id="{{ id }}">
-                    {{>moderation_actions}}
-                    <h2><span class="sAuteur">{{ author }}</span> - <span class="sType">{{ type }}</span></h2>
-                    {{#is_text}}
-                    <p class="sTexte">{{ text }}</p>
-                    {{/is_text}}
-                    {{#is_hybrid}}
-                    <p><span id="sTexte">{{ text }}</span><br><img class="sImage" src="/uploads/{{ image }}"></p>
-                    <p>W : {{ image_width }} -- H : {{ image_height }}</p>
-                    {{/is_hybrid}}
-                    {{#is_image}}
-                    <p><img class="sImage" src="/uploads/{{ image }}"></p>
-                    <p>W : {{ image_width }} -- H : {{ image_height }}</p>
-                    {{/is_image}}
+                <article class="c-moderation-post js-moderation-post" data-id="{{ id }}">
+                    <h2 class="c-moderation-post_header js-moderation-post_header">
+                        <span class="sAuteur">{{ author }}</span> - <span class="sType">{{ type }}</span>
+                    </h2>
+                    <div class="c-moderation-post_content js-moderation-post_content">
+                        {{>moderation_actions}}
+                        {{#has_text}}
+                        <p class="c-moderation-post_text">{{ text }}</p>
+                        {{/has_text}}
+                        {{#has_image}}
+                        <p class="c-moderation-post_image">
+                            <img src="/uploads/{{ image }}" alt="">
+                        </p>
+                        <p>W : {{ image_width }} -- H : {{ image_height }}</p>
+                        {{/has_image}}
+                    </div>
                 </article>
                 {{/posts}}
             </section>
-            <form class="c-form-moderation">
+            <form class="c-form-moderation js-moderation-form none">
                 <div class="o-grid">
                     <div class="o-grid_item -half">
                         <div class="o-input-item">
@@ -61,8 +63,8 @@
                             <input class="o-input" id="post_text" type="text" name="text" value="">
                         </div>
                         <div class="o-input-item">
-                            <button class="o-button -margin -flat btnCancel" type="button">Cancel</button>
-                            <button class="o-button -margin -flat btnSubmit" type="submit">Save</button>
+                            <button class="o-button -margin -flat js-button-cancel" type="button">Cancel</button>
+                            <button class="o-button -margin -flat" type="submit">Save</button>
                         </div>
                     </div>
                 </div>
