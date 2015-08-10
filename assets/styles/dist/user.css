@@ -11,9 +11,8 @@ article p, body, h1 {
 
 h1{
     background-color: #df8310;
-    background-image:         linear-gradient(bottom, #555555 0%, #3C3C3C 75%);
-    background-image: -webkit-linear-gradient(bottom, #555555 0%, #3C3C3C 75%);
-    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #555555),color-stop(0.75, #3C3C3C));
+    background-image: -webkit-linear-gradient(top, #555555 0%, #3C3C3C 75%);
+    background-image: linear-gradient(to bottom, #555555 0%, #3C3C3C 75%);
     color:white;
     font-size: 1.25em;
     padding:1em 5%;

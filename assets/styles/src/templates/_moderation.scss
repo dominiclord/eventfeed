@@ -2,8 +2,10 @@
 // Main template
 // ==========================================================================
 .t-moderation {
-    @media (min-width: $from-small) {
-        body {
+    body {
+        background-color: #FAFAFA;
+
+        @media (min-width: $from-small) {
             height: 100vh;
             padding-top: rem($header-main) * 2;
         }

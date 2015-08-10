@@ -25,6 +25,7 @@
 $input-icon-color: 534943; // No #
 
 .o-input {
+	background: transparent;
 	border-bottom: 2px solid $grey-light;
 	display: block;
 	color: $grey-dark;

@@ -11,14 +11,26 @@
     z-index: 90;
 
     @media (max-width: $to-small) {
-        font-size: 0;
+        //font-size: 0;
+
+        &::after {
+            bottom: -6px;
+            height: 6px;
+        }
     }
+
+    @media (min-width: $from-small) {
+
+        &::after {
+            bottom: -12px;
+            height: 12px;
+        }
+    }
+
 
     &::after {
         background: linear-gradient(to bottom, rgba(43, 43, 43, 0.55) 0%, rgba(47, 47, 47, 0) 100%);
-        bottom: -12px;
         content: "";
-        height: 12px;
         left: 0;
         pointer-events: none;
         position: absolute;

@@ -44,27 +44,36 @@
 
 // Moderation interface
 // ==========================================================================
+.c-moderation-post_header,
+.c-moderation-post_content {
+    background-color: #FAFAFA;
+    padding: 0 ($padding / 4);
+
+    @media (min-width: $from-medium) {
+        padding: 0 ($padding / 2);
+    }
+}
+
 .c-moderation-post_header {
-    background-image: linear-gradient(to bottom, #ededed, #f2f2f2);
-    border-top: 1px solid #aaa;
-    border-bottom: 1px solid #aaa;
+    color: $grey-dark;
     cursor: pointer;
-    font-size: 20px;
     margin: 0;
 
     @media (max-width: $to-small) {
+        font-size: 16px;
         height: $header-main-mobile;
         line-height: $header-main-mobile;
     }
 
     @media (min-width: $from-small) {
+        font-size: 20px;
         height: rem($header-main);
         line-height: rem($header-main);
     }
 }
 
 .c-moderation-post_content {
-    background-image: linear-gradient(to bottom, #f2f2f2, #ffffff);
+    border-bottom: 1px solid #DEDEDE;
     height: 0;
     margin: -1px;
     overflow: hidden;
