@@ -2,39 +2,46 @@
 // Button
 // ==========================================================================
 .o-button {
-	@extend .g-button;
-	background-color: $orange-dark;
-	transition: background-color $speed, color $speed;
-	color: white;
-	font-size: 14px;
-	letter-spacing: 0.1em;
-	padding: rem(20px) rem(25px);
-	text-decoration: none;
-	text-transform: uppercase;
+    @extend .g-button;
+    border-radius: 2px;
+    color: $grey-dark;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 36px;
+    min-width: 64px;
+    overflow: hidden;
+    outline: none;
+    padding: 0 8px;
+    position: relative;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: box-shadow $speed cubic-bezier(0.4,0,1,1), background-color $speed cubic-bezier(0.4,0,0.2,1), color $speed cubic-bezier(0.4,0,0.2,1);
+    will-change: box-shadow, transform;
 
-	&:focus {
-		background-color: darken($orange, 5%);
-	}
+    &:focus:not(:active) {
+        background-color: rgba($grey-light, 0.4);
+    }
 
-	&:hover {
-		background-color: darken($orange, 15%);
-		color: white;
-	}
+    &:hover {
+        background-color: rgba($grey-light, 0.2);
+    }
 
-	&.-margin {
-		margin-top: rem(30px);
-	}
+    &.-margin {
+        margin-top: rem(30px);
+    }
 
-	&.-flat {
-		background-color: transparent;
-		color: $grey-dark;
+    &.-color {
+        background-color: $orange-dark;
+        color: white;
 
-		&:focus {
-			background-color: rgba($grey-light, 0.4);
-		}
+        &:focus {
+            background-color: darken($orange, 5%);
+        }
 
-		&:hover {
-			background-color: rgba($grey-light, 0.2);
-		}
-	}
+        &:hover {
+            background-color: darken($orange, 15%);
+        }
+    }
 }

@@ -74,14 +74,19 @@
 
 .c-moderation-post_content {
     border-bottom: 1px solid #DEDEDE;
+    font-size: 18px;
     height: 0;
     margin: -1px;
     overflow: hidden;
-    padding: 0 3%;
     position: relative;
     z-index: 10;
 
     .is-opened & {
         height: auto;
     }
+}
+
+.c-moderation-post_label {
+    color: $grey-light;
+    font-size: 14px;
 }
