@@ -106,7 +106,7 @@
 
     @media (min-width: $from-small) {
         font-size: $font-size;
-        height: rem($header-main);
-        line-height: rem($header-main);
+        height: rem($header-main) * 0.5;
+        line-height: rem($header-main) * 0.5;
     }
 }

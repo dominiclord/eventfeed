@@ -1057,8 +1057,8 @@ h6, .h6, .zeta {
   @media (min-width: 768px) {
     .c-nav-moderation_link {
       font-size: 18px;
-      height: 6.6666666667rem;
-      line-height: 6.6666666667rem; } }
+      height: 3.3333333333rem;
+      line-height: 3.3333333333rem; } }
 
 .c-moderation-actions {
   margin: 40px 0; }
@@ -1130,7 +1130,12 @@ h6, .h6, .zeta {
 
 .c-moderation-post_label {
   color: #939393;
-  font-size: 14px; }
+  font-size: 14px;
+  margin-top: 2em; }
+
+@media (min-width: 768px) {
+  .c-moderation-post_image img {
+    max-width: 50%; } }
 
 .c-post-grid {
   font-size: 0;
@@ -1150,15 +1155,6 @@ h6, .h6, .zeta {
       padding: 0 5%; } }
   @media (min-width: 1024px) {
     .c-post-grid {
-      -webkit-box-align: top;
-      -webkit-align-items: top;
-          -ms-flex-align: top;
-              align-items: top;
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
-      height: 100%;
       padding: 0 10%; } }
 
 .c-post-grid_item {
@@ -1186,7 +1182,7 @@ h6, .h6, .zeta {
   @media (min-width: 768px) {
     .t-moderation body {
       height: 100vh;
-      padding-top: 13.3333333333rem; } }
+      padding-top: 10rem; } }
 
 .vertical-center {
   font-size: 0; }

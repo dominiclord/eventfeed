@@ -42,16 +42,23 @@
                         <p>{{ text }}</p>
                         {{/has_text}}
                         {{#has_image}}
+                        <h3 class="c-moderation-post_label h4">Image information</h3>
+                        <p>Width : {{ image_width }}<br> Height : {{ image_height }}</p>
+                        <h3 class="c-moderation-post_label h4">Image</h3>
                         <p class="c-moderation-post_image">
                             <img src="/uploads/{{ image }}" alt="">
                         </p>
-                        <p>W : {{ image_width }} -- H : {{ image_height }}</p>
                         {{/has_image}}
                         {{>moderation_actions}}
                     </div>
                 </article>
                 {{/posts}}
             </section>
+            <aside class="c-post-viewer js-post-viewer">
+                <img src="" alt="">
+                <h2></h2>
+                <p></p>
+            </aside>
             <form class="c-form-moderation js-moderation-form none">
                 <div class="o-grid">
                     <div class="o-grid_item -half">
