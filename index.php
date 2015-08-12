@@ -306,7 +306,6 @@ $app->get('/moderation(/)(:view)', function ( $view = null ) use ( $app, $db ) {
         break;
     }
 
-
     foreach ($posts as $post) {
 
         try {
@@ -325,13 +324,13 @@ $app->get('/moderation(/)(:view)', function ( $view = null ) use ( $app, $db ) {
             'author'             => $post['author'],
             'text'               => $post['text'],
             'image'              => $post['image'],
-            'image_height'       => ( ! empty( $image_size ) ? $image_size[0] : null ),
-            'image_width'        => ( ! empty( $image_size ) ? $image_size[1] : null ),
+            'image_height'       => (!empty($image_size) ? $image_size[0] : null),
+            'image_width'        => (!empty($image_size) ? $image_size[1] : null),
             'status'             => $post['status'],
             'type'               => $post['type']
         ];
 
-        switch ( $post['type'] ) {
+        switch ($post['type']) {
             case 'text':
                 $_post['has_text'] = true;
                 break;

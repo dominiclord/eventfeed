@@ -3,8 +3,35 @@
 // ==========================================================================
 
 .c-post-list {
+    @include grid;
 
+    padding: 0;
+
+    @media (min-width: $from-small) {
+        //display: flex;
+        //align-items: center;
+    }
 }
 .c-post-list_item {
+    @include grid_item;
 
+    border: 1px solid #ccc;
+
+    &::before {
+        content: '';
+        float: left;
+        padding-top:100%;
+    }
+
+    @media (min-width: $from-small) {
+        height: auto;
+    }
+
+    @media (min-width: $from-small) and (max-width: $to-medium) {
+        width: span(1/2);
+    }
+
+    @media (min-width: $from-medium) {
+        width: span(1/4);
+    }
 }

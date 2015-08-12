@@ -30,29 +30,33 @@
                     </li>
                 </ul>
             </nav>
-            <section class="c-post-list js-post-list">
+            <section class="js-post-list-container">
+                <ul class="c-post-list">
                 {{#posts}}
-                <article class="c-moderation-post js-moderation-post" data-id="{{ id }}">
-                    <h2 class="c-moderation-post_header js-moderation-post_header">
-                        <span class="sAuteur">{{ author }}</span> - <span class="sType">{{ type }}</span>
-                    </h2>
-                    <div class="c-moderation-post_content js-moderation-post_content">
-                        {{#has_text}}
-                        <h3 class="c-moderation-post_label h4">Message</h3>
-                        <p>{{ text }}</p>
-                        {{/has_text}}
-                        {{#has_image}}
-                        <h3 class="c-moderation-post_label h4">Image information</h3>
-                        <p>Width : {{ image_width }}<br> Height : {{ image_height }}</p>
-                        <h3 class="c-moderation-post_label h4">Image</h3>
-                        <p class="c-moderation-post_image">
-                            <img src="/uploads/{{ image }}" alt="">
-                        </p>
-                        {{/has_image}}
-                        {{>moderation_actions}}
-                    </div>
-                </article>
+                    <li class="c-post-list_item">
+                        <article class="c-moderation-post js-moderation-post" data-id="{{ id }}">
+                            <h2 class="c-moderation-post_header js-moderation-post_header">
+                                <span class="sAuteur">{{ author }}</span> - <span class="sType">{{ type }}</span>
+                            </h2>
+                            <div class="c-moderation-post_content js-moderation-post_content">
+                                {{#has_text}}
+                                <h3 class="c-moderation-post_label h4">Message</h3>
+                                <p>{{ text }}</p>
+                                {{/has_text}}
+                                {{#has_image}}
+                                <h3 class="c-moderation-post_label h4">Image information</h3>
+                                <p>Width : {{ image_width }}<br> Height : {{ image_height }}</p>
+                                <h3 class="c-moderation-post_label h4">Image</h3>
+                                <p class="c-moderation-post_image">
+                                    <img src="/uploads/{{ image }}" alt="">
+                                </p>
+                                {{/has_image}}
+                                {{>moderation_actions}}
+                            </div>
+                        </article>
+                    </li>
                 {{/posts}}
+                </ul>
             </section>
             <aside class="c-post-viewer js-post-viewer">
                 <img src="" alt="">

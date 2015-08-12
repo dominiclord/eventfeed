@@ -44,6 +44,18 @@
 
 // Moderation interface
 // ==========================================================================
+.c-moderation-post {
+    text-align: center;
+
+    @media (max-width: $to-small) {
+        //height: $header-main-mobile;
+    }
+
+    @media (min-width: $from-small) {
+        //height: rem($header-main);
+    }
+}
+
 .c-moderation-post_header,
 .c-moderation-post_content {
     background-color: #FAFAFA;
@@ -61,29 +73,15 @@
 
     @media (max-width: $to-small) {
         font-size: 16px;
-        height: $header-main-mobile;
-        line-height: $header-main-mobile;
     }
 
     @media (min-width: $from-small) {
         font-size: 20px;
-        height: rem($header-main);
-        line-height: rem($header-main);
     }
 }
 
 .c-moderation-post_content {
-    border-bottom: 1px solid #DEDEDE;
     font-size: 18px;
-    height: 0;
-    margin: -1px;
-    overflow: hidden;
-    position: relative;
-    z-index: 10;
-
-    .is-opened & {
-        height: auto;
-    }
 }
 
 .c-moderation-post_label {
@@ -95,8 +93,6 @@
 .c-moderation-post_image {
 
     @media (min-width: $from-small) {
-        img {
-            max-width: 50%;
-        }
+
     }
 }
