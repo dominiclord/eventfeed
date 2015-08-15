@@ -1,6 +1,7 @@
 var author_input  = $('#post_author'),
     text_input    = $('#post_text'),
-    post_id_input = $('#post_id');
+    post_id_input = $('#post_id'),
+    post_image    = $('#post_image');
 
 function reset_form(){
     author.val('').removeClass('error').blur();
@@ -106,12 +107,12 @@ function modify_post(event) {
         error = true;
     }
 
-    if(error){
+    if (error) {
         alert('You must fill all fields');
         return;
     }
 
-    if(error === false){
+    if (error === false) {
 
         $.ajax({
             url  : '/posts/' + post_id,
@@ -141,6 +142,7 @@ function display_post( post_id, data ){
     post_id_input.val(post_id);
     author_input.val(data.author);
     text_input.val(data.text);
+    post_image.attr('src', '/uploads/' + data.image);
     show_form();
 }
 
