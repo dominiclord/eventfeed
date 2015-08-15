@@ -122,10 +122,10 @@ function modify_post(event) {
             },
             success : function(msg){
 
-                var post = $('article[data-id='+post_id+']');
+                var post = $('[data-id='+post_id+']');
 
-                $('.sAuteur',post).text(author_input.val());
-                $('.sTexte',post).text(text_input.val());
+                $('.js-author', post).text(author_input.val());
+                $('.js-text', post).text(text_input.val());
 
                 show_posts();
                 reset_form();

@@ -33,8 +33,8 @@
             <section class="js-post-list-container">
                 <ul class="c-post-list">
                 {{#posts}}
-                    <li class="c-post-list_item">
-                        <article class="c-moderation-post js-post" data-id="{{ id }}">
+                    <li class="c-post-list_item js-post" data-id="{{ id }}">
+                        <article class="c-moderation-post">
                             <div class="c-moderation-post_image"{{#has_image}} style="background-image:url(/uploads/{{ image }})"{{/has_image}}>
                                 {{#has_image}}
                                 <div class="c-moderation-post_image_information">
@@ -43,9 +43,9 @@
                                 {{/has_image}}
                             </div>
                             <div class="c-moderation-post_content">
-                                <h2 class="c-moderation-post_label h4">{{author}}</h2>
+                                <h2 class="c-moderation-post_label h4 js-author">{{author}}</h2>
                                 {{#has_text}}
-                                <p>{{text}}</p>
+                                <p class="js-text">{{text}}</p>
                                 {{/has_text}}
                                 {{^has_text}}
                                 <p><em>no text</em></p>
