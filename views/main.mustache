@@ -17,7 +17,7 @@
             </header>
             <section class="c-post-grid">
                 {{#columns}}
-                <ul class="c-post-grid_item -half">
+                <ul class="c-post-grid_item -half js-main-column">
                     {{#posts}}
                     <article class="c-main-post -{{ type }}" data-timestamp="{{ timestamp }}" style="background-color: {{color}};">
                         {{#has_image}}
@@ -27,7 +27,7 @@
                         {{#has_text}}
                             <p class="c-main-post_text h3">{{ text }}</p>
                         {{/has_text}}
-                            <p class="c-main-post_author h4">- {{ author }}</p>
+                            <p class="c-main-post_author h4">{{ author }}</p>
                         </div>
                     </article>
                     {{/posts}}

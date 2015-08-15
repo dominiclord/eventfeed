@@ -136,6 +136,19 @@ $app->get('/main/posts(/)', function ( ) use ($app, $db) {
                 'type'               => $post['type']
             ];
 
+            switch ( $post['type'] ) {
+                case 'text':
+                    $_post['has_text'] = true;
+                    break;
+                case 'hybrid':
+                    $_post['has_text']  = true;
+                    $_post['has_image'] = true;
+                    break;
+                case 'image':
+                    $_post['has_image'] = true;
+                    break;
+            }
+
             $response['posts'][] = $_post;
 
         }

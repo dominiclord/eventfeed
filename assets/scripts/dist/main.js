@@ -33,33 +33,30 @@ function get_speed(){
 function show_new_posts(){
     if( !is_empty( posts[0] ) ){
 
-        var post  = posts[0],
-            sPost = '<div data-timestamp="'+post.timestamp+'" class="post '+post.type+' new">';
+        var post   = posts[0],
+            post_html  = '<article class="c-main-post -' + post.type + '" data-timestamp="' + post.timestamp + '">';
 
-        //Construction du post
-        switch(post.type){
-            case "text":
-                sPost += '<p><strong>'+post.author+'&nbsp;:</strong> '+post.text+'</p></div>';
-            break;
-            case "hybrid":
-                sPost += '<img src="../uploads/'+post.image+'"><div class="text"><p><strong>'+post.author+'&nbsp;:</strong> '+post.text+'</p></div></div>';
-            break;
-            case "image":
-              sPost += '<img src="../uploads/'+post.image+'"></div>';
-            break;
+        // Post injection
+        if (post.has_image) {
+            post_html += '<img class="c-main-post_image" src="../uploads/' + post.image + '" alt="">';
         }
+
+        post_html += '<div class="c-main-post_content">';
+
+        if (post.has_text) {
+            post_html += '<p class="c-main-post_text h3">' + post.text + '</p>';
+        }
+
+        post_html += '<p class="c-main-post_author h4">' + post.author + '</p>';
+        post_html += '</div>';
+        post_html += '</article>';
 
         if(split === true){
-            $('.column:first-child').append(sPost);
-            fix_width($('.post.new img'));
-            $('.column:first-child div:last-child').fadeIn().removeClass('new');
+            $('.js-main-column:first-child').prepend(post_html);
         }else{
-            $('.column:last-child').append(sPost);
-            $('.post.new img').each(function(){
-                fix_width($(this));
-            });
-            $('.column:last-child div:last-child').fadeIn().removeClass('new');
+            $('.js-main-column:last-child').prepend(post_html);
         }
+
         split = !split;
         posts.splice(0,1);
         publish_post(post.id);
