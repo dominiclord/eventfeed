@@ -667,7 +667,7 @@ h6, .h6, .zeta {
   letter-spacing: 0.05em;
   margin-bottom: 0.5555555556rem; }
 
-.o-input, .o-checkbox-label::before, .o-radio-label::before, .o-checkbox-label::after, .o-radio-label::after, .o-select, .o-textarea {
+.o-input, .o-input-file-path, .o-checkbox-label::before, .o-radio-label::before, .o-checkbox-label::after, .o-radio-label::after, .o-select, .o-textarea {
   background: transparent;
   border-bottom: 2px solid #939393;
   display: block;
@@ -678,17 +678,17 @@ h6, .h6, .zeta {
           transition: background-color 0.3s;
   font-size: 1.9444444444rem;
   -webkit-tap-highlight-color: transparent; }
-  .o-input:focus, .o-checkbox-label:focus::before, .o-radio-label:focus::before, .o-checkbox-label:focus::after, .o-radio-label:focus::after, .o-select:focus, .o-textarea:focus {
+  .o-input:focus, .o-input-file-path:focus, .o-checkbox-label:focus::before, .o-radio-label:focus::before, .o-checkbox-label:focus::after, .o-radio-label:focus::after, .o-select:focus, .o-textarea:focus {
     border-bottom: 2px solid #414141; }
-  .o-input::-webkit-input-placeholder, .o-select::-webkit-input-placeholder, .o-textarea::-webkit-input-placeholder {
+  .o-input::-webkit-input-placeholder, .o-input-file-path::-webkit-input-placeholder, .o-select::-webkit-input-placeholder, .o-textarea::-webkit-input-placeholder {
     color: rgba(114, 114, 114, 0.6); }
-  .o-input::-moz-placeholder, .o-select::-moz-placeholder, .o-textarea::-moz-placeholder {
+  .o-input::-moz-placeholder, .o-input-file-path::-moz-placeholder, .o-select::-moz-placeholder, .o-textarea::-moz-placeholder {
     color: rgba(114, 114, 114, 0.6); }
-  .o-input:-ms-input-placeholder, .o-select:-ms-input-placeholder, .o-textarea:-ms-input-placeholder {
+  .o-input:-ms-input-placeholder, .o-input-file-path:-ms-input-placeholder, .o-select:-ms-input-placeholder, .o-textarea:-ms-input-placeholder {
     color: rgba(114, 114, 114, 0.6); }
-  .o-input::placeholder, .o-select::placeholder, .o-textarea::placeholder {
+  .o-input::placeholder, .o-input-file-path::placeholder, .o-select::placeholder, .o-textarea::placeholder {
     color: rgba(114, 114, 114, 0.6); }
-  .o-input.has-error, .has-error.o-checkbox-label::before, .has-error.o-radio-label::before, .has-error.o-checkbox-label::after, .has-error.o-radio-label::after, .has-error.o-select, .has-error.o-textarea {
+  .o-input.has-error, .has-error.o-input-file-path, .has-error.o-checkbox-label::before, .has-error.o-radio-label::before, .has-error.o-checkbox-label::after, .has-error.o-radio-label::after, .has-error.o-select, .has-error.o-textarea {
     background-color: #F68080; }
 
 .o-input-item {
@@ -702,7 +702,7 @@ h6, .h6, .zeta {
 .o-input-wrap {
   position: relative; }
 
-.input-icon {
+.o-input-icon {
   position: absolute;
   top: 0;
   right: 0;
@@ -710,51 +710,20 @@ h6, .h6, .zeta {
   padding: 0 1.1111111111rem;
   cursor: pointer; }
 
-.input-icon_image {
+.o-input-icon_image {
   width: 1.3888888889rem;
   height: 100%;
   fill: #534943; }
 
-.input-group {
-  letter-spacing: normal;
-  font-size: 0;
-  margin-left: -0.2777777778rem; }
-  .input-group .input, .input-group .input-file-path, .input-group .button {
-    height: 3rem;
-    font-size: 0.7777777778rem; }
-
-@media (max-width: 767px) {
-  .input-group_input {
-    margin-bottom: 30px; } }
-
-@media (min-width: 768px) {
-  .input-group_input {
-    position: relative;
-    display: inline-block;
-    box-sizing: border-box;
-    width: 100%;
-    vertical-align: top;
-    font-size: 18px;
-    padding-left: 0.2777777778rem;
-    width: calc(100% - 11.3888888889rem); } }
-
-@media (min-width: 768px) {
-  .input-group_button {
-    position: relative;
-    display: inline-block;
-    box-sizing: border-box;
-    width: 100%;
-    vertical-align: top;
-    font-size: 18px;
-    padding-left: 0.2777777778rem;
-    width: 11.3888888889rem; } }
-
-.input-file {
+.o-input-file {
+  opacity: 0;
   position: absolute;
-  width: 0;
-  opacity: 0; }
-  .input-file:focus + .input-file-path {
-    background-color: #868686; }
+  width: 0; }
+  .o-input-file:focus + .o-input-file-path {
+    border-bottom: 2px solid #414141; }
+
+.o-input-file-path {
+  cursor: pointer; }
 
 .o-checkbox, .o-radio {
   position: absolute;
@@ -954,7 +923,7 @@ h6, .h6, .zeta {
       height: 6.6666666667rem;
       line-height: 6.6666666667rem; } }
 
-.c-form-moderation {
+.c-form {
   padding: 3%; }
 
 .c-nav-moderation {

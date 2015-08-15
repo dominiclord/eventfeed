@@ -1,34 +1,44 @@
 $(function(){
-    var author = $('#author'),
-        text = $('#text'),
-        imageFile = $('#imagefile');
-    $('#btnCancel').click(function(ev){
-        author.val('').removeClass('error').blur();
-        text.val('').removeClass('error').blur();
-        imageFile.val('').removeClass('error').blur();
-        $('#nocontent').hide();
+    var post_author = $('#post_author'),
+        post_text   = $('#post_text'),
+        post_image  = $('#post_image');
+
+    $('.js-input-file').on('change', function(event) {
+        var file_name = $(this)[0].files[0].name;
+        $(this).siblings('.js-input-file-path').text(file_name);
     });
-    $('#formEntry').submit(formSubmitted);
-    function formSubmitted(ev){
-        ev.preventDefault();
-        var timestamp = $('#timestamp'),
-            image = $('#image');
+
+    $('.js-erase-form').on('click', function() {
+        post_author.val('').removeClass('error').blur();
+        post_text.val('').removeClass('error').blur();
+        post_image.val('').removeClass('error').blur();
+        $('.js-input-file-path').text('');
+        $('.js-no-content').removeClass('none');
+    });
+
+    $('#formEntry').on('submit', function(event) {
+        event.preventDefault();
+
         var error = false;
-        author.removeClass('error');
-        text.removeClass('error');
-        $('#nocontent').hide();
-        if(author.val().length==0){
-            author.addClass('error');
+
+        post_author.removeClass('error');
+        post_text.removeClass('error');
+        $('.js-no-content').removeClass('none');
+
+        if (post_author.val().length === 0) {
+            post_author.addClass('error');
             error = true;
         }
-        if(text.val().length==0 && imageFile.val() == ''){
-            text.addClass('error');
-            $('#nocontent').fadeIn();
+
+        if (post_text.val().length === 0 && post_image.val() === '') {
+            post_text.addClass('error');
+            $('.js-no-content').addClass('none');
             error = true;
         }
-        if(error == false){
+
+        if (error === false) {
             $(this).unbind('submit').submit();
             $('#overlay').show();
         }
-    }
+    });
 });
