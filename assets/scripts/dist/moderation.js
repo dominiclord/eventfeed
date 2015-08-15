@@ -1,6 +1,4 @@
-var $posts,
-    opened_class  = 'is-opened',
-    author_input  = $('#post_author'),
+var author_input  = $('#post_author'),
     text_input    = $('#post_text'),
     post_id_input = $('#post_id');
 
@@ -12,79 +10,26 @@ function reset_form(){
 
 function show_posts() {
     $('.js-moderation-form').fadeOut('fast', function() {
-        $('.js-post-list').fadeIn('fast');
+        $('.js-post-list-container').fadeIn('fast');
     });
 }
 
 function show_form() {
-    $('.js-post-list').fadeOut('fast', function() {
+    $('.js-post-list-container').fadeOut('fast', function() {
         $('.js-moderation-form').fadeIn('fast');
     });
 }
 
 function bind_post_events() {
-
-    $posts = $('.js-moderation-post');
-
-    $('.js-moderation-post_header').on('click',toggle_single);
-
     $('.js-edit-post').on('click',load_post);
     $('.js-approve-post').on('click',approve_post);
     $('.js-reject-post').on('click',reject_post);
 }
 
-function toggle_single(event) {
-
-    var $this = $(this),
-        $parent = $this.parent();
-
-    if ($parent.hasClass(opened_class)) {
-        toggle_all('off');
-        $parent.removeClass(opened_class);
-    } else {
-        toggle_all('off');
-        $parent.addClass(opened_class);
-    }
-}
-
-function toggle_all(state) {
-
-    var len = $posts.length;
-
-    switch (state) {
-        case 'off' :
-            for (var i = 0; i < len; i++) {
-                $($posts[i]).removeClass(opened_class);
-            }
-        break;
-        case 'on' :
-            for (var j = 0; j < len; j++) {
-                $($posts[j]).addClass(opened_class);
-            }
-        break;
-        case 'maybe' :
-            var actives = 0;
-
-            for (var k = 0; k < len; k++) {
-                if( $($posts[k]).hasClass(opened_class) ){
-                    actives++;
-                }
-            }
-
-            if( actives > 0 ){
-                toggle_all('off');
-            }else{
-                toggle_all('on');
-            }
-
-        break;
-    }
-}
-
 function reject_post(event) {
     event.preventDefault();
 
-    var element = $(this).closest('article'),
+    var element = $(this).closest('.js-post'),
         post_id = element.attr('data-id');
 
     $.ajax({
@@ -105,7 +50,7 @@ function reject_post(event) {
 function approve_post(event) {
     event.preventDefault();
 
-    var element = $(this).closest('article'),
+    var element = $(this).closest('.js-post'),
         post_id = element.attr('data-id');
 
     $.ajax({
@@ -126,8 +71,8 @@ function approve_post(event) {
 function load_post(event) {
     event.preventDefault();
 
-    var $element = $(this).closest('.js-moderation-post'),
-        post_id = $element.attr('data-id');
+    var element = $(this).closest('.js-post'),
+        post_id = element.attr('data-id');
 
     $.ajax({
         url      : '/posts/' + post_id,
@@ -205,10 +150,6 @@ $(function(){
     $('.js-button-cancel').on('click',function(){
         show_posts();
         reset_form();
-    });
-
-    $('.js-moderation-toggle-all').on('click',function(){
-        toggle_all('maybe');
     });
 
     bind_post_events();

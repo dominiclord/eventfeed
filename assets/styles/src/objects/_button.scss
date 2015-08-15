@@ -9,11 +9,10 @@
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0;
-    line-height: 36px;
-    min-width: 64px;
+    line-height: 42px;
     overflow: hidden;
     outline: none;
-    padding: 0 8px;
+    padding: 0 16px;
     position: relative;
     text-decoration: none;
     text-transform: uppercase;
@@ -26,22 +25,5 @@
 
     &:hover {
         background-color: rgba($grey-light, 0.2);
-    }
-
-    &.-margin {
-        margin-top: rem(30px);
-    }
-
-    &.-color {
-        background-color: $orange-dark;
-        color: white;
-
-        &:focus {
-            background-color: darken($orange, 5%);
-        }
-
-        &:hover {
-            background-color: darken($orange, 15%);
-        }
     }
 }
