@@ -1,10 +1,10 @@
 module.exports = {
-	target: {
-		files: [{
-			expand: true,
-			cwd: 'assets/scripts/dist/',
-			src: '**/*.js',
-			dest: 'assets/scripts/dist/'
-		}]
-	}
-}
+    target: {
+        files: [{
+            expand: true,
+            cwd: 'www/assets/scripts/dist/',
+            src: '**/*.js',
+            dest: 'www/assets/scripts/dist/'
+        }]
+    }
+};

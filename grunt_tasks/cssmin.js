@@ -1,10 +1,10 @@
 module.exports = {
-	combine: {
-		files: [{
-			expand: true,
-			cwd: 'assets/styles/dist/',
-			src: '*.css',
-			dest: 'assets/styles/dist/'
-		}]
-	}
-}
+    combine: {
+        files: [{
+            expand: true,
+            cwd: 'www/assets/styles/dist/',
+            src: '*.css',
+            dest: 'www/assets/styles/dist/'
+        }]
+    }
+};

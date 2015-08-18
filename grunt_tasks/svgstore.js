@@ -1,10 +1,10 @@
 module.exports = {
-	options: {
+    options: {
 
-	},
-	default : {
-		files: {
-			'assets/images/dist/svgs.svg': ['assets/images/svgs/*.svg'],
-		}
-	}
-}
+    },
+    default : {
+        files: {
+            'www/assets/images/dist/svgs.svg': ['www/assets/images/svgs/*.svg'],
+        }
+    }
+};
