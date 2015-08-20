@@ -1,13 +1,13 @@
-//The build will inline common dependencies into this file.
+/*global define*/
+'use strict';
 
-//For any third party dependencies, like jQuery, place them in the lib folder.
+define([], function () {
+    return {
+        // Which filter are we using?
+        TodoFilter: '', // empty, active, completed
 
-//Configure loading modules from the lib directory,
-//except for 'app' ones, which are in a sibling
-//directory.
-requirejs.config({
-    baseUrl: 'assets/scripts/lib',
-    paths: {
-        app: '../app'
-    }
+        // What is the enter key constant?
+        ENTER_KEY: 13,
+        ESCAPE_KEY: 27
+    };
 });

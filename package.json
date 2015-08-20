@@ -1,6 +1,7 @@
 {
   "name": "EventFeed",
   "version": "0.0.1",
+  "repository": "http://github.com/dominiclord/eventfeed",
   "author": "Dominic Lord <dlord@outlook.com>",
   "devDependencies": {
     "autoprefixer-core": "^5.2.1",
