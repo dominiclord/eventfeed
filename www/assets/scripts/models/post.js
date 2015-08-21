@@ -1,16 +1,30 @@
-define(function () {
+define([
+    'underscore',
+    'backbone'
+], function (_, Backbone) {
+    'use strict';
 
-    function Post(author, message, timestamp) {
-        this.author = author;
-        this.message = message;
-        this.timestamp = timestamp;
-    }
+    var Post = Backbone.Model.extend({
+        // Default attributes for the todo
+        // and ensure that each todo created has `title` and `completed` keys.
+        defaults: {
+            title: '',
+            completed: false,
+            author: '',
+            message: '',
+            timestamp: 0
+        },
 
-    Post.prototype = {
+        // Toggle the `completed` state of this todo item.
+        toggle: function () {
+            this.save({
+                completed: !this.get('completed')
+            });
+        },
         get_author: function () {
             return this.author;
         }
-    };
+    });
 
     return Post;
 });
