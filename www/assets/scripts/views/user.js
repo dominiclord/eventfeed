@@ -24,8 +24,9 @@ define([
 
         // Delegated events for creating new items, and clearing completed ones.
         events: {
-            'submit': 'createPost',
-            'click .js-erase-form': 'clearForm'
+            'submit': 'submitPostForm',
+            'click .js-erase-form': 'clearForm',
+            'change #post_image': 'displayImageName'
         },
 
         // At initialization we bind to the relevant events on the `Todos`
@@ -35,7 +36,7 @@ define([
             this.$post_author      = this.$('#post_author');
             this.$post_text        = this.$('#post_text');
             this.$post_image       = this.$('#post_image');
-            this.$post_image_label = this.$('.js-input-file-path');
+            this.$post_image_label = this.$('#post_image_label');
             this.$no_content       = this.$('.js-no-content');
         },
 
@@ -77,15 +78,33 @@ define([
             };
         },
 
-        // If you hit return in the main input field, create new **Todo** model,
-        // persisting it to *localStorage*.
-        createPost: function (e) {
-            if (e.which !== Common.ENTER_KEY || !this.$input.val().trim()) {
-                return;
+        // On form submit, attempt to submit a post
+        submitPostForm: function (e) {
+            e.preventDefault();
+
+            var error = false;
+
+            this.$post_author.removeClass('has-error');
+            this.$post_text.removeClass('has-error');
+
+            this.$no_content.addClass('none');
+
+            if (this.$post_author.val().length === 0) {
+                this.$post_author.addClass('has-error');
+                error = true;
             }
 
-            Todos.create(this.newAttributes());
-            this.$input.val('');
+            if (this.$post_text.val().length === 0 && this.$post_image.val() === '') {
+                this.$post_text.addClass('has-error');
+                this.$no_content.removeClass('none');
+                error = true;
+            }
+
+            if (error === false) {
+                this.$el.unbind('submit').submit();
+            }
+
+            //Todos.create(this.newAttributes());
         },
 
         // Clear all form fields
@@ -96,6 +115,12 @@ define([
             this.$post_image_label.text('Chose an image');
             this.$no_content.addClass('none');
             return false;
+        },
+
+        // Patching the default file input to make it prettier
+        displayImageName: function () {
+            var file_name = this.$post_image[0].files[0].name;
+            this.$post_image_label.text(file_name);
         }
     });
 
