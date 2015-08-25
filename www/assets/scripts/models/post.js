@@ -42,7 +42,6 @@ define([
                 return function (event) {
                     // Set the file data correctly on the Backbone model
                     self.set({image : event.target.result});
-                    console.log(callback);
                     // Handle anything else you want to do after parsing the file and setting up the model.
                     callback();
                 };

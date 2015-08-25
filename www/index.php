@@ -417,9 +417,6 @@ $app->group('/api', function () use ($app, $db) {
             $request_body = $app->request()->getBody();
             $data = json_decode($request_body);
 
-            var_dump($data);
-            die();
-
             if (empty($data->timestamp)) {
                 $timestamp_date = new \DateTime( 'now', new \DateTimeZone('America/Montreal') );
                 $timestamp = $timestamp_date->getTimestamp();
@@ -445,7 +442,7 @@ $app->group('/api', function () use ($app, $db) {
 
             try {
 
-                if( isset( $_FILES['image'] ) && ( isset( $_FILES['image']['name'] ) && $_FILES['image']['name'] ) && ( isset( $_FILES['image']['tmp_name'] ) && $_FILES['image']['tmp_name'] ) ) {
+                if( $image ) {
 
                     // File upload properties
                     $base_path    = __DIR__.'/';
@@ -460,10 +457,17 @@ $app->group('/api', function () use ($app, $db) {
                     ];
 
                     $file_name = $token;
-                    $file_data = $_FILES['image'];
-                    $file_info = pathinfo($file_data['name']);
-                    $file_size = filesize($file_data['tmp_name']);
+                    $file_data = $data->image;
+                    $file = base64_decode($file_data);
+                    $f = finfo_open();
+
+                    $file_info = finfo_buffer($f, $file, FILEINFO_MIME_TYPE);
+                    $file_size = strlen($file_data);
+                    var_dump($file_info);
+                    die();
                     $file_type = $finfo->file($file_data['tmp_name']);
+
+                    finfo_close($f);
 
                     if (isset($file_info['extension']) && $file_info['extension']) {
                         $file_name .= '.'.$file_info['extension'];
@@ -621,7 +625,7 @@ $app->group('/api', function () use ($app, $db) {
         });
 
         // DELETE route
-        $app->delete('/posts/:id', function ($id) use ($app, $log) {
+        $app->delete('/posts/:id', function ($id) use ($app, $db) {
 
         });
 
