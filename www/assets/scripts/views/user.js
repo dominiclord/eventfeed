@@ -4,7 +4,7 @@ define([
     'underscore',
     'backbone',
     'models/post',
-    //'collections/todos',
+    //'collections/posts',
     //'views/todos',
     //'text!templates/stats.html',
     'common'
@@ -72,9 +72,9 @@ define([
         // Generate the attributes for a new Todo item.
         newAttributes: function () {
             return {
-                title: this.$input.val().trim(),
-                order: Todos.nextOrder(),
-                completed: false
+                author: this.$('#post_author').val(),
+                text: this.$('#post_text').val(),
+                image: this.$post_image[0].files[0]
             };
         },
 
@@ -101,10 +101,12 @@ define([
             }
 
             if (error === false) {
-                this.$el.unbind('submit').submit();
+                var post = new PostModel();
+                post.save(this.newAttributes());
+                //Posts.create(this.newAttributes());
+                //this.$el.unbind('submit').submit();
             }
 
-            //Todos.create(this.newAttributes());
         },
 
         // Clear all form fields

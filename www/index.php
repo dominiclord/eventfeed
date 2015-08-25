@@ -160,7 +160,7 @@ $app->get('/main/posts(/)', function ( ) use ($app, $db) {
 
     } catch(PDOException $e) {
         $app->response()->setStatus(404);
-        echo '{"error":{"text":'. $e->getMessage() .'}}';
+        echo '{"error":{"text":"'. $e->getMessage() .'"}}';
     }
     die();
 });
@@ -194,32 +194,7 @@ $app->put('/main/posts/:id', function ( $id = null ) use ( $app, $db ) {
 
     } catch(PDOException $e) {
         $app->response()->setStatus(404);
-        echo '{"error":{"text":'. $e->getMessage() .'}}';
-    }
-    die();
-});
-
-/**
-* Fetch a post
-* @TODO Add authentification
-* @param $app  Application
-* @param $db   Database connection
-*/
-$app->get('/posts/:id', function ( $id = null ) use ( $app, $db ) {
-    $app->response()->headers->set('Content-Type', 'application/json');
-    try{
-        $row = $db->{'posts'}[$id];
-
-        if($row) {
-            $app->response->setStatus(200);
-            echo json_encode($row);
-        } else {
-            throw new PDOException('No posts found.');
-        }
-
-    } catch(PDOException $e) {
-        $app->response()->setStatus(404);
-        echo '{"error":{"text":'. $e->getMessage() .'}}';
+        echo '{"error":{"text":"'. $e->getMessage() .'"}}';
     }
     die();
 });
@@ -343,8 +318,8 @@ $app->get('/', function ( ) use ($app, $db) {
 
 URL                           HTTP Method  Operation
 /api/v1/posts                 GET          Returns an array of posts
-/api/v1/posts/:id             GET          Returns the contact with id of :id
-/api/v1/posts                 POST         Adds a new contact and return it with an id attribute added
+/api/v1/posts/:id             GET          Returns the post with id of :id
+/api/v1/posts                 POST         Adds a new post and return it with an id attribute added
 /api/v1/posts/:id             PUT          Updates the contact with id of :id
 
 =============================
@@ -357,63 +332,104 @@ $app->group('/api', function () use ($app, $db) {
     $app->group('/v1', function () use ($app, $db) {
 
 
-        $app->get('/posts', function ( ) use ($app, $db) {
-
-            $app->response()->headers->set('Content-Type', 'application/json');
-
-            try{
-                $posts = $db
-                    ->posts()
-                    ->where('status','published')
-                    ->order('timestamp DESC');
-
-                if($posts) {
-                    $app->response->setStatus(200);
-                    echo json_encode($posts);
-                } else {
-                    throw new PDOException('No posts found.');
-                }
-
-            } catch(PDOException $e) {
-                $app->response()->setStatus(404);
-                echo '{"error":{"text":'. $e->getMessage() .'}}';
-            }
-            die();
-
-
-        });
-
-        // GET route
-        $app->get('/posts/:id', function ($id) use ($app, $log) {
-
-        });
-
-
         /**
-        * Modify a post
+        * Fetch all posts
         * @TODO Add authentification
         * @param $app  Application
         * @param $db   Database connection
         */
-        $app->post('/submit', function () use ($app, $db) {
+        $app->get('/posts', function ( ) use ($app, $db) {
 
-            $app->response()->header('Content-Type', 'application/json');
+            // @TODO If status is other than published, request authorization
+            $status = ($app->request->get('status')) ? : 'published';
+
+            try {
+                $posts = $db
+                    ->posts()
+                    ->where('status', $status)
+                    ->order('timestamp DESC');
+
+                if (count($posts)) {
+                    $response = [
+                        'results' => $posts,
+                        'status' => 'OK'
+                    ];
+                } else {
+                    throw new PDOException('No posts found.');
+                }
+            } catch(PDOException $e) {
+                $response = [
+                    'error_message' => $e->getMessage(),
+                    'results' => [],
+                    'status' => 'ERROR'
+                ];
+            }
+
+            $app->response()->headers->set('Content-Type', 'application/json');
+            $app->response()->setStatus(200);
+            echo json_encode($response);
+            die();
+        });
+
+
+        /**
+        * Fetch a single post
+        * @TODO Add authentification
+        * @param $app  Application
+        * @param $db   Database connection
+        */
+        $app->get('/posts/:id', function ( $id = null ) use ( $app, $db ) {
+
+            try {
+                $row = $db->{'posts'}[$id];
+
+                if ($row) {
+                    $response = [
+                        'results' => $row,
+                        'status' => 'OK'
+                    ];
+                } else {
+                    throw new PDOException('No posts found.');
+                }
+            } catch(PDOException $e) {
+                $response = [
+                    'error_message' => $e->getMessage(),
+                    'results' => [],
+                    'status' => 'ERROR'
+                ];
+            }
+
+            $app->response()->headers->set('Content-Type', 'application/json');
+            $app->response()->setStatus(200);
+            echo json_encode($response);
+            die();
+        });
+
+
+        /**
+        * Create a post
+        * @TODO Add authentification
+        * @param $app  Application
+        * @param $db   Database connection
+        */
+        $app->post('/posts', function () use ($app, $db) {
+
             $data = $app->request()->post();
 
-            if( empty( $data['timestamp'] ) ){
+            if (empty($data['timestamp'])) {
                 $timestamp_date = new \DateTime( 'now', new \DateTimeZone('America/Montreal') );
                 $timestamp = $timestamp_date->getTimestamp();
             }
 
-            $author    = empty( $data['author'] ) ? '' : $data['author'];
-            $text      = empty( $data['text'] ) ? '' : $data['text'];
-            $image     = empty( $data['image'] ) ? '' : $data['image'];
+            $author    = empty($data['author']) ? '' : $data['author'];
+            $text      = empty($data['text']) ? '' : $data['text'];
+            $image     = empty($data['image']) ? '' : $data['image'];
             $type      = "";
             $file_name = "";
 
-            if( $image === "" ){
+            if ( $image === "" ) {
                 $image = false;
-            }else{
+            } else {
                 $image = true;
             }
 
@@ -423,125 +439,135 @@ $app->group('/api', function () use ($app, $db) {
             $generator = new RandomStringGenerator;
             $token = $generator->generate(40);
 
-            if( isset( $_FILES['image'] ) && ( isset( $_FILES['image']['name'] ) && $_FILES['image']['name'] ) && ( isset( $_FILES['image']['tmp_name'] ) && $_FILES['image']['tmp_name'] ) ) {
+            try {
 
-                // File upload properties
-                $base_path    = __DIR__.'/';
-                $upload_path  = 'uploads/';
-                $dir          = $base_path.$upload_path;
-                $max_filesize = 134220000; //128M
-                $finfo         = new finfo(FILEINFO_MIME_TYPE);
-                $mimetypes    = [
-                    'image/gif',
-                    'image/png',
-                    'image/jpeg'
-                ];
+                if( isset( $_FILES['image'] ) && ( isset( $_FILES['image']['name'] ) && $_FILES['image']['name'] ) && ( isset( $_FILES['image']['tmp_name'] ) && $_FILES['image']['tmp_name'] ) ) {
 
-                $file_name = $token;
-                $file_data = $_FILES['image'];
-                $file_info = pathinfo( $file_data['name'] );
-                $file_size = filesize( $file_data['tmp_name'] );
-                $file_type = $finfo->file( $file_data['tmp_name'] );
+                    // File upload properties
+                    $base_path    = __DIR__.'/';
+                    $upload_path  = 'uploads/';
+                    $dir          = $base_path . $upload_path;
+                    $max_filesize = 134220000; //128M
+                    $finfo         = new finfo(FILEINFO_MIME_TYPE);
+                    $mimetypes    = [
+                        'image/gif',
+                        'image/png',
+                        'image/jpeg'
+                    ];
 
-                if (isset($file_info['extension']) && $file_info['extension']) {
-                    $file_name .= '.'.$file_info['extension'];
-                }else{
-                    $file_name .= '.jpg';
-                }
+                    $file_name = $token;
+                    $file_data = $_FILES['image'];
+                    $file_info = pathinfo($file_data['name']);
+                    $file_size = filesize($file_data['tmp_name']);
+                    $file_type = $finfo->file($file_data['tmp_name']);
 
-                $target = $dir.$file_name;
-
-                /**
-                * @TODO
-                * Manage image failures gracefully
-                */
-                if ( !is_writable($dir) ) {
-                    throw new Exception('Error: upload directory is not writeable');
-                    die();
-                }
-
-                if ( file_exists($target) ) {
-                    /**
-                    * @TODO
-                    * Generate new token? This could mean the token already exists in the database as well
-                    */
-                    throw new Exception('Error: file already exists');
-                    die();
-                }
-
-                if ( !in_array( $file_type, $mimetypes ) ) {
-                    throw new Exception('Error: rejected mimetype');
-                    die();
-                }
-
-                if ( $file_size > $max_filesize ) {
-                    throw new Exception('Error: file too big');
-                    die();
-                }
-
-                if( move_uploaded_file( $file_data['tmp_name'], $target) ){
-
-                    $imagick = new \Imagick( realpath($target) );
-
-                    $exif_data = $imagick->getImageProperties("exif:*");
-
-                    if ( ! empty( $exif_data ) && isset( $exif_data['exif:Orientation'] ) && $orientation = $exif_data['exif:Orientation'] ) {
-
-                        chmod($target, 0755);
-
-                        switch($orientation){
-                            //case '1': // Normal
-                            case '3':// 180 rotate left
-                                $imagick->rotateimage(new \ImagickPixel('none'), 180);
-                            break;
-                            case '6':// 90 rotate right
-                                $imagick->rotateimage(new \ImagickPixel('none'), -90);
-                            break;
-                            case '8':// 90 rotate left
-                                $imagick->rotateimage(new \ImagickPixel('none'), 90);
-                            break;
-                        }
-
-                        $imagick->writeImage( $target );
-
+                    if (isset($file_info['extension']) && $file_info['extension']) {
+                        $file_name .= '.'.$file_info['extension'];
+                    } else {
+                        $file_name .= '.jpg';
                     }
 
-                    $image = true;
+                    $target = $dir . $file_name;
 
-                }else{
+                    /**
+                    * @TODO
+                    * Manage image failures gracefully
+                    */
+                    if (!is_writable($dir)) {
+                        throw new Exception('Error: upload directory is not writeable');
+                    }
 
-                    $image = false;
+                    if (file_exists($target)) {
+                        /**
+                        * @TODO
+                        * Generate new token? This could mean the token already exists in the database as well
+                        */
+                        throw new Exception('Error: file already exists');
+                    }
+
+                    if (!in_array($file_type, $mimetypes)) {
+                        throw new Exception('Error: rejected mimetype');
+                    }
+
+                    if ($file_size > $max_filesize) {
+                        throw new Exception('Error: file too big');
+                    }
+
+                    if (move_uploaded_file($file_data['tmp_name'], $target)) {
+
+                        $imagick = new \Imagick(realpath($target));
+
+                        $exif_data = $imagick->getImageProperties("exif:*");
+
+                        if (!empty($exif_data) && isset($exif_data['exif:Orientation']) && $orientation = $exif_data['exif:Orientation']) {
+
+                            chmod($target, 0755);
+
+                            switch ($orientation) {
+                                //case '1': // Normal
+                                case '3':// 180 rotate left
+                                    $imagick->rotateimage(new \ImagickPixel('none'), 180);
+                                break;
+                                case '6':// 90 rotate right
+                                    $imagick->rotateimage(new \ImagickPixel('none'), -90);
+                                break;
+                                case '8':// 90 rotate left
+                                    $imagick->rotateimage(new \ImagickPixel('none'), 90);
+                                break;
+                            }
+
+                            $imagick->writeImage($target);
+
+                        }
+                        $image = true;
+                    }else{
+                        $image = false;
+                    }
 
                 }
 
-            }
+                if ( $image === true && $text !== '' ) {
+                    $type = 'hybrid';
+                } elseif ( $image === true && $text === '' ) {
+                    $type = 'image';
+                } elseif ( $image === false && $text !== '' ) {
+                    $type = 'text';
+                }
 
-            if( $image === true && $text !== '' ){
-                $type = 'hybrid';
-            }elseif( $image === true && $text === '' ){
-                $type = 'image';
-            }elseif( $image === false && $text !== '' ){
-                $type = 'text';
-            }
+                if ($author === '' || $type === '') {
+                    throw new Exception('Empty author or post type');
+                } else {
 
-            if($author === '' || $type === ''){
-                throw new Exception('Error: empty author or post type');
-                die();
-            }else{
+                    $post = [
+                        'id'        => $token,
+                        'timestamp' => $timestamp,
+                        'author'    => $author,
+                        'text'      => $text,
+                        'image'     => $file_name,
+                        'status'    => 'moderation',
+                        'type'      => $type
+                    ];
 
-                $post = [
-                    'id'        => $token,
-                    'timestamp' => $timestamp,
-                    'author'    => $author,
-                    'text'      => $text,
-                    'image'     => $file_name,
-                    'status'    => 'moderation',
-                    'type'      => $type
+                    $result = $db->posts->insert($post);
+
+                    $response = [
+                        'results' => $result,
+                        'status' => 'OK'
+                    ];
+                }
+
+            } catch(Exception $e) {
+                $response = [
+                    'error_message' => $e->getMessage(),
+                    'results' => [],
+                    'status' => 'ERROR'
                 ];
-
-                $result = $db->posts->insert( $post );
-                $app->redirect('/submit');
             }
+
+            $app->response()->headers->set('Content-Type', 'application/json');
+            $app->response()->setStatus(200);
+            echo json_encode($response);
+            die();
 
         });
 
@@ -585,7 +611,7 @@ $app->group('/api', function () use ($app, $db) {
 
             } catch(PDOException $e) {
                 $app->response()->setStatus(404);
-                echo '{"error":{"text":'. $e->getMessage() .'}}';
+                echo '{"error":{"text":"'. $e->getMessage() .'"}}';
             }
             die();
         });

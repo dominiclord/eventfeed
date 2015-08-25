@@ -15,6 +15,12 @@ define([
             timestamp: 0
         },
 
+        url: function () {
+            return this.urlRoot;
+        },
+
+        urlRoot: '/posts',
+
         // Toggle the `completed` state of this todo item.
         toggle: function () {
             this.save({
