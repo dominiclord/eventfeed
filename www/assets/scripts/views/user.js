@@ -103,8 +103,30 @@ define([
             if (error === false) {
                 var post = new PostModel();
                 post.save(this.newAttributes());
-                //Posts.create(this.newAttributes());
-                //this.$el.unbind('submit').submit();
+
+                /*
+                if (image !== '') {
+
+                var reader = new FileReader();
+
+                // when image data was read
+                reader.onload = function(event) {
+                // I usually remove the prefix to only keep data, but it depends on your server
+                var data = event.target.result.replace("data:"+ file.type +";base64,", '');
+
+                // make here your ajax call
+                $.ajax({
+                url: 'and_so_on',
+                json: {
+                data: data
+                }
+                });
+
+                // read data from file
+                reader.readAsDataURL(file);
+            };
+                 */
+
             }
 
         },

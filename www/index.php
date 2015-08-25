@@ -414,16 +414,20 @@ $app->group('/api', function () use ($app, $db) {
         */
         $app->post('/posts', function () use ($app, $db) {
 
-            $data = $app->request()->post();
+            $request_body = $app->request()->getBody();
+            $data = json_decode($request_body);
 
-            if (empty($data['timestamp'])) {
+            var_dump($data->image);
+            die();
+
+            if (empty($data->timestamp)) {
                 $timestamp_date = new \DateTime( 'now', new \DateTimeZone('America/Montreal') );
                 $timestamp = $timestamp_date->getTimestamp();
             }
 
-            $author    = empty($data['author']) ? '' : $data['author'];
-            $text      = empty($data['text']) ? '' : $data['text'];
-            $image     = empty($data['image']) ? '' : $data['image'];
+            $author    = empty($data->author) ? '' : $data->author;
+            $text      = empty($data->text) ? '' : $data->text;
+            $image     = empty($data->image) ? '' : $data->image;
             $type      = "";
             $file_name = "";
 
