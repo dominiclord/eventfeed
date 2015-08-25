@@ -417,7 +417,7 @@ $app->group('/api', function () use ($app, $db) {
             $request_body = $app->request()->getBody();
             $data = json_decode($request_body);
 
-            var_dump($data->image);
+            var_dump($data);
             die();
 
             if (empty($data->timestamp)) {
