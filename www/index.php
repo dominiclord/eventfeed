@@ -458,19 +458,21 @@ $app->group('/api', function () use ($app, $db) {
 
                     $file_name = $token;
                     $file_data = $data->image;
-                    $file = base64_decode($file_data);
-                    $f = finfo_open();
-
-                    $file_info = finfo_buffer($f, $file, FILEINFO_MIME_TYPE);
                     $file_size = strlen($file_data);
-                    var_dump($file_info);
-                    die();
-                    $file_type = $finfo->file($file_data['tmp_name']);
+                    $file_type = mime_content_type($file_data);
 
-                    finfo_close($f);
+                    $file = $file_data;
+                    $file = preg_replace('#^data:image/\w+;base64,#i', '', $file);
+                    $file = str_replace(' ', '+', $file);
+                    $file = base64_decode($file);
 
-                    if (isset($file_info['extension']) && $file_info['extension']) {
-                        $file_name .= '.'.$file_info['extension'];
+                    if (isset($file_type)) {
+                        $extension = str_replace('image/', '', $file_type);
+                        // Personal preference!
+                        if ($extension === 'jpeg') {
+                            $extension = 'jpg';
+                        }
+                        $file_name .= '.' . $extension;
                     } else {
                         $file_name .= '.jpg';
                     }
@@ -481,6 +483,10 @@ $app->group('/api', function () use ($app, $db) {
                     * @TODO
                     * Manage image failures gracefully
                     */
+                    if (!in_array($file_type, $mimetypes)) {
+                        throw new Exception('Error: rejected mimetype');
+                    }
+
                     if (!is_writable($dir)) {
                         throw new Exception('Error: upload directory is not writeable');
                     }
@@ -493,16 +499,11 @@ $app->group('/api', function () use ($app, $db) {
                         throw new Exception('Error: file already exists');
                     }
 
-                    if (!in_array($file_type, $mimetypes)) {
-                        throw new Exception('Error: rejected mimetype');
-                    }
-
                     if ($file_size > $max_filesize) {
                         throw new Exception('Error: file too big');
                     }
 
-                    if (move_uploaded_file($file_data['tmp_name'], $target)) {
-
+                    if (file_put_contents($target, $file)) {
                         $imagick = new \Imagick(realpath($target));
 
                         $exif_data = $imagick->getImageProperties("exif:*");
