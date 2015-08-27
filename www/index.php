@@ -504,30 +504,44 @@ $app->group('/api', function () use ($app, $db) {
                     }
 
                     if (file_put_contents($target, $file)) {
+
                         $imagick = new \Imagick(realpath($target));
 
-                        $exif_data = $imagick->getImageProperties("exif:*");
-
-                        if (!empty($exif_data) && isset($exif_data['exif:Orientation']) && $orientation = $exif_data['exif:Orientation']) {
-
-                            chmod($target, 0755);
-
-                            switch ($orientation) {
-                                //case '1': // Normal
-                                case '3':// 180 rotate left
-                                    $imagick->rotateimage(new \ImagickPixel('none'), 180);
-                                break;
-                                case '6':// 90 rotate right
-                                    $imagick->rotateimage(new \ImagickPixel('none'), -90);
-                                break;
-                                case '8':// 90 rotate left
-                                    $imagick->rotateimage(new \ImagickPixel('none'), 90);
-                                break;
-                            }
-
-                            $imagick->writeImage($target);
-
+                        switch ($imagick->getImageOrientation()) {
+                            case \Imagick::ORIENTATION_TOPLEFT:
+                            break;
+                            case \Imagick::ORIENTATION_TOPRIGHT:
+                                $imagick->flopImage();
+                            break;
+                            case \Imagick::ORIENTATION_BOTTOMRIGHT:
+                                $imagick->rotateImage("#000", 180);
+                            break;
+                            case \Imagick::ORIENTATION_BOTTOMLEFT:
+                                $imagick->flopImage();
+                                $imagick->rotateImage("#000", 180);
+                            break;
+                            case \Imagick::ORIENTATION_LEFTTOP:
+                                $imagick->flopImage();
+                                $imagick->rotateImage("#000", -90);
+                            break;
+                            case \Imagick::ORIENTATION_RIGHTTOP:
+                                $imagick->rotateImage("#000", 90);
+                            break;
+                            case \Imagick::ORIENTATION_RIGHTBOTTOM:
+                                $imagick->flopImage();
+                                $imagick->rotateImage("#000", 90);
+                            break;
+                            case \Imagick::ORIENTATION_LEFTBOTTOM:
+                                $imagick->rotateImage("#000", -90);
+                            break;
+                            default: // Invalid orientation
+                            break;
                         }
+
+                        $imagick->setImageOrientation(\Imagick::ORIENTATION_TOPLEFT);
+
+                        $imagick->writeImage($target);
+
                         $image = true;
                     }else{
                         $image = false;
