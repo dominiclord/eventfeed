@@ -26,7 +26,8 @@ require.config({
         underscore: '../../../node_modules/underscore/underscore',
         backbone: '../../../node_modules/backbone/backbone',
         backboneLocalstorage: '../../../node_modules/backbone.localstorage/backbone.localStorage',
-        text: '../../../node_modules/requirejs-text/text'
+        text: '../../../node_modules/requirejs-text/text',
+        mustache: '../../../node_modules/mustache/mustache.min'
     }
 });
 

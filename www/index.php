@@ -19,7 +19,7 @@ require_once '../utils/index.php';
 $app = new Slim([
     'view'           => new \Slim\Mustache\Mustache(),
     'debug'          => true,
-    'templates.path' => '../views'
+    'templates.path' => 'assets/templates'
 ]);
 $pdo = new PDO('mysql:dbname=eventfeed_local;host:127.0.0.1','root','root');
 $db  = new NotORM($pdo);
@@ -504,43 +504,18 @@ $app->group('/api', function () use ($app, $db) {
                     }
 
                     if (file_put_contents($target, $file)) {
-
-                        $imagick = new \Imagick(realpath($target));
-
-                        switch ($imagick->getImageOrientation()) {
-                            case \Imagick::ORIENTATION_TOPLEFT:
-                            break;
-                            case \Imagick::ORIENTATION_TOPRIGHT:
-                                $imagick->flopImage();
-                            break;
-                            case \Imagick::ORIENTATION_BOTTOMRIGHT:
-                                $imagick->rotateImage("#000", 180);
-                            break;
-                            case \Imagick::ORIENTATION_BOTTOMLEFT:
-                                $imagick->flopImage();
-                                $imagick->rotateImage("#000", 180);
-                            break;
-                            case \Imagick::ORIENTATION_LEFTTOP:
-                                $imagick->flopImage();
-                                $imagick->rotateImage("#000", -90);
-                            break;
-                            case \Imagick::ORIENTATION_RIGHTTOP:
-                                $imagick->rotateImage("#000", 90);
-                            break;
-                            case \Imagick::ORIENTATION_RIGHTBOTTOM:
-                                $imagick->flopImage();
-                                $imagick->rotateImage("#000", 90);
-                            break;
-                            case \Imagick::ORIENTATION_LEFTBOTTOM:
-                                $imagick->rotateImage("#000", -90);
-                            break;
-                            default: // Invalid orientation
-                            break;
-                        }
-
-                        $imagick->setImageOrientation(\Imagick::ORIENTATION_TOPLEFT);
-
-                        $imagick->writeImage($target);
+                        $img = new \Charcoal\Image\Imagick\ImagickImage();
+                        $img->open($target);
+                        $img->set_data([
+                            'target'=>$target,
+                            'effects'=>[
+                                [
+                                    'type'=>'autoorientation'
+                                ]
+                            ]
+                        ]);
+                        $img->process();
+                        $img->save();
 
                         $image = true;
                     }else{
@@ -591,7 +566,6 @@ $app->group('/api', function () use ($app, $db) {
             $app->response()->setStatus(200);
             echo json_encode($response);
             die();
-
         });
 
 

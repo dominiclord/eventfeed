@@ -4,12 +4,11 @@ define([
     'underscore',
     'backbone',
     'models/post',
-    //'collections/posts',
-    //'views/todos',
-    //'text!templates/stats.html',
+    'text!../../templates/user_success.mustache',
+    'mustache',
     'common'
 //], function ($, _, Backbone, Todos, TodoView, statsTemplate, Common) {
-], function ($, _, Backbone, PostModel, Common) {
+], function ($, _, Backbone, PostModel, successTemplate, Mustache, Common) {
     'use strict';
 
     // Our overall **UserView** is the top-level piece of UI.
@@ -19,9 +18,6 @@ define([
         // the App already present in the HTML.
         el: '.js-user-form',
 
-        // Compile our stats template
-        //template: _.template(statsTemplate),
-
         // Delegated events for creating new items, and clearing completed ones.
         events: {
             'submit': 'submitPostForm',
@@ -29,44 +25,17 @@ define([
             'change #post_image': 'displayImageName'
         },
 
-        // At initialization we bind to the relevant events on the `Todos`
-        // collection, when items are added or changed. Kick things off by
-        // loading any preexisting todos that might be saved in *localStorage*.
         initialize: function () {
             this.$post_author      = this.$('#post_author');
             this.$post_text        = this.$('#post_text');
             this.$post_image       = this.$('#post_image');
             this.$post_image_label = this.$('#post_image_label');
             this.$no_content       = this.$('.js-no-content');
-        },
 
-        // Re-rendering the App just means refreshing the statistics -- the rest
-        // of the app doesn't change.
-        render: function () {
-            /*
-            var completed = Todos.completed().length;
-            var remaining = Todos.remaining().length;
+            this.Post = new PostModel();
 
-            if (Todos.length) {
-                this.$main.show();
-                this.$footer.show();
+            this.listenTo(this.Post, 'sync', this.displayCreatedPost);
 
-                this.$footer.html(this.template({
-                    completed: completed,
-                    remaining: remaining
-                }));
-
-                this.$('#filters li a')
-                    .removeClass('selected')
-                    .filter('[href="#/' + (Common.TodoFilter || '') + '"]')
-                    .addClass('selected');
-            } else {
-                this.$main.hide();
-                this.$footer.hide();
-            }
-
-            this.allCheckbox.checked = !remaining;
-            */
         },
 
         // Generate the attributes for a new Todo item.
@@ -101,18 +70,17 @@ define([
             }
 
             if (error === false) {
-                var post = new PostModel(),
-                    attributes = this.newAttributes();
+                var attributes = this.newAttributes();
 
-                post.set(attributes);
+                this.Post.set(attributes);
 
                 // If we have an image, make sure to convert it to base64 before attempting to save the data
                 if (typeof(attributes.image) !== 'undefined') {
-                    post.readImage(attributes.image, function() {
-                        post.save();
+                    this.Post.readImage(attributes.image, function() {
+                        this.Post.save();
                     });
                 } else {
-                    post.save();
+                    this.Post.save();
                 }
             }
 
@@ -132,6 +100,12 @@ define([
         displayImageName: function () {
             var file_name = this.$post_image[0].files[0].name;
             this.$post_image_label.text(file_name);
+        },
+
+        displayCreatedPost: function () {
+            var rendered = Mustache.to_html(successTemplate, this.Post.toJSON());
+
+            this.$el.html(rendered);
         }
     });
 

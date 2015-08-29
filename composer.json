@@ -10,6 +10,7 @@
         "mustache/mustache": "2.*",
         "dearon/slim-mustache": "0.1.*",
         "vrana/notorm": "dev-master",
-        "dominiclord/colorpalette": "dev-master"
+        "dominiclord/colorpalette": "dev-master",
+        "locomotivemtl/charcoal-image": "dev-master"
     }
 }
