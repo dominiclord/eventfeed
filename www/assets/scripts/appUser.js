@@ -15,17 +15,12 @@ require.config({
                 'jquery'
             ],
             exports: 'Backbone'
-        },
-        backboneLocalstorage: {
-            deps: ['backbone'],
-            exports: 'Store'
         }
     },
     paths: {
         jquery: '../../../node_modules/jquery/dist/jquery',
         underscore: '../../../node_modules/underscore/underscore',
         backbone: '../../../node_modules/backbone/backbone',
-        backboneLocalstorage: '../../../node_modules/backbone.localstorage/backbone.localStorage',
         text: '../../../node_modules/requirejs-text/text',
         mustache: '../../../node_modules/mustache/mustache.min'
     }
@@ -33,14 +28,8 @@ require.config({
 
 require([
     'backbone',
-    'views/user',
-    'routers/router'
-], function (Backbone, UserView, Workspace) {
-    /*jshint nonew:false*/
-    // Initialize routing and start Backbone.history()
-    new Workspace();
-    Backbone.history.start();
-
+    'views/userView'
+], function (Backbone, UserView) {
     // Initialize the application view
     new UserView();
 });
