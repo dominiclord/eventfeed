@@ -11,7 +11,6 @@
     z-index: 90;
 
     @media (max-width: $to-small) {
-        //font-size: 0;
 
         &::after {
             bottom: -6px;
@@ -43,7 +42,6 @@
 
     &.-moderation {
         background-color: $orange;
-        cursor: pointer;
     }
 
     &.-user {
@@ -55,12 +53,12 @@
     margin: 0;
 
     @media (max-width: $to-small) {
-        height: $header-main-mobile;
-        line-height: $header-main-mobile;
+        height: $header-height;
+        line-height: $header-height;
     }
 
     @media (min-width: $from-small) {
-        height: rem($header-main);
-        line-height: rem($header-main);
+        height: rem($header-height * 2);
+        line-height: rem($header-height * 2);
     }
 }

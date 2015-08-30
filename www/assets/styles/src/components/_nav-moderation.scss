@@ -19,7 +19,7 @@
     }
 
     @media (min-width: $from-small) {
-        top: rem($header-main);
+        top: rem($header-height * 2);
 
         &::after {
             background: linear-gradient(to bottom, rgba(43, 43, 43, 0.55) 0%, rgba(47, 47, 47, 0) 100%);
@@ -100,13 +100,13 @@
 
     @media (max-width: $to-small) {
         font-size: 12px;
-        height: $header-main-mobile;
-        line-height: $header-main-mobile;
+        height: $header-height;
+        line-height: $header-height;
     }
 
     @media (min-width: $from-small) {
         font-size: $font-size;
-        height: rem($header-main) * 0.5;
-        line-height: rem($header-main) * 0.5;
+        height: rem($header-height);
+        line-height: rem($header-height);
     }
 }

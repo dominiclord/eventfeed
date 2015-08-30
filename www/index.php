@@ -626,11 +626,6 @@ $app->group('/api', function () use ($app, $db) {
             die();
         });
 
-        // DELETE route
-        $app->delete('/posts/:id', function ($id) use ($app, $db) {
-
-        });
-
     });
 
 });

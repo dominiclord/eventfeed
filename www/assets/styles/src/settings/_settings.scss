@@ -14,6 +14,8 @@ $grey-error: #FFD4D1;
 
 // Generic
 $black: #222222;
+$white: white;
+$white-dark: #e9e9e9;
 
 // Specific
 $selection: $orange;
@@ -24,20 +26,21 @@ $link-hover: darken($orange, 10%);
 // ==========================================================================
 
 //Fonts
-$arimo: 'Roboto', serif;
+$roboto: 'Roboto', sans-serif;
 
 // Base
 $font-size: 18px;
 $line-height: 1.4;
-$font-family: $arimo;
+$font-family: $roboto;
 $color: $orange;
+
 // Headings
 $heading1: 72px; // .alpha
-$heading2: 46px; // .beta
-$heading3: 36px; // .gamma
-$heading4: 22px; // .delta
-$heading5: 13px; // .epsilon
-$heading6: 11px; // .zeta
+$heading2: 40px; // .beta
+$heading3: 30px; // .gamma
+$heading4: 25px; // .delta
+$heading5: 20px; // .epsilon
+$heading6: 12px; // .zeta
 $heading-line-height: 1;
 
 // Weights
@@ -54,31 +57,29 @@ $padding: 60px;
 // Spacings
 // ==========================================================================
 $gutter: 20px;
-$margin: 40px;
+$margin: 20px;
 
-$unit: 60px;
+$unit: 30px;
 
 // Components
 // ==========================================================================
-$header-main: ($unit * 2);
-$header-main-mobile: 59px;
-$header-line-height: 40px;
+$header-height: $unit * 2;
 
 // Screen widths
 // ==========================================================================
-$from-tiny: 414px;
+$from-tiny: 480px;
 $to-tiny: $from-tiny - 1;
-$from-small: 768px;
+$from-small: 600px;
 $to-small: $from-small - 1;
-$from-medium: 1024px;
+$from-medium: 960px;
 $to-medium: $from-medium - 1;
 $from-large: 1280px;
 $to-large: $from-large - 1;
-$from-huge: 1680px;
+$from-huge: 1600px;
 $to-huge: $from-huge - 1;
 
 // Transitions
 // ==========================================================================
 $speed: 0.3s;
-$speed-slow: 0.6s;
-$easing: linear;
+$speed-fast: ($speed / 2);
+$easing: cubic-bezier(.55,0,.1,1);

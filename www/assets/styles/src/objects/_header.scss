@@ -3,10 +3,10 @@
 // ==========================================================================
 %header-main-height {
 	@media (max-width: $to-small) {
-		height: $header-main-mobile;
+		height: $header-height;
 	}
 
 	@media (min-width: $from-small) {
-		height: rem($header-main);
+		height: rem($header-height);
 	}
 }

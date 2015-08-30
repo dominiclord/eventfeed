@@ -25,11 +25,11 @@ html {
 
 body {
 	@media (max-width: $to-small) {
-		padding-top: $header-main-mobile;
+		padding-top: $header-height;
 	}
 
 	@media (min-width: $from-small) {
-		padding-top: rem($header-main);
+		padding-top: rem($header-height);
 	}
 }
 
@@ -56,7 +56,7 @@ img, svg {
 
 a {
 	color: $link;
-	transition: color $speed;
+	transition: color $speed $easing;
 
 	&:hover {
 		color: $link-hover;
