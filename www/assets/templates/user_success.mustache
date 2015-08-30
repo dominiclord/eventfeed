@@ -1,2 +1,18 @@
-<h3>Your post was succesfully submitted.</h3>
-<h3>It will reviewed and posted once it is approved!</h3>
+<h2>Your post was succesfully submitted.</h2>
+<h2>It will reviewed and posted once it is approved!</h2>
+
+<h4>Preview</h4>
+
+{{#results}}
+<article class="c-main-post -{{ type }}" data-timestamp="{{ timestamp }}">
+    {{#has_image}}
+    <img class="c-main-post_image" src="/uploads/{{ image }}" alt="">
+    {{/has_image}}
+    <div class="c-main-post_content">
+    {{#has_text}}
+        <p class="c-main-post_text h3">{{ text }}</p>
+    {{/has_text}}
+        <p class="c-main-post_author h4">{{ author }}</p>
+    </div>
+</article>
+{{/results}}

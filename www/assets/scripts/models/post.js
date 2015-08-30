@@ -5,8 +5,7 @@ define([
     'use strict';
 
     var Post = Backbone.Model.extend({
-        // Default attributes for the todo
-        // and ensure that each todo created has `title` and `completed` keys.
+        // Default attributes for the post
         defaults: {
             author: '',
             text: '',
@@ -20,12 +19,41 @@ define([
             return this.urlRoot;
         },
 
+        validate: function (attrs, options) {
+            var response = {
+                status: 'OK',
+                fields: []
+            };
+
+            if (attrs.author.length === 0) {
+                response.fields.push('author');
+                response.status = 'ERROR';
+            }
+
+            if (attrs.text.length === 0 && typeof(attrs.image === 'undefined')) {
+                response.status = 'ERROR';
+
+                if (attrs.text.length === 0) {
+                    response.fields.push('text');
+                } else {
+                    response.fields.push('image');
+                }
+            }
+
+            if (response.status !== 'OK') {
+                return response;
+            }
+
+        },
+
+        /*
         // Toggle the `completed` state of this todo item.
         toggle: function () {
             this.save({
                 completed: !this.get('completed')
             });
         },
+        */
 
         /**
          * Helper function to get around AJAX's file uploading limitations

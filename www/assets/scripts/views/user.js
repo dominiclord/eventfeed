@@ -18,7 +18,7 @@ define([
         // the App already present in the HTML.
         el: '.js-user-form',
 
-        // Delegated events for creating new items, and clearing completed ones.
+        // Delegated events for creating new posts and other visual changes
         events: {
             'submit': 'submitPostForm',
             'click .js-erase-form': 'clearForm',
@@ -34,8 +34,8 @@ define([
 
             this.Post = new PostModel();
 
-            this.listenTo(this.Post, 'sync', this.displayCreatedPost);
-
+            this.listenTo(this.Post, 'sync', this.displaySyncResponse);
+            this.listenTo(this.Post, 'invalid', this.displayFormErrors);
         },
 
         // Generate the attributes for a new Todo item.
@@ -49,39 +49,26 @@ define([
 
         // On form submit, attempt to submit a post
         submitPostForm: function (e) {
+            var self = this;
+
             e.preventDefault();
 
-            var error = false;
-
-            this.$post_author.removeClass('has-error');
-            this.$post_text.removeClass('has-error');
-
+            // Clean the form of errors
+            self.$post_author.removeClass('has-error');
+            self.$post_text.removeClass('has-error');
             this.$no_content.addClass('none');
 
-            if (this.$post_author.val().length === 0) {
-                this.$post_author.addClass('has-error');
-                error = true;
-            }
+            var attributes = self.newAttributes();
 
-            if (this.$post_text.val().length === 0 && this.$post_image.val() === '') {
-                this.$post_text.addClass('has-error');
-                this.$no_content.removeClass('none');
-                error = true;
-            }
+            self.Post.set(attributes);
 
-            if (error === false) {
-                var attributes = this.newAttributes();
-
-                this.Post.set(attributes);
-
-                // If we have an image, make sure to convert it to base64 before attempting to save the data
-                if (typeof(attributes.image) !== 'undefined') {
-                    this.Post.readImage(attributes.image, function() {
-                        this.Post.save();
-                    });
-                } else {
-                    this.Post.save();
-                }
+            // If we have an image, make sure to convert it to base64 before attempting to save the data
+            if (typeof(attributes.image) !== 'undefined') {
+                self.Post.readImage(attributes.image, function() {
+                    self.Post.save();
+                });
+            } else {
+                self.Post.save();
             }
 
         },
@@ -102,9 +89,22 @@ define([
             this.$post_image_label.text(file_name);
         },
 
-        displayCreatedPost: function () {
-            var rendered = Mustache.to_html(successTemplate, this.Post.toJSON());
+        /**
+         * Display erros in form on `invalid` event
+         * @param  {Object}  model  A copy of the submitted model
+         * @param  {Object}  error  A custom response object
+         */
+        displayFormErrors: function (model, error) {
+            this.$no_content.removeClass('none');
 
+            for (var i = 0, len = error.fields.length; i < len; i++) {
+                this['$post_' + error.fields[i]].addClass('has-error');
+            }
+        },
+
+        displaySyncResponse: function () {
+            var rendered = Mustache.to_html(successTemplate, this.Post.toJSON());
+            console.log(this.Post.toJSON());
             this.$el.html(rendered);
         }
     });

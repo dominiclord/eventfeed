@@ -548,6 +548,19 @@ $app->group('/api', function () use ($app, $db) {
 
                     $result = $db->posts->insert($post);
 
+                    switch ( $type ) {
+                        case 'text':
+                            $result['has_text'] = true;
+                            break;
+                        case 'hybrid':
+                            $result['has_text']  = true;
+                            $result['has_image'] = true;
+                            break;
+                        case 'image':
+                            $result['has_image'] = true;
+                            break;
+                    }
+
                     $response = [
                         'results' => $result,
                         'status' => 'OK'
