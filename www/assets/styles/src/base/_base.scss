@@ -29,7 +29,7 @@ body {
 	}
 
 	@media (min-width: $from-small) {
-		padding-top: rem($header-height);
+		padding-top: rem($header-height * 2);
 	}
 }
 
