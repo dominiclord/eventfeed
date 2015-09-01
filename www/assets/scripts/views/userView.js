@@ -16,21 +16,25 @@ define([
 
         // Instead of generating a new element, bind to the existing skeleton of
         // the App already present in the HTML.
-        el: '.js-user-form',
+        el: '.js-user-view',
 
         // Delegated events for creating new posts and other visual changes
         events: {
-            'submit': 'submitPostForm',
-            'click .js-erase-form': 'clearForm',
-            'change #post_image': 'displayImageName'
+            'submit .js-user-form'  : 'submitPostForm',
+            'click  .js-erase-form' : 'clearForm',
+            'change #post_image'    : 'displayImageName'
         },
 
         initialize: function () {
+            this.$user_form        = this.$('.js-user-form');
+
             this.$post_author      = this.$('#post_author');
             this.$post_text        = this.$('#post_text');
             this.$post_image       = this.$('#post_image');
             this.$post_image_label = this.$('#post_image_label');
+
             this.$no_content       = this.$('.js-no-content');
+
             this.$loader           = this.$('.js-loader');
             this.$loader_box       = this.$('.js-loader-box');
 
@@ -106,24 +110,29 @@ define([
         },
 
         displayLoader: function (model, response, options) {
-            console.log(this.$loader);
-            this.$loader.removeClass('none').addClass('fadeIn animated');
-            //removeClass('none').addClass('fadeIn animated');
-            //this.$loader_box.addClass('fadeInUp animated');
+            $('body').addClass('is-transmitting-post');
+            //this.$loader_box.addClass('animated');
         },
 
         displaySyncResponse: function () {
             var self = this;
 
             window.setTimeout(function(){
-                self.$loader.removeClass('fadeIn animated');
-                self.$loader_box.removeClass('fadeInUp animated');
-            }, 5000);
+                $('body')
+                    .addClass('is-transmission-completed')
+                    .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+                        function() {
+                            ('body')
+                                .removeClass('is-transmitting-post is-transmission-completed')
+                                .unbind('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
+                        });
+                //self.$loader_box.removeClass('fadeInUp animated');
+            }, 2000);
 
             window.setTimeout(function(){
                 var rendered = Mustache.to_html(successTemplate, self.Post.toJSON());
-                self.$el.html(rendered);
-            }, 5000);
+                self.$user_form.html(rendered);
+            }, 1000);
         }
     });
 

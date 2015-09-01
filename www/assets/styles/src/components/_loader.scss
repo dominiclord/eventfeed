@@ -24,35 +24,46 @@
 }
 
 .c-loader{
-    background-color: white;
+    @include vertical-center;
+    background-color: $blue;
     position: absolute;
     height: 100%;
+    width: 100%;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    width: 100%;
+    text-align: center;
+    transform: translateY(-150%);
+    transition-property: transform, height;
+    transition-duration: 1s;
+    transition-timing-function: $easing;
+    will-change: transform;
+
+    .is-transmitting-post & {
+        transform: translateY(0%);
+    }
+
+    .is-transmission-completed & {
+        transform: translateY(150%);
+    }
 }
 
 .c-loader_box {
     height: rem($unit * 4);
-    left: 50%;
-    margin: 0 auto;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
     width: rem($unit * 8);
 }
 
 .c-loader_label {
-    color: $black;
+    color: $white;
     display: block;
     line-height: rem($unit * 2);
     text-align: center;
 }
 
-.c-loader_wrap {
-    background-color: rgba($blue, 0.5);
+.c-loader_bar {
+    background-color: rgba($white, 0.5);
     bottom: 1.23rem;
     height: 4px;
     left: 50%;
@@ -63,7 +74,7 @@
 }
 
 .c-loader_line {
-    background-color: rgba($blue, 0.75);
+    background-color: rgba($white, 0.75);
     height: 100%;
     position: absolute;
     top: 0;

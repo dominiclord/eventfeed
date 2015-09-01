@@ -3513,34 +3513,57 @@ Copyright (c) 2015 Daniel Eden
     width: 75%; } }
 
 .c-loader {
-  background-color: white;
+  font-size: 0;
+  background-color: #4c8ffe;
   position: absolute;
   height: 100%;
+  width: 100%;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  width: 100%; }
+  text-align: center;
+  -webkit-transform: translateY(-150%);
+      -ms-transform: translateY(-150%);
+          transform: translateY(-150%);
+  -webkit-transition-property: -webkit-transform, height;
+          transition-property: transform, height;
+  -webkit-transition-duration: 1s;
+          transition-duration: 1s;
+  -webkit-transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
+          transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
+  will-change: transform; }
+  .c-loader:before {
+    display: inline-block;
+    height: 100%;
+    content: "";
+    vertical-align: middle; }
+  .c-loader > * {
+    font-size: 1rem;
+    display: inline-block;
+    vertical-align: middle; }
+  .is-transmitting-post .c-loader {
+    -webkit-transform: translateY(0%);
+        -ms-transform: translateY(0%);
+            transform: translateY(0%); }
+  .is-transmission-completed .c-loader {
+    -webkit-transform: translateY(150%);
+        -ms-transform: translateY(150%);
+            transform: translateY(150%); }
 
 .c-loader_box {
   height: 6.6666666667rem;
-  left: 50%;
-  margin: 0 auto;
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  position: relative;
   width: 13.3333333333rem; }
 
 .c-loader_label {
-  color: #222222;
+  color: white;
   display: block;
   line-height: 3.3333333333rem;
   text-align: center; }
 
-.c-loader_wrap {
-  background-color: rgba(76, 143, 254, 0.5);
+.c-loader_bar {
+  background-color: rgba(255, 255, 255, 0.5);
   bottom: 1.23rem;
   height: 4px;
   left: 50%;
@@ -3552,7 +3575,7 @@ Copyright (c) 2015 Daniel Eden
   width: 80%; }
 
 .c-loader_line {
-  background-color: rgba(76, 143, 254, 0.75);
+  background-color: rgba(255, 255, 255, 0.75);
   height: 100%;
   position: absolute;
   top: 0;
