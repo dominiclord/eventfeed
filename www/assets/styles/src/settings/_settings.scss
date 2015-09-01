@@ -4,13 +4,16 @@
 
 // Colors
 // ==========================================================================
-$orange-light: #F57C00;
 $orange: #EF6C00;
+$orange-light: #F57C00;
 $orange-dark: #E65100;
+
 $grey: #727272;
 $grey-light: #939393;
 $grey-dark: #414141;
 $grey-error: #FFD4D1;
+
+$blue: #4c8ffe;
 
 // Generic
 $black: #222222;
@@ -35,7 +38,7 @@ $font-family: $roboto;
 $color: $orange;
 
 // Headings
-$heading1: 72px; // .alpha
+$heading1: 60px; // .alpha
 $heading2: 40px; // .beta
 $heading3: 30px; // .gamma
 $heading4: 25px; // .delta

@@ -16,7 +16,7 @@
 	font-size: 14px;
 	font-weight: $medium;
 	letter-spacing: 0.05em;
-	margin-bottom: rem(10px);
+	margin-bottom: rem(5px);
 }
 
 // Input
@@ -29,7 +29,7 @@ $input-icon-color: 534943; // No #
 	display: block;
 	color: $grey-dark;
 	padding: rem(5px) 0;
-	height: rem(60px);
+	height: rem($unit * 2);
 	transition: background-color $speed;
 	font-size: rem(35px);
 	@include notap;
@@ -48,16 +48,7 @@ $input-icon-color: 534943; // No #
 }
 
 .o-input-item {
-	margin-bottom: rem(28px);
-
-	&.-height {
-		height: rem(60px);
-	}
-
-	&.-inline {
-		display: inline-block;
-		margin-right: rem(60px);
-	}
+	margin-bottom: rem($unit * 1.5);
 }
 
 .o-input-wrap {

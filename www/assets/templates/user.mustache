@@ -35,17 +35,26 @@
                             </div>
                         </div>
                         <div class="o-input-item">
-                            <p class="js-no-content none"><strong>You need to send at least an image or a message.</strong></p>
+                            <h4 class="js-no-content none"><strong>You need to send at least an image or a message.</strong></h4>
                             <p>You can send a message, an image, or both at the same time.</p>
                             <p>Innapropriate content will not be posted.</p>
                         </div>
                         <div class="o-input-item">
-                            <button class="o-button -margin js-erase-form" type="button">Erase</button>
-                            <button class="o-button -margin" type="submit">Send</button>
+                            <button class="o-button js-erase-form" type="button">Erase</button>
+                            <button class="o-button" type="submit">Send</button>
                         </div>
                     </div>
                 </div>
             </form>
+            <div class="c-loader js-loader none">
+                <div class="c-loader_box js-loader-box">
+                    <span class="c-loader_label">Sending your post</span>
+                    <div class="c-loader_wrap">
+                        <div class="c-loader_line"></div>
+                        <div class="c-loader_line"></div>
+                    </div>
+                </div>
+            </div>
         </main>
         <script data-main="/assets/scripts/appUser" src="/node_modules/requirejs/require.js"></script>
     </body>

@@ -2,68 +2,72 @@
 // Base
 // ==========================================================================
 html {
-	font-family: $font-family;
-	line-height: $line-height;
-	color: $black;
+    font-family: $font-family;
+    line-height: $line-height;
+    color: $black;
 
-	@media (max-width: $to-small) {
-		font-size: 12px;
-	}
+    @media (max-width: $to-small) {
+        font-size: 12px;
+    }
 
-	@media (min-width: $from-small) and (max-width: $to-medium) {
-		font-size: 13px;
-	}
+    @media (min-width: $from-small) and (max-width: $to-medium) {
+        font-size: 13px;
+    }
 
-	@media (min-width: $from-medium) and (max-width: $to-huge) {
-		font-size: 14px;
-	}
+    @media (min-width: $from-medium) and (max-width: $to-huge) {
+        font-size: 14px;
+    }
 
-	@media (min-width: $from-huge) {
-		font-size: $font-size;
-	}
+    @media (min-width: $from-huge) {
+        font-size: $font-size;
+    }
 }
 
 body {
-	@media (max-width: $to-small) {
-		padding-top: $header-height;
-	}
+    @media (max-width: $to-small) {
+        padding-top: $header-height;
+    }
 
-	@media (min-width: $from-small) {
-		padding-top: rem($header-height * 2);
-	}
+    @media (min-width: $from-small) {
+        padding-top: rem($header-height * 2);
+    }
 }
 
 ::selection {
-	background: $selection;
-	color: white;
-	text-shadow: none;
+    background: $selection;
+    color: white;
+    text-shadow: none;
 }
 
 hr {
-	display: block;
+    display: block;
 
-	height: 1px;
-	margin: rem($unit) 0;
-	padding: 0;
+    height: 1px;
+    margin: rem($unit) 0;
+    padding: 0;
 
-	border: 0;
-	border-top: 1px solid rgba($black, 0.20);
+    border: 0;
+    border-top: 1px solid rgba($black, 0.20);
 }
 
 img, svg {
-	max-width: 100%;
+    max-width: 100%;
 }
 
 a {
-	color: $link;
-	transition: color $speed $easing;
+    color: $link;
+    transition: color $speed $easing;
 
-	&:hover {
-		color: $link-hover;
-	}
+    &:hover {
+        color: $link-hover;
+    }
 }
 
 p {
-	margin: 0;
+    margin: 0;
+
+    & + p {
+        margin-top: 1em;
+    }
 }
 

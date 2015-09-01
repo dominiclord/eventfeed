@@ -31,10 +31,13 @@ define([
             this.$post_image       = this.$('#post_image');
             this.$post_image_label = this.$('#post_image_label');
             this.$no_content       = this.$('.js-no-content');
+            this.$loader           = this.$('.js-loader');
+            this.$loader_box       = this.$('.js-loader-box');
 
             this.Post = new PostModel();
 
             this.listenTo(this.Post, 'sync', this.displaySyncResponse);
+            this.listenTo(this.Post, 'request', this.displayLoader);
             this.listenTo(this.Post, 'invalid', this.displayFormErrors);
         },
 
@@ -102,10 +105,25 @@ define([
             }
         },
 
+        displayLoader: function (model, response, options) {
+            console.log(this.$loader);
+            this.$loader.removeClass('none').addClass('fadeIn animated');
+            //removeClass('none').addClass('fadeIn animated');
+            //this.$loader_box.addClass('fadeInUp animated');
+        },
+
         displaySyncResponse: function () {
-            var rendered = Mustache.to_html(successTemplate, this.Post.toJSON());
-            console.log(this.Post.toJSON());
-            this.$el.html(rendered);
+            var self = this;
+
+            window.setTimeout(function(){
+                self.$loader.removeClass('fadeIn animated');
+                self.$loader_box.removeClass('fadeInUp animated');
+            }, 5000);
+
+            window.setTimeout(function(){
+                var rendered = Mustache.to_html(successTemplate, self.Post.toJSON());
+                self.$el.html(rendered);
+            }, 5000);
         }
     });
 

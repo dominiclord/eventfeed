@@ -1,0 +1,83 @@
+// ==========================================================================
+// Loader
+// ==========================================================================
+
+@keyframes transmitting {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(300%);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        width: 75%;
+    }
+    50% {
+        width: 50%;
+    }
+    100% {
+        width: 75%;
+    }
+}
+
+.c-loader{
+    background-color: white;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.c-loader_box {
+    height: rem($unit * 4);
+    left: 50%;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: rem($unit * 8);
+}
+
+.c-loader_label {
+    color: $black;
+    display: block;
+    line-height: rem($unit * 2);
+    text-align: center;
+}
+
+.c-loader_wrap {
+    background-color: rgba($blue, 0.5);
+    bottom: 1.23rem;
+    height: 4px;
+    left: 50%;
+    overflow:hidden;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 80%;
+}
+
+.c-loader_line {
+    background-color: rgba($blue, 0.75);
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    width: 50%;
+    will-change: transform;
+
+    animation:  transmitting 2000ms cubic-bezier(.55,0,.1,1) infinite,
+                pulse 2000ms cubic-bezier(.55,0,.1,1) infinite;
+
+    &:nth-child(2) {
+        animation-delay: 750ms;
+    }
+}
