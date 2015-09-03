@@ -3402,6 +3402,9 @@ Copyright (c) 2015 Daniel Eden
   background-size: cover;
   height: 60%;
   position: relative; }
+  .c-moderation-post.-text .c-moderation-post_image {
+    background-image: url(../../images/icon-no-image.svg);
+    background-size: 30%; }
 
 .c-moderation-post_image_information {
   background-image: -webkit-linear-gradient(bottom, black 0%, rgba(0, 0, 0, 0.4) 75%, transparent 95%);

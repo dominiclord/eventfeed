@@ -34,7 +34,7 @@
                 <ul class="c-post-list">
                 {{#posts}}
                     <li class="c-post-list_item js-post" data-id="{{ id }}">
-                        <article class="c-moderation-post">
+                        <article class="c-moderation-post -{{type}}">
                             <div class="c-moderation-post_image"{{#has_image}} style="background-image:url(/uploads/{{ image }})"{{/has_image}}>
                                 {{#has_image}}
                                 <div class="c-moderation-post_image_information">

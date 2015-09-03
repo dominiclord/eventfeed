@@ -76,6 +76,11 @@
     background-size: cover;
     height: 60%;
     position: relative;
+
+    .c-moderation-post.-text & {
+        background-image: url(../../images/icon-no-image.svg);
+        background-size: 30%;
+    }
 }
 
 .c-moderation-post_image_information {
