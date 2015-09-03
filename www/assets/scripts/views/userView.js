@@ -3,12 +3,11 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'models/post',
+    'collections/postsCollection',
     'text!../../templates/user_success.mustache',
     'mustache',
     'common'
-//], function ($, _, Backbone, Todos, TodoView, statsTemplate, Common) {
-], function ($, _, Backbone, PostModel, successTemplate, Mustache, Common) {
+], function ($, _, Backbone, PostsCollection, successTemplate, Mustache, Common) {
     'use strict';
 
     // Our overall **UserView** is the top-level piece of UI.
@@ -38,11 +37,12 @@ define([
             this.$loader           = this.$('.js-loader');
             this.$loader_box       = this.$('.js-loader-box');
 
-            this.Post = new PostModel();
+            this.Post = PostsCollection.create();
 
             this.listenTo(this.Post, 'sync', this.displaySyncResponse);
             this.listenTo(this.Post, 'request', this.displayLoader);
             this.listenTo(this.Post, 'invalid', this.displayFormErrors);
+
         },
 
         // Generate the attributes for a new Todo item.

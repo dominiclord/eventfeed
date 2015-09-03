@@ -3,7 +3,7 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'models/post',
+    'models/postModel',
     'mustache',
     'common'
 ], function ($, _, Backbone, PostModel, Mustache, Common) {
@@ -12,7 +12,7 @@ define([
     // Our overall **ModerationView** is the top-level piece of UI.
     var ModerationView = Backbone.View.extend({
 
-        el: '',
+        el: '.js-moderation-view',
 
         events: {
         },

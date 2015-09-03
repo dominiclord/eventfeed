@@ -4,19 +4,13 @@ define([
 ], function (_, Backbone) {
     'use strict';
 
-    var Post = Backbone.Model.extend({
+    var PostModel = Backbone.Model.extend({
         // Default attributes for the post
         defaults: {
             author: '',
             text: '',
             image: '',
             timestamp: ''
-        },
-
-        urlRoot: '/api/v1/posts',
-
-        url: function () {
-            return this.urlRoot;
         },
 
         validate: function (attrs, options) {
@@ -46,15 +40,6 @@ define([
 
         },
 
-        /*
-        // Toggle the `completed` state of this todo item.
-        toggle: function () {
-            this.save({
-                completed: !this.get('completed')
-            });
-        },
-        */
-
         /**
          * Helper function to get around AJAX's file uploading limitations
          * @see    http://stackoverflow.com/a/17537376
@@ -80,5 +65,5 @@ define([
         }
     });
 
-    return Post;
+    return PostModel;
 });
