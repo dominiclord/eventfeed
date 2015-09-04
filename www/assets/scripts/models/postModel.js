@@ -14,13 +14,6 @@ define([
             timestamp: ''
         },
 
-        /*
-        parse: function(resp, options) {
-
-            return resp.results;
-        },
-        */
-
         validate: function (attrs, options) {
             var response = {
                 status: 'OK',

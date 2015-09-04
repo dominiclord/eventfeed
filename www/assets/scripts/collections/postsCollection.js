@@ -10,6 +10,10 @@ define([
         // Reference to this collection's model.
         model: postModel,
 
+        parse: function(resp, options) {
+            return resp.results;
+        },
+
         url: function () {
             return '/api/v1/posts';
         }

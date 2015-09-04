@@ -25,7 +25,12 @@ define([
             this.listenTo(PostsCollection, 'reset', this.addAll);
             this.listenTo(PostsCollection, 'all', _.debounce(this.render, 0));
 
-            PostsCollection.fetch({reset:true});
+            PostsCollection.fetch({
+                data: {
+                    status: 'moderation'
+                },
+                reset: true
+            });
         },
 
         render: function () {

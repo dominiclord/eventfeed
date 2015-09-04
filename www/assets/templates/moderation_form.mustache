@@ -1,0 +1,31 @@
+<form class="c-form js-moderation-form none">
+    <div class="o-grid">
+        <div class="o-grid_item -half">
+            <div class="o-input-item">
+                <label class="o-label" for="post_author">Author</label>
+                <input class="o-input" id="post_author" type="text" name="author" value="{{author}}">
+            </div>
+            <div class="o-input-item">
+            {{#has_text}}
+                <label class="o-label" for="post_text">Text</label>
+                <input class="o-input" id="post_text" type="text" name="text" value="{{text}}">
+            {{/has_text}}
+            {{^has_text}}
+                <p><em>no text</em></p>
+            {{/has_text}}
+            </div>
+            {{#has_image}}
+            <div class="o-input-item">
+                <label class="o-label">Image</label>
+                <p>{{image_width}}x{{image_height}}</p>
+                <img src="{{image}}" id="post_image" alt="">
+            </div>
+            {{/has_image}}
+            <div class="o-input-item">
+                <button class="o-button -margin js-button-cancel" type="button">Cancel</button>
+                <button class="o-button -margin" type="submit">Save</button>
+            </div>
+        </div>
+    </div>
+    <input id="post_id" type="hidden" value="{{id}}">
+</form>

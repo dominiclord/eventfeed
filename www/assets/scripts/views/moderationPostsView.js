@@ -4,14 +4,16 @@ define([
     'underscore',
     'backbone',
     'text!../../templates/moderation_post.mustache',
+    'text!../../templates/moderation_form.mustache',
     'mustache',
     'common'
-], function ($, _, Backbone, postTemplate, Mustache, Common) {
+], function ($, _, Backbone, postTemplate, formTemplate, Mustache, Common) {
     'use strict';
 
     var ModerationPostView = Backbone.View.extend({
 
         tagName: 'li',
+        className: 'c-post-list_item',
 
         // The DOM events specific to an item.
         events: {
@@ -53,6 +55,7 @@ define([
         edit: function () {
             //this.$el.addClass('editing');
             //this.$input.focus();
+            console.log(this);
         },
 
         approve: function () {
