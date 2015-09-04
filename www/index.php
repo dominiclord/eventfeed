@@ -361,19 +361,42 @@ $app->group('/api', function () use ($app, $db) {
 
                 foreach ($posts as $post) {
 
+                    try {
+                        $image_size = getimagesize( __DIR__ . '/uploads/' . $post['image'] );
+                    } catch (Exception $e) {
+                        $image_size = null;
+                    }
+
                     /**
                      * @todo : Figure out how to output structure automatically with NotORM
                      */
-                    $_posts[] = [
+                    $_post = [
                         'id'                 => $post['id'],
                         'timestamp'          => $post['timestamp'],
                         'timestamp_modified' => $post['timestamp_modified'],
                         'author'             => $post['author'],
                         'text'               => $post['text'],
                         'image'              => $post['image'],
+                        'image_height'       => (!empty($image_size) ? $image_size[0] : null),
+                        'image_width'        => (!empty($image_size) ? $image_size[1] : null),
                         'status'             => $post['status'],
                         'type'               => $post['type']
                     ];
+
+                    switch ($post['type']) {
+                        case 'text':
+                            $_post['has_text'] = true;
+                            break;
+                        case 'hybrid':
+                            $_post['has_text']  = true;
+                            $_post['has_image'] = true;
+                            break;
+                        case 'image':
+                            $_post['has_image'] = true;
+                            break;
+                    }
+
+                    $_posts[] = $_post;
                 }
 
                 if (count($_posts)) {
