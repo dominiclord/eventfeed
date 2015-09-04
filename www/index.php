@@ -25,10 +25,10 @@ $pdo = new PDO('mysql:dbname=eventfeed_local;host:127.0.0.1','root','root');
 $db  = new NotORM($pdo);
 
 /**
-* Fetch posts for main interface
-* @param $app  Application
-* @param $db   Database connection
-*/
+ * Main interface display
+ * @param $app  Application
+ * @param $db   Database connection
+ */
 $app->get('/main(/)', function ( ) use ($app, $db) {
 
     $left_posts  = [];
@@ -48,9 +48,9 @@ $app->get('/main(/)', function ( ) use ($app, $db) {
 
         $color = $color_palette->render();
 
-        /*
-        * @TODO : Figure out how to output structure automatically with NotORM
-        */
+        /**
+         * @todo : Figure out how to output structure automatically with NotORM
+         */
         $_post = [
             'id'                 => $post['id'],
             'timestamp'          => $post['timestamp'],
@@ -103,10 +103,10 @@ $app->get('/main(/)', function ( ) use ($app, $db) {
 });
 
 /**
-* Fetch posts for main interface
-* @param $app  Application
-* @param $db   Database connection
-*/
+ * Fetch posts for main interface
+ * @param $app  Application
+ * @param $db   Database connection
+ */
 $app->get('/main/posts(/)', function ( ) use ($app, $db) {
 
     $response = [
@@ -122,9 +122,9 @@ $app->get('/main/posts(/)', function ( ) use ($app, $db) {
 
         foreach ($posts as $post) {
 
-            /*
-            * @TODO : Figure out how to output structure automatically with NotORM
-            */
+            /**
+             * @todo : Figure out how to output structure automatically with NotORM
+             */
             $_post = [
                 'id'                 => $post['id'],
                 'timestamp'          => $post['timestamp'],
@@ -166,11 +166,11 @@ $app->get('/main/posts(/)', function ( ) use ($app, $db) {
 });
 
 /**
-* Set post to published
-* @TODO Add authentification
-* @param $app  Application
-* @param $db   Database connection
-*/
+ * Set post to published
+ * @todo Add authentification
+ * @param $app  Application
+ * @param $db   Database connection
+ */
 $app->put('/main/posts/:id', function ( $id = null ) use ( $app, $db ) {
     $app->response()->headers->set('Content-Type', 'application/json');
     try{
@@ -200,11 +200,11 @@ $app->put('/main/posts/:id', function ( $id = null ) use ( $app, $db ) {
 });
 
 /**
-* Moderation interface
-* @TODO Add authentification
-* @param $app  Application
-* @param $db   Database connection
-*/
+ * Moderation interface
+ * @todo Add authentification
+ * @param $app  Application
+ * @param $db   Database connection
+ */
 $app->get('/moderation(/)(:view)', function ( $view = null ) use ( $app, $db ) {
 
     $posts = $db->posts();
@@ -258,9 +258,9 @@ $app->get('/moderation(/)(:view)', function ( $view = null ) use ( $app, $db ) {
             $image_size = null;
         }
 
-        /*
-        * @TODO : Figure out how to output structure automatically with NotORM
-        */
+        /**
+         * @todo : Figure out how to output structure automatically with NotORM
+         */
         $_post = [
             'id'                 => $post['id'],
             'timestamp'          => $post['timestamp'],
@@ -325,22 +325,30 @@ URL                           HTTP Method  Operation
 =============================
 */
 
-// API group
+/**
+ * Main API group
+ * @param $app  Application
+ * @param $db   Database connection
+ */
 $app->group('/api', function () use ($app, $db) {
 
-    // Version group
+    /**
+     * API group v1
+     * @param $app  Application
+     * @param $db   Database connection
+     */
     $app->group('/v1', function () use ($app, $db) {
 
 
         /**
         * Fetch all posts
-        * @TODO Add authentification
+        * @todo Add authentification
         * @param $app  Application
         * @param $db   Database connection
         */
         $app->get('/posts', function ( ) use ($app, $db) {
 
-            // @TODO If status is other than published, request authorization
+            // @todo If status is other than published, request authorization
             $status = ($app->request->get('status')) ? : 'published';
 
             try {
@@ -373,11 +381,11 @@ $app->group('/api', function () use ($app, $db) {
 
 
         /**
-        * Fetch a single post
-        * @TODO Add authentification
-        * @param $app  Application
-        * @param $db   Database connection
-        */
+         * Fetch a single post
+         * @todo Add authentification
+         * @param $app  Application
+         * @param $db   Database connection
+         */
         $app->get('/posts/:id', function ( $id = null ) use ( $app, $db ) {
 
             try {
@@ -407,11 +415,11 @@ $app->group('/api', function () use ($app, $db) {
 
 
         /**
-        * Create a post
-        * @TODO Add authentification
-        * @param $app  Application
-        * @param $db   Database connection
-        */
+         * Create a post
+         * @todo Add authentification
+         * @param $app  Application
+         * @param $db   Database connection
+         */
         $app->post('/posts', function () use ($app, $db) {
 
             $request_body = $app->request()->getBody();
@@ -480,9 +488,9 @@ $app->group('/api', function () use ($app, $db) {
                     $target = $dir . $file_name;
 
                     /**
-                    * @TODO
-                    * Manage image failures gracefully
-                    */
+                     * @todo
+                     * Manage image failures gracefully
+                     */
                     if (!in_array($file_type, $mimetypes)) {
                         throw new Exception('Error: rejected mimetype');
                     }
@@ -493,9 +501,9 @@ $app->group('/api', function () use ($app, $db) {
 
                     if (file_exists($target)) {
                         /**
-                        * @TODO
-                        * Generate new token? This could mean the token already exists in the database as well
-                        */
+                         * @todo
+                         * Generate new token? This could mean the token already exists in the database as well
+                         */
                         throw new Exception('Error: file already exists');
                     }
 
@@ -583,11 +591,11 @@ $app->group('/api', function () use ($app, $db) {
 
 
         /**
-        * Modify a post
-        * @TODO Add authentification
-        * @param $app  Application
-        * @param $db   Database connection
-        */
+         * Modify a post
+         * @todo Add authentification
+         * @param $app  Application
+         * @param $db   Database connection
+         */
         $app->put('/posts/:id', function ( $id = null ) use ( $app, $db ) {
             try{
 
