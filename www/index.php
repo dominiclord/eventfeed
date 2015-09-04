@@ -357,9 +357,28 @@ $app->group('/api', function () use ($app, $db) {
                     ->where('status', $status)
                     ->order('timestamp DESC');
 
-                if (count($posts)) {
+                $_posts = [];
+
+                foreach ($posts as $post) {
+
+                    /**
+                     * @todo : Figure out how to output structure automatically with NotORM
+                     */
+                    $_posts[] = [
+                        'id'                 => $post['id'],
+                        'timestamp'          => $post['timestamp'],
+                        'timestamp_modified' => $post['timestamp_modified'],
+                        'author'             => $post['author'],
+                        'text'               => $post['text'],
+                        'image'              => $post['image'],
+                        'status'             => $post['status'],
+                        'type'               => $post['type']
+                    ];
+                }
+
+                if (count($_posts)) {
                     $response = [
-                        'results' => $posts,
+                        'results' => $_posts,
                         'status' => 'OK'
                     ];
                 } else {

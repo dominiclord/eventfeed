@@ -5,6 +5,7 @@ define([
     'use strict';
 
     var PostModel = Backbone.Model.extend({
+
         // Default attributes for the post
         defaults: {
             author: '',
@@ -12,6 +13,13 @@ define([
             image: '',
             timestamp: ''
         },
+
+        /*
+        parse: function(resp, options) {
+
+            return resp.results;
+        },
+        */
 
         validate: function (attrs, options) {
             var response = {

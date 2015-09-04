@@ -6,7 +6,7 @@ define([
 ], function (_, Backbone, postModel) {
     'use strict';
 
-    var postsCollection = Backbone.Collection.extend({
+    var PostsCollection = Backbone.Collection.extend({
         // Reference to this collection's model.
         model: postModel,
 
@@ -15,5 +15,5 @@ define([
         }
     });
 
-    return new postsCollection();
+    return new PostsCollection();
 });

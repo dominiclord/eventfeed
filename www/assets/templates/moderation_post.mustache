@@ -1,0 +1,27 @@
+{{#results}}
+<li class="c-post-list_item" data-id="{{ id }}">
+    <article class="c-moderation-post -{{type}}">
+        <div class="c-moderation-post_image"{{#has_image}} style="background-image:url(/uploads/{{ image }})"{{/has_image}}>
+            {{#has_image}}
+            <div class="c-moderation-post_image_information">
+                <p>{{image_width}}x{{image_height}}</p>
+            </div>
+            {{/has_image}}
+        </div>
+        <div class="c-moderation-post_content">
+            <h2 class="c-moderation-post_label h4 js-author">{{author}}</h2>
+            {{#has_text}}
+            <p class="js-text">{{text}}</p>
+            {{/has_text}}
+            {{^has_text}}
+            <p><em>no text</em></p>
+            {{/has_text}}
+            <aside class="c-moderation-actions">
+                <button class="o-button -flat js-edit-post">Edit</button>
+                <button class="o-button -flat js-approve-post">Approve</button>
+                <button class="o-button -flat js-reject-post">Reject</button>
+            </aside>
+        </div>
+    </article>
+</li>
+{{/results}}
