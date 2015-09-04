@@ -15,8 +15,10 @@ define([
 
         // The DOM events specific to an item.
         events: {
+            'click .js-edit-post': 'edit',
+            'click .js-approve-post': 'approve',
+            'click .js-reject-post': 'reject'
             /*
-            'click .toggle':    'toggleCompleted',
             'dblclick label':   'edit',
             'click .destroy':   'clear',
             'keypress .edit':   'updateOnEnter',
@@ -49,6 +51,11 @@ define([
 
         // Switch this view into `"editing"` mode, displaying the input field.
         edit: function () {
+            //this.$el.addClass('editing');
+            //this.$input.focus();
+        },
+
+        approve: function () {
             //this.$el.addClass('editing');
             //this.$input.focus();
         },
