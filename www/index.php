@@ -3,7 +3,7 @@
 /**
 * Main EventFeed functions and routing
 *
-* @author Dominc Lord <dlord@outlook.com>
+* @author Dominic Lord <dlord@outlook.com>
 * @copyright 2015 dominiclord
 * @version 2015-07-01
 * @link http://github.com/dominiclord/eventfeed
