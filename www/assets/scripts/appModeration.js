@@ -1,6 +1,3 @@
-/*global require*/
-'use strict';
-
 // Require.js allows us to configure shortcut alias
 require.config({
     // The shim config allows us to configure dependencies for
@@ -22,14 +19,22 @@ require.config({
         underscore: '../../../node_modules/underscore/underscore',
         backbone: '../../../node_modules/backbone/backbone',
         text: '../../../node_modules/requirejs-text/text',
-        mustache: '../../../node_modules/mustache/mustache.min'
+        mustache: '../../../node_modules/mustache/mustache.min',
+        template: '../templates'
     }
 });
 
 require([
     'backbone',
+    'routerModeration',
     'views/moderationView'
-], function (Backbone, ModerationView) {
+], function (Backbone, routerModeration, ModerationView) {
+
+
     // Initialize the application view
-    new ModerationView();
+    var moderationView = new ModerationView();
+
+    routerModeration.initialize({
+        appView: moderationView
+    });
 });

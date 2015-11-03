@@ -200,13 +200,18 @@ $app->put('/main/posts/:id', function ( $id = null ) use ( $app, $db ) {
 });
 
 /**
- * Moderation interface
- * @todo Add authentification
+ * Simple, catchall moderation interface routing. Specific routing is handled by Backbone
+ *
  * @param $app  Application
  * @param $db   Database connection
+ * @todo  Add authentification
+ * @see   https://gist.github.com/funkatron/1447169
  */
-$app->get('/moderation(/)(:view)', function ( $view = null ) use ( $app, $db ) {
+$app->get('/moderation(/)(:view)', function ($view = null) use ($app, $db) {
 
+    $app->render('moderation');
+
+    /*
     $posts = $db->posts();
 
     // Default view data
@@ -258,9 +263,6 @@ $app->get('/moderation(/)(:view)', function ( $view = null ) use ( $app, $db ) {
             $image_size = null;
         }
 
-        /**
-         * @todo : Figure out how to output structure automatically with NotORM
-         */
         $_post = [
             'id'                 => $post['id'],
             'timestamp'          => $post['timestamp'],
@@ -291,9 +293,8 @@ $app->get('/moderation(/)(:view)', function ( $view = null ) use ( $app, $db ) {
     }
 
     $app->view()->setData( $view_data );
-
-    $app->render('moderation');
-});
+    */
+})->conditions(array('view' => '.+'));
 
 // User interface
 $app->get('/', function ( ) use ($app, $db) {

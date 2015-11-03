@@ -17,9 +17,9 @@ define([
 
         // The DOM events specific to an item.
         events: {
-            'click .js-edit-post': 'edit',
-            'click .js-approve-post': 'approve',
-            'click .js-reject-post': 'reject'
+            'click .js-editPost': 'edit',
+            //'click .js-approve-post': 'approve',
+            //'click .js-reject-post': 'reject'
             /*
             'dblclick label':   'edit',
             'click .destroy':   'clear',
@@ -33,9 +33,9 @@ define([
         // a one-to-one correspondence between a **Todo** and a **TodoView** in this
         // app, we set a direct reference on the model for convenience.
         initialize: function () {
-            /*
             this.listenTo(this.model, 'change', this.render);
-            this.listenTo(this.model, 'destroy', this.remove);
+            //this.listenTo(this.model, 'destroy', this.remove);
+            /*
             this.listenTo(this.model, 'visible', this.toggleVisible);
             */
         },
@@ -51,11 +51,14 @@ define([
             return this;
         },
 
-        // Switch this view into `"editing"` mode, displaying the input field.
-        edit: function () {
+        // Navigate router to edit the post
+        edit: function (event) {
+            var href = 'edit/' + this.model.id;
+
+            Backbone.history.navigate(href, {trigger: true});
+
             //this.$el.addClass('editing');
             //this.$input.focus();
-            console.log(this);
         },
 
         approve: function () {
