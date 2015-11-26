@@ -368,28 +368,16 @@ $app->group('/api', function () use ($app, $db) {
                         $image_size = null;
                     }
 
-                    /**
-                     * @todo : Figure out how to output structure automatically with NotORM
-                     */
-                    $_post = [
-                        'id'                 => $post['id'],
-                        'timestamp'          => $post['timestamp'],
-                        'timestamp_modified' => $post['timestamp_modified'],
-                        'author'             => $post['author'],
-                        'text'               => $post['text'],
-                        'image'              => $post['image'],
-                        'image_height'       => (!empty($image_size) ? $image_size[0] : null),
-                        'image_width'        => (!empty($image_size) ? $image_size[1] : null),
-                        'status'             => $post['status'],
-                        'type'               => $post['type']
-                    ];
+                    $_post = $post;
+                    $_post['image_height'] = (!empty($image_size) ? $image_size[0] : null);
+                    $_post['image_width'] = (!empty($image_size) ? $image_size[1] : null);
 
                     switch ($post['type']) {
                         case 'text':
                             $_post['has_text'] = true;
                             break;
                         case 'hybrid':
-                            $_post['has_text']  = true;
+                            $_post['has_text'] = true;
                             $_post['has_image'] = true;
                             break;
                         case 'image':
